@@ -1,0 +1,960 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Boissons Café — Premium Coffee Experience | Sialkot</title>
+<meta name="description" content="Boissons Café, Paris Road Sialkot — premium handcrafted coffee, exquisite desserts, and a luxurious dining experience. Book a table or order online.">
+<meta name="keywords" content="Boissons Café, café Sialkot, coffee Sialkot, Paris Road café, premium coffee Pakistan">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&family=DM+Sans:opsz,wght@9..40,300;9..40,400;9..40,500&display=swap" rel="stylesheet">
+<style>
+:root{
+  --k:#080604;--dp:#0f0b07;--sf:#161008;--cd:#1c1409;--c2:#211608;
+  --go:#c9a84c;--gl:#e8c97a;--gd:#8a6e2f;--gf:rgba(201,168,76,.07);
+  --cr:#f5ead8;--c2r:#c9b08a;--c3r:#8a7055;
+  --b1:rgba(201,168,76,.12);--b2:rgba(201,168,76,.28);--b3:rgba(201,168,76,.5);
+  --gs:rgba(22,16,8,.75);--r:3px;
+}
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth}
+body{background:var(--k);color:var(--cr);font-family:'DM Sans',sans-serif;font-weight:300;line-height:1.7;overflow-x:hidden}
+h1,h2,h3,h4{font-family:'Cormorant Garamond',serif;font-weight:300;line-height:1.15}
+a{color:inherit;text-decoration:none}
+button{cursor:pointer;font-family:'DM Sans',sans-serif}
+::-webkit-scrollbar{width:3px}
+::-webkit-scrollbar-track{background:var(--k)}
+::-webkit-scrollbar-thumb{background:var(--gd);border-radius:2px}
+::selection{background:var(--gd);color:var(--cr)}
+
+/* NAV */
+#nav{position:fixed;top:0;left:0;right:0;z-index:200;padding:1.4rem 3rem;display:flex;align-items:center;justify-content:space-between;backdrop-filter:blur(24px);background:rgba(8,6,4,.55);border-bottom:1px solid var(--b1);transition:padding .4s,background .4s}
+#nav.sc{padding:.85rem 3rem;background:rgba(8,6,4,.9)}
+.logo{font-family:'Cormorant Garamond',serif;font-size:1.65rem;font-weight:300;color:var(--go);letter-spacing:.18em}
+.logo em{font-style:italic;color:var(--cr);font-weight:300}
+.nl{display:flex;gap:2.5rem;list-style:none}
+.nl a{font-size:.72rem;letter-spacing:.18em;text-transform:uppercase;color:var(--c3r);transition:color .3s}
+.nl a:hover{color:var(--go)}
+.nr{display:flex;align-items:center;gap:.75rem}
+.nb{padding:.45rem 1.1rem;border-radius:var(--r);font-size:.72rem;letter-spacing:.12em;text-transform:uppercase;transition:all .3s;border:1px solid var(--b2);background:none;color:var(--c2r)}
+.nb:hover{border-color:var(--go);color:var(--go)}
+.nb.gd{background:var(--go);color:var(--k);border-color:var(--go)}
+.nb.gd:hover{background:var(--gl)}
+.bg{display:none;flex-direction:column;gap:5px;background:none;border:none;padding:4px}
+.bg span{display:block;width:22px;height:1px;background:var(--cr);transition:all .3s}
+
+/* HERO */
+#hero{height:100vh;min-height:680px;display:flex;align-items:center;justify-content:center;position:relative;overflow:hidden}
+.hbg{position:absolute;inset:0;background:radial-gradient(ellipse 80% 60% at 15% 60%,rgba(74,46,26,.45),transparent),radial-gradient(ellipse 50% 50% at 85% 25%,rgba(201,168,76,.07),transparent),linear-gradient(160deg,#080604,#1a0d04 50%,#0c0804)}
+.hgr{position:absolute;inset:0;opacity:.035;background-image:url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");background-size:200px 200px;pointer-events:none}
+.hln{position:absolute;inset:0;pointer-events:none;background-image:repeating-linear-gradient(90deg,rgba(201,168,76,.04) 0,rgba(201,168,76,.04) 1px,transparent 0,transparent 80px)}
+.orb{position:absolute;border-radius:50%;pointer-events:none;filter:blur(60px)}
+.o1{width:500px;height:500px;top:-80px;right:-80px;background:radial-gradient(circle,rgba(201,168,76,.1),transparent 70%);animation:dr 12s ease-in-out infinite}
+.o2{width:350px;height:350px;bottom:-60px;left:-40px;background:radial-gradient(circle,rgba(74,46,26,.35),transparent 70%);animation:dr 9s ease-in-out 3s infinite reverse}
+.o3{width:220px;height:220px;top:45%;left:12%;background:radial-gradient(circle,rgba(201,168,76,.06),transparent 70%);animation:dr 7s ease-in-out 5s infinite}
+@keyframes dr{0%,100%{transform:translateY(0) scale(1)}50%{transform:translateY(-28px) scale(1.04)}}
+.hi{position:relative;z-index:2;text-align:center;padding:2rem;max-width:920px}
+.htag{font-size:.65rem;letter-spacing:.45em;text-transform:uppercase;color:var(--go);margin-bottom:1.6rem;opacity:0;animation:up 1s .2s forwards}
+.hh1{font-size:clamp(3.8rem,9vw,7.5rem);color:var(--cr);line-height:1.02;margin-bottom:1.4rem;opacity:0;animation:up 1s .4s forwards}
+.hh1 em{color:var(--go);font-style:italic}
+.hs{font-size:1.05rem;color:var(--c3r);letter-spacing:.06em;margin-bottom:2.8rem;opacity:0;animation:up 1s .6s forwards}
+.hct{display:flex;gap:1rem;justify-content:center;flex-wrap:wrap;opacity:0;animation:up 1s .8s forwards}
+.bg-btn{padding:.9rem 2.6rem;background:var(--go);color:var(--k);border:none;border-radius:var(--r);font-size:.75rem;letter-spacing:.16em;text-transform:uppercase;font-weight:500;transition:all .3s;display:inline-flex;align-items:center;gap:.4rem}
+.bg-btn:hover{background:var(--gl);transform:translateY(-2px)}
+.ol-btn{padding:.9rem 2.6rem;background:none;color:var(--cr);border:1px solid var(--b2);border-radius:var(--r);font-size:.75rem;letter-spacing:.16em;text-transform:uppercase;transition:all .3s;display:inline-flex;align-items:center;gap:.4rem}
+.ol-btn:hover{border-color:var(--go);color:var(--go);transform:translateY(-2px)}
+.sh{position:absolute;bottom:2rem;left:50%;transform:translateX(-50%);display:flex;flex-direction:column;align-items:center;gap:.5rem;color:var(--c3r);font-size:.6rem;letter-spacing:.35em;text-transform:uppercase;opacity:0;animation:up 1s 1.1s forwards}
+.sb{width:1px;height:42px;background:linear-gradient(var(--go),transparent);animation:pu 2.5s infinite}
+@keyframes pu{0%,100%{opacity:1}50%{opacity:.2}}
+@keyframes up{from{opacity:0;transform:translateY(28px)}to{opacity:1;transform:translateY(0)}}
+
+/* MARQUEE */
+.mw{background:var(--go);padding:.65rem 0;overflow:hidden;white-space:nowrap;border-top:1px solid rgba(0,0,0,.1);border-bottom:1px solid rgba(0,0,0,.1)}
+.mt{display:inline-flex;animation:sc 22s linear infinite}
+.mt span{font-size:.65rem;letter-spacing:.3em;text-transform:uppercase;color:var(--k);padding:0 2.5rem;font-weight:500}
+.mt .dot{color:rgba(0,0,0,.35)}
+@keyframes sc{from{transform:translateX(0)}to{transform:translateX(-50%)}}
+
+/* SECTIONS */
+section{padding:6rem 3rem}
+.w{max-width:1300px;margin:0 auto}
+.ey{font-size:.63rem;letter-spacing:.42em;text-transform:uppercase;color:var(--go);margin-bottom:.7rem}
+.st{font-size:clamp(2.4rem,5vw,4rem);color:var(--cr);margin-bottom:.8rem}
+.sl{width:52px;height:1px;background:linear-gradient(to right,var(--go),transparent);margin-bottom:2.8rem}
+.rv{opacity:0;transform:translateY(36px);transition:opacity .8s cubic-bezier(.4,0,.2,1),transform .8s cubic-bezier(.4,0,.2,1)}
+.rv.on{opacity:1;transform:none}
+.d1{transition-delay:.1s}.d2{transition-delay:.2s}.d3{transition-delay:.3s}
+
+/* MENU */
+#menu{background:var(--dp)}
+.mtabs{display:flex;border:1px solid var(--b1);border-radius:var(--r);overflow:hidden;width:fit-content;margin-bottom:3rem}
+.mtab{padding:.7rem 2.2rem;background:none;color:var(--c3r);border:none;border-right:1px solid var(--b1);font-size:.72rem;letter-spacing:.18em;text-transform:uppercase;transition:all .3s}
+.mtab:last-child{border-right:none}
+.mtab.on{background:var(--go);color:var(--k)}
+.mtab:not(.on):hover{color:var(--go)}
+.mg{display:grid;grid-template-columns:repeat(auto-fill,minmax(285px,1fr));gap:1.4rem}
+.mc{background:var(--cd);border:1px solid var(--b1);border-radius:var(--r);overflow:hidden;transition:all .4s;position:relative}
+.mc:hover{transform:translateY(-7px);border-color:var(--b2);box-shadow:0 24px 64px rgba(0,0,0,.45),0 0 0 1px rgba(201,168,76,.08)}
+.mi{height:195px;overflow:hidden;position:relative;display:flex;align-items:center;justify-content:center;flex-direction:column;gap:.4rem}
+.mic{font-size:3.2rem;transition:transform .5s}
+.mc:hover .mic{transform:scale(1.12)}
+.mbg{position:absolute;top:.75rem;right:.75rem;padding:.25rem .65rem;background:var(--go);color:var(--k);font-size:.6rem;letter-spacing:.1em;text-transform:uppercase;border-radius:2px;font-weight:500}
+.mb2{padding:1.25rem}
+.mn{font-family:'Cormorant Garamond',serif;font-size:1.35rem;color:var(--cr);margin-bottom:.2rem}
+.md{font-size:.78rem;color:var(--c3r);line-height:1.55;margin-bottom:1rem}
+.mf{display:flex;align-items:center;justify-content:space-between}
+.mp{font-family:'Cormorant Garamond',serif;font-size:1.15rem;color:var(--go)}
+.ab{padding:.38rem 1rem;background:none;border:1px solid var(--b2);color:var(--c2r);border-radius:var(--r);font-size:.68rem;letter-spacing:.12em;text-transform:uppercase;transition:all .3s}
+.ab:hover{background:var(--go);color:var(--k);border-color:var(--go)}
+
+/* SPECIALS */
+#specials{background:var(--sf)}
+.spg{display:grid;grid-template-columns:repeat(3,1fr);gap:1.5rem}
+.spc{border:1px solid var(--b1);border-radius:var(--r);padding:2rem;background:var(--gf);position:relative;overflow:hidden;transition:all .4s}
+.spc:hover{border-color:var(--b2);transform:translateY(-4px)}
+.spc::before{content:'';position:absolute;top:0;left:0;right:0;height:2px;background:linear-gradient(to right,var(--go),transparent)}
+.spi{font-size:2.2rem;margin-bottom:1rem}
+.spc h3{font-size:1.5rem;color:var(--cr);margin-bottom:.5rem}
+.spc p{font-size:.82rem;color:var(--c3r);line-height:1.65}
+.spp{margin-top:1.2rem;font-family:'Cormorant Garamond',serif;font-size:1.6rem;color:var(--go)}
+
+/* BOOKING */
+#booking{background:var(--dp)}
+.bkg{display:grid;grid-template-columns:1fr 1fr;gap:5rem;align-items:center}
+.bkp{list-style:none;display:flex;flex-direction:column;gap:.8rem;margin-top:1.5rem}
+.bkp li{display:flex;align-items:center;gap:.75rem;color:var(--c2r);font-size:.88rem}
+.pd{width:5px;height:5px;background:var(--go);border-radius:50%;flex-shrink:0}
+.fb{background:var(--gs);border:1px solid var(--b1);border-radius:var(--r);padding:2.5rem;backdrop-filter:blur(24px)}
+.fr{display:grid;grid-template-columns:1fr 1fr;gap:1rem}
+.fg{display:flex;flex-direction:column;gap:.38rem;margin-bottom:1rem}
+.fg label{font-size:.63rem;letter-spacing:.2em;text-transform:uppercase;color:var(--c3r)}
+.fg input,.fg select,.fg textarea{background:rgba(255,255,255,.04);border:1px solid var(--b1);color:var(--cr);padding:.72rem 1rem;border-radius:var(--r);font-size:.9rem;outline:none;transition:border-color .3s;width:100%}
+.fg input:focus,.fg select:focus,.fg textarea:focus{border-color:var(--go)}
+.fg input::placeholder,.fg textarea::placeholder{color:var(--c3r)}
+.fg select option{background:var(--cd);color:var(--cr)}
+.fg textarea{resize:vertical;min-height:80px}
+.w100{width:100%}
+
+/* GALLERY */
+#gallery{background:var(--k)}
+.gg{display:grid;grid-template-columns:repeat(4,1fr);grid-template-rows:220px 220px;gap:1rem}
+.gi{border-radius:var(--r);overflow:hidden;position:relative;border:1px solid var(--b1);cursor:pointer;transition:border-color .4s}
+.gi:hover{border-color:var(--b2)}
+.gi:nth-child(1){grid-column:span 2;grid-row:span 2}
+.gi:nth-child(4){grid-column:span 2}
+.gin{width:100%;height:100%;display:flex;align-items:center;justify-content:center;flex-direction:column;gap:.5rem;transition:transform .5s}
+.gi:hover .gin{transform:scale(1.07)}
+.gl2{font-size:.72rem;color:var(--c3r);letter-spacing:.1em}
+.gov{position:absolute;inset:0;background:linear-gradient(to top,rgba(8,6,4,.8),transparent 55%);opacity:0;transition:opacity .4s;display:flex;align-items:flex-end;padding:1.5rem}
+.gi:hover .gov{opacity:1}
+.gov span{font-family:'Cormorant Garamond',serif;font-size:1.1rem;color:var(--cr)}
+
+/* ABOUT */
+#about{background:var(--sf)}
+.abg{display:grid;grid-template-columns:1fr 1fr;gap:6rem;align-items:center}
+.av{position:relative;height:480px}
+.af1{position:absolute;inset:0 0 70px 0;background:var(--cd);border:1px solid var(--b1);border-radius:var(--r);display:flex;align-items:center;justify-content:center;font-size:5rem}
+.af2{position:absolute;bottom:0;right:0;width:54%;height:52%;background:var(--c2);border:1px solid var(--b1);border-radius:var(--r);display:flex;align-items:center;justify-content:center;font-size:2.8rem}
+.al{position:absolute;bottom:-6px;left:1.5rem;right:1.5rem;height:6px;background:linear-gradient(to right,var(--go),transparent);opacity:.35;border-radius:2px}
+.at p{color:var(--c2r);line-height:1.9;margin-bottom:1.4rem;font-size:.95rem}
+.sts{display:grid;grid-template-columns:repeat(3,1fr);gap:1rem;margin-top:2.5rem}
+.stt{text-align:center;padding:1.4rem 1rem;border:1px solid var(--b1);border-radius:var(--r)}
+.stt b{font-family:'Cormorant Garamond',serif;font-size:2.4rem;color:var(--go);display:block;line-height:1}
+.stt small{font-size:.63rem;letter-spacing:.2em;text-transform:uppercase;color:var(--c3r)}
+
+/* CONTACT */
+#contact{background:var(--dp)}
+.ctg{display:grid;grid-template-columns:1fr 1.3fr;gap:4rem}
+.cti{display:flex;flex-direction:column;gap:1.8rem}
+.cit{display:flex;gap:1.2rem;align-items:flex-start}
+.cic{width:46px;height:46px;flex-shrink:0;border:1px solid var(--b2);border-radius:var(--r);display:flex;align-items:center;justify-content:center;font-size:1.15rem;background:var(--gf)}
+.cit h4{font-size:.62rem;letter-spacing:.22em;text-transform:uppercase;color:var(--go);margin-bottom:.3rem;font-family:'DM Sans',sans-serif;font-weight:400}
+.cit p{color:var(--c2r);font-size:.9rem;line-height:1.6}
+.cit a{color:var(--c2r);transition:color .3s}
+.cit a:hover{color:var(--go)}
+.wab{display:inline-flex;align-items:center;gap:.5rem;padding:.75rem 1.6rem;background:#25D366;color:#fff;border:none;border-radius:var(--r);font-size:.75rem;letter-spacing:.1em;text-transform:uppercase;transition:all .3s;margin-top:.5rem;font-weight:500}
+.wab:hover{background:#20b858;transform:translateY(-2px)}
+.mb3{border-radius:var(--r);overflow:hidden;border:1px solid var(--b1);height:380px;position:relative;background:var(--cd)}
+.mb3 iframe{width:100%;height:100%;border:none;filter:grayscale(1) invert(1) contrast(.85) brightness(.9);opacity:.9}
+.mol{position:absolute;top:1rem;left:1rem;background:var(--gs);border:1px solid var(--b1);backdrop-filter:blur(12px);padding:.5rem 1rem;border-radius:var(--r);font-size:.75rem;color:var(--cr)}
+
+/* FOOTER */
+footer{background:var(--k);border-top:1px solid var(--b1);padding:3.5rem 3rem 2rem}
+.fg2{display:grid;grid-template-columns:2fr 1fr 1fr 1fr;gap:3rem;margin-bottom:2.5rem}
+.fb2 p{color:var(--c3r);font-size:.82rem;margin-top:.75rem;max-width:240px;line-height:1.75}
+.fc h5{font-size:.6rem;letter-spacing:.3em;text-transform:uppercase;color:var(--go);margin-bottom:1rem;font-family:'DM Sans',sans-serif;font-weight:400}
+.fc ul{list-style:none;display:flex;flex-direction:column;gap:.55rem}
+.fc a{color:var(--c3r);font-size:.82rem;transition:color .3s}
+.fc a:hover{color:var(--go)}
+.fbot{border-top:1px solid var(--b1);padding-top:1.5rem;display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:1rem}
+.fbot p{color:var(--c3r);font-size:.72rem}
+.soc{display:flex;gap:.75rem}
+.sl2{width:34px;height:34px;border:1px solid var(--b1);border-radius:var(--r);display:flex;align-items:center;justify-content:center;color:var(--c3r);font-size:.75rem;transition:all .3s}
+.sl2:hover{border-color:var(--go);color:var(--go)}
+
+/* CART */
+.ov{position:fixed;inset:0;background:rgba(0,0,0,.65);z-index:300;opacity:0;pointer-events:none;transition:opacity .3s;backdrop-filter:blur(4px)}
+.ov.on{opacity:1;pointer-events:all}
+.cp{position:fixed;top:0;right:0;bottom:0;width:420px;max-width:95vw;background:var(--cd);border-left:1px solid var(--b1);z-index:301;transform:translateX(100%);transition:transform .4s cubic-bezier(.4,0,.2,1);display:flex;flex-direction:column}
+.cp.on{transform:none}
+.cph{padding:1.5rem 2rem;border-bottom:1px solid var(--b1);display:flex;justify-content:space-between;align-items:center}
+.cph h3{font-size:1.5rem;color:var(--cr);font-weight:300}
+.xb{width:32px;height:32px;border:1px solid var(--b1);border-radius:var(--r);background:none;color:var(--c3r);font-size:1rem;display:flex;align-items:center;justify-content:center;transition:all .3s}
+.xb:hover{border-color:var(--go);color:var(--go)}
+.cpbd{flex:1;overflow-y:auto;padding:1.5rem 2rem}
+.cpe{text-align:center;padding:3rem 1rem;color:var(--c3r)}
+.cie{font-size:2.8rem;margin-bottom:.8rem}
+.cit2{display:flex;gap:1rem;align-items:center;padding:.9rem 0;border-bottom:1px solid var(--b1)}
+.cii{font-size:1.4rem;flex-shrink:0}
+.cin{flex:1}
+.cina{font-size:.88rem;color:var(--cr);margin-bottom:.15rem}
+.cinp{font-size:.78rem;color:var(--go)}
+.ciq{display:flex;align-items:center;gap:.4rem}
+.qb{width:22px;height:22px;background:none;border:1px solid var(--b1);color:var(--c3r);border-radius:2px;font-size:.8rem;display:flex;align-items:center;justify-content:center;transition:all .3s}
+.qb:hover{border-color:var(--go);color:var(--go)}
+.qn{font-size:.82rem;min-width:18px;text-align:center;color:var(--cr)}
+.cpf{padding:1.5rem 2rem;border-top:1px solid var(--b1);display:none}
+.cpt{display:flex;justify-content:space-between;margin-bottom:1.2rem;align-items:baseline}
+.cpt span:first-child{color:var(--c3r);font-size:.9rem}
+.cpt span:last-child{font-family:'Cormorant Garamond',serif;font-size:1.6rem;color:var(--go)}
+
+/* MODALS */
+.mo{position:fixed;inset:0;background:rgba(0,0,0,.88);z-index:400;display:flex;align-items:center;justify-content:center;opacity:0;pointer-events:none;transition:opacity .3s;backdrop-filter:blur(10px);padding:1rem}
+.mo.on{opacity:1;pointer-events:all}
+.md2{background:var(--cd);border:1px solid var(--b1);border-radius:var(--r);width:100%;max-width:600px;max-height:92vh;overflow-y:auto;transform:scale(.96) translateY(18px);transition:transform .3s}
+.mo.on .md2{transform:none}
+.mhd{padding:2rem 2.5rem 1.5rem;border-bottom:1px solid var(--b1);display:flex;justify-content:space-between;align-items:center}
+.mhd h3{font-size:1.9rem;color:var(--cr);font-weight:300}
+.mbd{padding:2rem 2.5rem}
+.stp{display:flex;gap:.5rem;margin-bottom:2rem}
+.stp div{flex:1;height:2px;background:var(--b1);border-radius:1px;transition:background .4s}
+.stp div.on{background:var(--go)}
+.cs2 h4{font-size:.62rem;letter-spacing:.22em;text-transform:uppercase;color:var(--go);margin-bottom:1rem;font-family:'DM Sans',sans-serif;font-weight:400}
+.cs2{margin-bottom:1.5rem}
+.osi{display:flex;justify-content:space-between;padding:.5rem 0;border-bottom:1px solid var(--b1);font-size:.84rem;color:var(--c2r)}
+.ot{display:flex;justify-content:space-between;padding:1rem 0 0;align-items:baseline}
+.ot span:last-child{font-family:'Cormorant Garamond',serif;font-size:1.5rem;color:var(--go)}
+.cw{background:rgba(255,255,255,.04);border:1px solid var(--b1);border-radius:var(--r);overflow:hidden}
+.cw input{width:100%;padding:.72rem 1rem;background:none;border:none;border-bottom:1px solid var(--b1);color:var(--cr);font-size:.9rem;outline:none;transition:background .3s;font-family:'DM Sans',sans-serif}
+.cw input:last-child{border-bottom:none}
+.cw input:focus{background:rgba(201,168,76,.04)}
+.cw input::placeholder{color:var(--c3r)}
+.cr2{display:grid;grid-template-columns:2fr 1fr}
+.cr2 input:first-child{border-right:1px solid var(--b1);border-bottom:none}
+.cr2 input:last-child{border-bottom:none}
+.sec{display:flex;align-items:center;gap:.6rem;padding:.7rem 1rem;background:rgba(201,168,76,.05);border:1px solid rgba(201,168,76,.15);border-radius:var(--r);color:var(--gd);font-size:.73rem;margin-bottom:1.5rem}
+.br{display:flex;gap:.75rem;margin-top:.5rem}
+.su{text-align:center;padding:2rem 0}
+.su .si{font-size:3rem;margin-bottom:1rem}
+.su h3{font-size:2rem;color:var(--cr);margin-bottom:.5rem;font-weight:300}
+.su p{color:var(--c3r);font-size:.9rem}
+.su .oid{color:var(--go);font-size:.85rem;margin-top:.4rem}
+.atbs{display:flex;border-bottom:1px solid var(--b1);margin-bottom:2rem}
+.atb{padding:.75rem 1.5rem;background:none;border:none;border-bottom:2px solid transparent;color:var(--c3r);font-size:.72rem;letter-spacing:.12em;text-transform:uppercase;transition:all .3s;margin-bottom:-1px}
+.atb.on{color:var(--go);border-bottom-color:var(--go)}
+
+/* ADMIN */
+#adm{position:fixed;inset:0;z-index:500;background:var(--dp);overflow-y:auto;display:none}
+#adm.on{display:block}
+.an{background:var(--k);border-bottom:1px solid var(--b1);padding:1rem 2rem;display:flex;align-items:center;justify-content:space-between;position:sticky;top:0;z-index:10}
+.abd{padding:2rem;max-width:1200px;margin:0 auto}
+.asg{display:grid;grid-template-columns:repeat(4,1fr);gap:1rem;margin-bottom:2.5rem}
+.asc{background:var(--cd);border:1px solid var(--b1);border-radius:var(--r);padding:1.5rem;position:relative;overflow:hidden}
+.asc::after{content:'';position:absolute;top:0;left:0;right:0;height:2px;background:linear-gradient(to right,var(--go),transparent)}
+.asc .an2{font-family:'Cormorant Garamond',serif;font-size:2.2rem;color:var(--go);display:block}
+.asc .al2{font-size:.65rem;letter-spacing:.2em;text-transform:uppercase;color:var(--c3r);margin-top:.3rem}
+.asc2{background:var(--cd);border:1px solid var(--b1);border-radius:var(--r);padding:1.5rem;margin-bottom:1.5rem}
+.asc2 h3{font-size:1.2rem;color:var(--cr);margin-bottom:1.2rem;font-weight:300;border-bottom:1px solid var(--b1);padding-bottom:.8rem}
+.dt{width:100%;border-collapse:collapse;font-size:.82rem}
+.dt th{font-size:.6rem;letter-spacing:.2em;text-transform:uppercase;color:var(--go);padding:.6rem .8rem;text-align:left;border-bottom:1px solid var(--b1);font-weight:400}
+.dt td{padding:.7rem .8rem;color:var(--c2r);border-bottom:1px solid rgba(201,168,76,.06);vertical-align:top}
+.dt tr:hover td{background:rgba(201,168,76,.03)}
+.bx{padding:.2rem .55rem;border-radius:2px;font-size:.65rem;letter-spacing:.08em;text-transform:uppercase}
+.bn{background:rgba(201,168,76,.15);color:var(--go)}
+.bp{background:rgba(37,211,102,.12);color:#25D366}
+.bd{background:rgba(255,255,255,.07);color:var(--c3r)}
+.nd{text-align:center;color:var(--c3r);padding:2rem;font-size:.88rem}
+.atg{display:flex;gap:.5rem;margin-bottom:1.5rem;flex-wrap:wrap}
+.at2{padding:.5rem 1.2rem;background:none;border:1px solid var(--b1);color:var(--c3r);border-radius:var(--r);font-size:.72rem;letter-spacing:.1em;text-transform:uppercase;transition:all .3s}
+.at2.on{background:var(--go);color:var(--k);border-color:var(--go)}
+
+/* TOAST */
+.tos{position:fixed;bottom:2rem;left:50%;transform:translateX(-50%) translateY(80px);background:var(--cd);border:1px solid var(--b2);padding:.7rem 1.6rem;border-radius:var(--r);color:var(--cr);font-size:.83rem;z-index:600;transition:transform .4s cubic-bezier(.4,0,.2,1);display:flex;align-items:center;gap:.5rem;white-space:nowrap;box-shadow:0 8px 32px rgba(0,0,0,.5)}
+.tos.on{transform:translateX(-50%) translateY(0)}
+.td2{width:5px;height:5px;background:var(--go);border-radius:50%;flex-shrink:0}
+
+/* RESPONSIVE */
+@media(max-width:900px){
+  #nav{padding:1rem 1.5rem}
+  #nav.sc{padding:.8rem 1.5rem}
+  .nl{display:none;position:absolute;top:60px;left:0;right:0;background:var(--dp);border-bottom:1px solid var(--b1);padding:1.5rem 2rem;flex-direction:column;gap:1.5rem}
+  .nl.on{display:flex}
+  .bg{display:flex}
+  section{padding:4rem 1.5rem}
+  .bkg,.abg,.ctg{grid-template-columns:1fr;gap:2.5rem}
+  .spg{grid-template-columns:1fr}
+  .gg{grid-template-columns:1fr 1fr;grid-template-rows:auto}
+  .gi:nth-child(1){grid-column:span 2;grid-row:span 1}
+  .gi:nth-child(4){grid-column:span 1}
+  .fg2{grid-template-columns:1fr 1fr;gap:2rem}
+  .fr{grid-template-columns:1fr}
+  .av{height:320px}
+  .cp{width:100%}
+  .mbd,.mhd{padding:1.5rem}
+  .hct{flex-direction:column;align-items:center}
+  .asg{grid-template-columns:1fr 1fr}
+}
+@media(max-width:500px){
+  .fg2{grid-template-columns:1fr}
+  .gg{grid-template-columns:1fr}
+  .gi:nth-child(1){grid-column:span 1}
+  .gi:nth-child(4){grid-column:span 1}
+}
+</style>
+</head>
+<body>
+
+<!-- ═══ ADMIN PANEL ═══ -->
+<div id="adm">
+  <div class="an">
+    <span class="logo">Boissons <em>Owner Dashboard</em></span>
+    <div style="display:flex;gap:.75rem;align-items:center">
+      <span style="font-size:.72rem;color:var(--c3r);letter-spacing:.1em">OWNER PORTAL</span>
+      <button class="nb" onclick="closeAdm()">← Back to Site</button>
+    </div>
+  </div>
+  <div class="abd">
+    <div class="asg" id="aStats"></div>
+    <div class="atg">
+      <button class="at2 on" onclick="admTab('orders',this)">📦 Orders</button>
+      <button class="at2" onclick="admTab('bookings',this)">📅 Bookings</button>
+      <button class="at2" onclick="admTab('users',this)">👥 Users</button>
+      <button class="at2" onclick="admTab('payments',this)">💰 Payments</button>
+    </div>
+    <div class="asc2">
+      <h3 id="aTitle">All Orders</h3>
+      <div id="aTable"></div>
+    </div>
+    <div style="margin-top:1rem;padding:1.25rem;background:rgba(201,168,76,.05);border:1px solid var(--b1);border-radius:var(--r)">
+      <p style="font-size:.78rem;color:var(--c3r);line-height:1.8">
+        <strong style="color:var(--go)">🔌 To Make This Permanent:</strong>
+        Connect <strong style="color:var(--cr)">Firebase Firestore</strong> — all orders, bookings, payments & users will be saved permanently across all devices in real-time.
+        Connect <strong style="color:var(--cr)">Stripe</strong> — every payment goes directly to your bank account.
+        Contact your developer or reach out to set this up.
+        <br><strong style="color:var(--go)">Admin PIN:</strong> 1234 (change this before going live)
+      </p>
+    </div>
+  </div>
+</div>
+
+<!-- ═══ NAV ═══ -->
+<nav id="nav">
+  <a class="logo" href="#">Boissons <em>Café</em></a>
+  <ul class="nl" id="navL">
+    <li><a href="#menu" onclick="cNav()">Menu</a></li>
+    <li><a href="#specials" onclick="cNav()">Specials</a></li>
+    <li><a href="#booking" onclick="cNav()">Reserve</a></li>
+    <li><a href="#gallery" onclick="cNav()">Gallery</a></li>
+    <li><a href="#about" onclick="cNav()">Our Story</a></li>
+    <li><a href="#contact" onclick="cNav()">Contact</a></li>
+  </ul>
+  <div class="nr">
+    <button class="nb" onclick="tCart()" style="display:flex;align-items:center;gap:.5rem">
+      ☕ Cart
+      <span id="cb" style="display:none;background:var(--go);color:var(--k);min-width:18px;height:18px;border-radius:50%;font-size:.6rem;font-weight:500;align-items:center;justify-content:center;padding:0 3px">0</span>
+    </button>
+    <button class="nb gd" onclick="openAuth()" id="authBtn">Sign In</button>
+    <button class="bg" onclick="tNav()"><span></span><span></span><span></span></button>
+  </div>
+</nav>
+
+<!-- ═══ HERO ═══ -->
+<section id="hero">
+  <div class="hbg"></div><div class="hgr"></div><div class="hln"></div>
+  <div class="orb o1"></div><div class="orb o2"></div><div class="orb o3"></div>
+  <div class="hi">
+    <p class="htag">✦ Est. 2019 &nbsp;·&nbsp; Paris Road, Sialkot, Pakistan ✦</p>
+    <h1 class="hh1">Experience <em>Premium</em><br>Coffee</h1>
+    <p class="hs">Freshly brewed, crafted with passion — Sialkot's finest café experience</p>
+    <div class="hct">
+      <a href="#menu" class="bg-btn">🍽 View Menu</a>
+      <button class="ol-btn" onclick="tCart()">🛒 Order Now</button>
+      <a href="#booking" class="ol-btn">📅 Book a Table</a>
+    </div>
+  </div>
+  <div class="sh"><div class="sb"></div><span>Scroll</span></div>
+</section>
+
+<!-- MARQUEE -->
+<div class="mw"><div class="mt" id="mqt"></div></div>
+
+<!-- ═══ MENU ═══ -->
+<section id="menu">
+  <div class="w">
+    <div class="rv"><p class="ey">Curated Selection</p><h2 class="st">Our Menu</h2><div class="sl"></div></div>
+    <div class="rv d1">
+      <div class="mtabs">
+        <button class="mtab on" onclick="fMenu('coffee',this)">☕ Coffee</button>
+        <button class="mtab" onclick="fMenu('desserts',this)">🍰 Desserts</button>
+        <button class="mtab" onclick="fMenu('cold',this)">🧊 Cold Drinks</button>
+      </div>
+    </div>
+    <div class="mg rv d2" id="mGrid"></div>
+  </div>
+</section>
+
+<!-- ═══ SPECIALS ═══ -->
+<section id="specials">
+  <div class="w">
+    <div style="text-align:center" class="rv"><p class="ey">This Week</p><h2 class="st">Chef's Specials</h2><div class="sl" style="margin:0 auto 2.8rem"></div></div>
+    <div class="spg">
+      <div class="spc rv d1"><div class="spi">🌅</div><h3>Morning Set</h3><p>Two espresso shots, a warm croissant with butter & jam, and fresh orange juice — the perfect Sialkot sunrise.</p><div class="spp">Rs 650</div></div>
+      <div class="spc rv d2"><div class="spi">🍫</div><h3>Signature Truffle Mocha</h3><p>Our most-loved creation — dark Valrhona chocolate, ristretto espresso, Himalayan truffle-infused cream, gold dust finish.</p><div class="spp">Rs 980</div></div>
+      <div class="spc rv d3"><div class="spi">🌿</div><h3>Wellness Bowl</h3><p>Matcha granola, local honey, fresh seasonal fruits, coconut yoghurt, chia seeds — nourishing luxury in a bowl.</p><div class="spp">Rs 750</div></div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══ BOOKING ═══ -->
+<section id="booking">
+  <div class="w">
+    <div class="bkg">
+      <div class="rv">
+        <p class="ey">Reserve Your Seat</p><h2 class="st">Book a Table</h2><div class="sl"></div>
+        <p style="color:var(--c2r);line-height:1.85;font-size:.95rem">Whether an intimate evening or a celebratory gathering, we arrange every detail to perfection. Reserve at Boissons Café, Paris Road, Sialkot.</p>
+        <ul class="bkp">
+          <li><span class="pd"></span>Complimentary welcome drink on arrival</li>
+          <li><span class="pd"></span>Priority seating & dedicated table service</li>
+          <li><span class="pd"></span>Special occasion & event arrangements</li>
+          <li><span class="pd"></span>Private dining area for groups</li>
+          <li><span class="pd"></span>Instant WhatsApp confirmation</li>
+        </ul>
+      </div>
+      <div class="fb rv d2">
+        <div class="fr">
+          <div class="fg"><label>Full Name *</label><input type="text" placeholder="Your full name" id="bkN"></div>
+          <div class="fg"><label>Phone *</label><input type="tel" placeholder="+92 300 0000000" id="bkP"></div>
+        </div>
+        <div class="fr">
+          <div class="fg"><label>Date *</label><input type="date" id="bkD"></div>
+          <div class="fg"><label>Time *</label>
+            <select id="bkT"><option value="">Select time</option>
+              <option>8:00 AM</option><option>9:00 AM</option><option>10:00 AM</option><option>11:00 AM</option>
+              <option>12:00 PM</option><option>1:00 PM</option><option>2:00 PM</option><option>3:00 PM</option>
+              <option>4:00 PM</option><option>5:00 PM</option><option>6:00 PM</option><option>7:00 PM</option>
+              <option>8:00 PM</option><option>9:00 PM</option><option>10:00 PM</option>
+            </select>
+          </div>
+        </div>
+        <div class="fr">
+          <div class="fg"><label>Guests *</label>
+            <select id="bkG"><option>1 Guest</option><option>2 Guests</option><option>3 Guests</option><option>4 Guests</option><option>5 Guests</option><option>6 Guests</option><option>7+ (Group)</option></select>
+          </div>
+          <div class="fg"><label>Occasion</label>
+            <select id="bkO"><option value="">Optional</option><option>Birthday</option><option>Anniversary</option><option>Business Meeting</option><option>Engagement</option><option>Casual Dining</option><option>Other</option></select>
+          </div>
+        </div>
+        <div class="fg"><label>Special Requests</label><textarea placeholder="Dietary needs, seating preferences..." id="bkR"></textarea></div>
+        <button class="bg-btn w100" style="justify-content:center;padding:1rem" onclick="submitBk()">✓ Confirm Reservation</button>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══ GALLERY ═══ -->
+<section id="gallery">
+  <div class="w">
+    <div style="text-align:center;margin-bottom:3rem" class="rv"><p class="ey">Visual Journey</p><h2 class="st">Our Space</h2><div class="sl" style="margin:0 auto 0"></div></div>
+    <div class="gg rv d1">
+      <div class="gi"><div class="gin" style="background:linear-gradient(135deg,#1a0e06,#2d180a)"><span style="font-size:4rem">☕</span><span class="gl2">Grand Lounge</span></div><div class="gov"><span>The Grand Lounge</span></div></div>
+      <div class="gi"><div class="gin" style="background:linear-gradient(135deg,#0f0a05,#1e1208)"><span style="font-size:3rem">🫘</span><span class="gl2">Single Origin Beans</span></div><div class="gov"><span>Single Origin Beans</span></div></div>
+      <div class="gi"><div class="gin" style="background:linear-gradient(135deg,#120c06,#20150a)"><span style="font-size:3rem">🍰</span><span class="gl2">Patisserie</span></div><div class="gov"><span>Artisan Patisserie</span></div></div>
+      <div class="gi"><div class="gin" style="background:linear-gradient(135deg,#0a0c10,#0e1520)"><span style="font-size:3rem">🌿</span><span class="gl2">Garden Terrace</span></div><div class="gov"><span>Garden Terrace</span></div></div>
+      <div class="gi"><div class="gin" style="background:linear-gradient(135deg,#14100a,#221808)"><span style="font-size:3rem">🎨</span><span class="gl2">Curated Art</span></div><div class="gov"><span>Art & Décor</span></div></div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══ ABOUT ═══ -->
+<section id="about">
+  <div class="w">
+    <div class="abg">
+      <div class="av rv"><div class="af1">☕<div class="af2">🌿</div></div><div class="al"></div></div>
+      <div class="at rv d2">
+        <p class="ey">Our Heritage</p><h2 class="st">A Story of<br><em style="color:var(--go)">Passion</em></h2><div class="sl"></div>
+        <p>Boissons Café was born from one conviction: that coffee, at its finest, is not merely a drink — it is a ritual, a moment of stillness in a rushing world. We set out to bring Paris-inspired luxury to the heart of Sialkot, creating a sanctuary where craftsmanship meets elegance on Paris Road.</p>
+        <p>Every cup tells the story of farmers who tended the soil, roasters who coaxed out complexity, and our baristas who pour their soul into every creation. We source from single-origin estates across Ethiopia, Colombia, and South Asia.</p>
+        <div class="sts">
+          <div class="stt"><b>60+</b><small>Menu Items</small></div>
+          <div class="stt"><b>12</b><small>Origins</small></div>
+          <div class="stt"><b>5★</b><small>Experience</small></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══ CONTACT ═══ -->
+<section id="contact">
+  <div class="w">
+    <div class="rv" style="margin-bottom:3rem"><p class="ey">Find Us</p><h2 class="st">Visit & Contact</h2><div class="sl"></div></div>
+    <div class="ctg">
+      <div class="cti rv">
+        <div class="cit"><div class="cic">📍</div><div><h4>Location</h4><p>Boissons Café<br>Paris Road, Sialkot<br>Punjab, Pakistan</p></div></div>
+        <div class="cit"><div class="cic">📞</div><div><h4>Phone</h4><p><a href="tel:+923001234567">+92 300 123 4567</a><br><a href="tel:+923111234567">+92 311 123 4567</a></p></div></div>
+        <div class="cit"><div class="cic">🕐</div><div><h4>Opening Hours</h4><p>Mon–Thu: 8 AM – 11 PM<br>Fri–Sat: 8 AM – 12 AM<br>Sunday: 9 AM – 11 PM</p></div></div>
+        <div class="cit"><div class="cic">📧</div><div><h4>Email</h4><p><a href="mailto:hello@boissonscafe.pk">hello@boissonscafe.pk</a></p></div></div>
+        <div>
+          <a href="https://wa.me/923001234567?text=Hello%20Boissons%20Caf%C3%A9!%20I%27d%20like%20to%20enquire%20about%20a%20reservation." target="_blank" class="wab">💬 Chat on WhatsApp</a>
+        </div>
+      </div>
+      <div class="rv d2">
+        <div class="mb3">
+          <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d54368!2d74.4986!3d32.4945!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x391eef7a2a72df07%3A0xbf021fcdb41b0df3!2sParis%20Road%2C%20Sialkot%2C%20Punjab%2C%20Pakistan!5e0!3m2!1sen!2s!4v1700000000000" allowfullscreen loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
+          <div class="mol">📍 Paris Road, Sialkot</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══ FOOTER ═══ -->
+<footer>
+  <div class="w">
+    <div class="fg2">
+      <div class="fb2">
+        <span class="logo">Boissons <em>Café</em></span>
+        <p>A sanctuary of premium coffee on Paris Road, Sialkot. Every visit, an experience. Every cup, a story.</p>
+        <div class="soc" style="margin-top:1.2rem">
+          <a href="#" class="sl2">ig</a><a href="#" class="sl2">fb</a>
+          <a href="#" class="sl2">tw</a>
+          <a href="https://wa.me/923001234567" target="_blank" class="sl2">wa</a>
+        </div>
+      </div>
+      <div class="fc"><h5>Navigate</h5><ul>
+        <li><a href="#hero">Home</a></li><li><a href="#menu">Menu</a></li>
+        <li><a href="#specials">Specials</a></li><li><a href="#booking">Reserve</a></li>
+        <li><a href="#gallery">Gallery</a></li><li><a href="#about">Our Story</a></li>
+      </ul></div>
+      <div class="fc"><h5>Services</h5><ul>
+        <li><a href="#" onclick="tCart()">Online Order</a></li>
+        <li><a href="#booking">Table Booking</a></li>
+        <li><a href="#">Private Events</a></li>
+        <li><a href="#">Catering</a></li>
+        <li><a href="#">Gift Cards</a></li>
+      </ul></div>
+      <div class="fc"><h5>Contact</h5><ul>
+        <li><a href="tel:+923001234567">+92 300 123 4567</a></li>
+        <li><a href="tel:+923111234567">+92 311 123 4567</a></li>
+        <li><a href="mailto:hello@boissonscafe.pk">hello@boissonscafe.pk</a></li>
+        <li><a href="https://wa.me/923001234567" target="_blank">WhatsApp Us</a></li>
+        <li><a href="#contact">Paris Road, Sialkot</a></li>
+      </ul></div>
+    </div>
+    <div class="fbot">
+      <p>© 2026 Boissons Café, Sialkot. All rights reserved. &nbsp;|&nbsp; <a href="#" onclick="openAdm()" style="color:var(--gd);font-size:.65rem">Owner Portal</a></p>
+      <p style="font-size:.68rem;color:var(--c3r)">Crafted with passion ☕ Paris Road, Sialkot</p>
+    </div>
+  </div>
+</footer>
+
+<!-- CART -->
+<div class="ov" id="cOv" onclick="tCart()"></div>
+<div class="cp" id="cPanel">
+  <div class="cph"><h3>Your Order</h3><button class="xb" onclick="tCart()">✕</button></div>
+  <div class="cpbd" id="cBody"></div>
+  <div class="cpf" id="cFoot">
+    <div class="cpt"><span>Order Total</span><span id="cTotal">Rs 0</span></div>
+    <button class="bg-btn w100" style="justify-content:center;padding:1rem" onclick="openCk()">Proceed to Checkout →</button>
+  </div>
+</div>
+
+<!-- CHECKOUT MODAL -->
+<div class="mo" id="ckMo">
+  <div class="md2">
+    <div class="mhd"><h3 id="ckT">Checkout</h3><button class="xb" onclick="closeCk()">✕</button></div>
+    <div class="mbd" id="ckB"></div>
+  </div>
+</div>
+
+<!-- AUTH MODAL -->
+<div class="mo" id="auMo">
+  <div class="md2" style="max-width:460px">
+    <div class="mhd"><h3 id="auT">Welcome</h3><button class="xb" onclick="closeAuth()">✕</button></div>
+    <div class="mbd" id="auB"></div>
+  </div>
+</div>
+
+<!-- TOAST -->
+<div class="tos" id="tos"><div class="td2"></div><span id="tosM"></span></div>
+
+<script>
+// ══════════════════════════════════════════════
+//  IN-SESSION DATABASE (connect Firebase to persist)
+// ══════════════════════════════════════════════
+var DB={orders:[],bookings:[],users:[],payments:[]};
+var cart=[],usr=null,admPin='1234';
+
+// ── MENU DATA ──
+var MENU={
+  coffee:[
+    {n:'Grand Espresso',p:450,d:'Double-shot Ethiopian espresso, velvety crema & golden finish',i:'☕',b:'Bestseller'},
+    {n:'Café au Lait',p:550,d:'Silky steamed milk with rich house-blend espresso',i:'🥛'},
+    {n:'Gold Cappuccino',p:620,d:'Micro-foam artistry, hints of vanilla, gold dust & cinnamon',i:'✨',b:'Signature'},
+    {n:'Flat White',p:500,d:'Ristretto shot with perfectly textured velvety microfoam',i:'🤍'},
+    {n:'Cold Brew Reserve',p:680,d:'18-hour cold steep, naturally sweet, over hand-cut crystal ice',i:'🧊'},
+    {n:'Truffle Mocha',p:780,d:'Valrhona 72% chocolate, espresso, truffle-infused cream',i:'🍫',b:"Chef's Pick"},
+    {n:'Dalgona Cloud',p:590,d:'Whipped coffee foam over chilled milk, dusted with cocoa',i:'☁️'},
+    {n:'Saffron Latte',p:720,d:'Local saffron, warm oat milk, honey & cardamom',i:'🌼',b:'New'},
+  ],
+  desserts:[
+    {n:'Paris-Brest',p:950,d:'Choux pastry ring, hazelnut praline mousseline, toasted slivers',i:'🍰',b:'Classic'},
+    {n:'Opera Gâteau',p:1050,d:'Joconde sponge, coffee buttercream, dark chocolate mirror glaze',i:'🎂'},
+    {n:'Mille-feuille',p:980,d:'Caramelised puff pastry, vanilla diplomat cream, raspberry coulis',i:'🧁'},
+    {n:'Fondant Chocolat',p:850,d:'Warm 72% dark chocolate centre, Himalayan salt, vanilla ice cream',i:'🍮'},
+    {n:'Macarons (4pc)',p:680,d:'Seasonal selection by our pâtissier — rotating weekly',i:'🌈'},
+    {n:'Tarte Citron',p:880,d:'Silky Meyer lemon curd in a buttery almond pastry shell',i:'🍋'},
+  ],
+  cold:[
+    {n:'Yuzu Lemonade',p:520,d:'Japanese yuzu, fresh lemon, sparkling water, raw honey',i:'🍋'},
+    {n:'Rose Iced Tea',p:480,d:'First-flush Darjeeling, rose water, dried petals',i:'🌹',b:'Popular'},
+    {n:'Matcha Fizz',p:650,d:'Ceremonial matcha, sparkling yuzu water, fresh mint',i:'🍵'},
+    {n:'Mango Sharbat',p:550,d:'Chaunsa mango, Himalayan salt, chaat masala, soda',i:'🥭',b:'Local Fav'},
+    {n:'Elderflower Spritz',p:490,d:'Elderflower cordial, cucumber ribbons, premium tonic',i:'💐'},
+    {n:'Tropical Smoothie',p:620,d:'Papaya, pineapple, coconut cream, turmeric, ginger',i:'🌴'},
+  ]
+};
+
+// ── MARQUEE ──
+(function(){
+  var items=['Premium Coffee','Sialkot\'s Finest Café','Paris Road Sialkot','Handcrafted with Love','Fresh Daily Bakes','Book a Table Today','Order Online'];
+  var t=document.getElementById('mqt');
+  var h=items.map(function(i){return '<span>'+i+'</span><span class="dot">✦</span>';}).join('');
+  t.innerHTML=h+h;
+})();
+
+// ── RENDER MENU ──
+function fMenu(cat,btn){
+  document.querySelectorAll('.mtab').forEach(function(b){b.classList.remove('on')});
+  btn.classList.add('on');
+  var bgs={coffee:'linear-gradient(140deg,#1c0e06,#2e1a0a)',desserts:'linear-gradient(140deg,#140c06,#221408)',cold:'linear-gradient(140deg,#060e14,#0a1822)'};
+  var g=document.getElementById('mGrid');
+  g.innerHTML=MENU[cat].map(function(it,i){
+    return '<div class="mc rv" style="transition-delay:'+i*.07+'s">'+
+      '<div class="mi" style="background:'+bgs[cat]+'">'+
+        '<span class="mic">'+it.i+'</span>'+
+        (it.b?'<div class="mbg">'+it.b+'</div>':'')+
+      '</div>'+
+      '<div class="mb2">'+
+        '<div class="mn">'+it.n+'</div>'+
+        '<div class="md">'+it.d+'</div>'+
+        '<div class="mf">'+
+          '<span class="mp">Rs '+Number(it.p).toLocaleString()+'</span>'+
+          '<button class="ab" onclick="addCart(\''+it.n+'\','+it.p+',\''+it.i+'\')">+ Add</button>'+
+        '</div>'+
+      '</div>'+
+    '</div>';
+  }).join('');
+  setTimeout(function(){document.querySelectorAll('.mc').forEach(function(c){c.classList.add('on')});},50);
+}
+
+// ── CART ──
+function addCart(name,price,ico){
+  var ex=cart.find(function(x){return x.name===name});
+  if(ex){ex.qty++;}else{cart.push({name:name,price:Number(price),ico:ico,qty:1});}
+  updCart(); showT(ico+' '+name+' added to order');
+}
+function chQty(name,d){
+  var i=cart.find(function(x){return x.name===name});
+  if(!i)return; i.qty+=d;
+  if(i.qty<=0)cart=cart.filter(function(x){return x.name!==name});
+  updCart();
+}
+function updCart(){
+  var tot=cart.reduce(function(s,i){return s+i.price*i.qty},0);
+  var cnt=cart.reduce(function(s,i){return s+i.qty},0);
+  var bb=document.getElementById('cb');
+  bb.textContent=cnt; bb.style.display=cnt>0?'flex':'none';
+  var bd=document.getElementById('cBody'),ft=document.getElementById('cFoot');
+  if(!cart.length){
+    bd.innerHTML='<div class="cpe"><div class="cie">☕</div><p>Your cart is empty</p><p style="font-size:.78rem;margin-top:.4rem;color:var(--c3r)">Browse our menu and add items</p></div>';
+    ft.style.display='none';
+  } else {
+    bd.innerHTML=cart.map(function(it){
+      return '<div class="cit2"><div class="cii">'+it.ico+'</div><div class="cin"><div class="cina">'+it.name+'</div><div class="cinp">Rs '+(it.price*it.qty).toLocaleString()+'</div></div>'+
+        '<div class="ciq"><button class="qb" onclick="chQty(\''+it.name+'\',-1)">−</button><span class="qn">'+it.qty+'</span><button class="qb" onclick="chQty(\''+it.name+'\',1)">+</button></div></div>';
+    }).join('');
+    document.getElementById('cTotal').textContent='Rs '+tot.toLocaleString();
+    ft.style.display='block';
+  }
+}
+function tCart(){
+  document.getElementById('cOv').classList.toggle('on');
+  document.getElementById('cPanel').classList.toggle('on');
+}
+
+// ── CHECKOUT ──
+function openCk(){
+  if(!cart.length){showT('Add items first');return;}
+  if(!usr){showT('Please sign in to place an order');openAuth();return;}
+  tCart(); renderCk(1); document.getElementById('ckMo').classList.add('on');
+}
+function closeCk(){document.getElementById('ckMo').classList.remove('on')}
+
+function renderCk(step){
+  var tot=cart.reduce(function(s,i){return s+i.price*i.qty},0);
+  var del=150,tax=Math.round(tot*.1),grand=tot+del+tax;
+  var T=document.getElementById('ckT'),B=document.getElementById('ckB');
+  var bar='<div class="stp">'+[1,2,3].map(function(n){return '<div class="'+(n<=step?'on':'')+'"></div>';}).join('')+'</div>';
+
+  if(step===1){
+    T.textContent='Order Summary';
+    B.innerHTML=bar+
+      '<div class="cs2"><h4>Items Ordered</h4>'+
+        cart.map(function(i){return '<div class="osi"><span>'+i.ico+' '+i.name+' × '+i.qty+'</span><span>Rs '+(i.price*i.qty).toLocaleString()+'</span></div>';}).join('')+
+        '<div class="osi" style="color:var(--c3r)"><span>Delivery</span><span>Rs '+del+'</span></div>'+
+        '<div class="osi" style="color:var(--c3r)"><span>Tax (10%)</span><span>Rs '+tax+'</span></div>'+
+        '<div class="ot"><span>Total Payable</span><span>Rs '+grand.toLocaleString()+'</span></div>'+
+      '</div>'+
+      '<button class="bg-btn w100" style="padding:1rem;justify-content:center" onclick="renderCk(2)">Enter Delivery Details →</button>';
+  } else if(step===2){
+    T.textContent='Delivery Details';
+    B.innerHTML=bar+
+      '<div class="cs2"><h4>Delivery Information</h4>'+
+        '<div class="fg"><label>Full Name *</label><input type="text" id="dN" placeholder="Your full name" value="'+(usr?usr.name:'')+'"></div>'+
+        '<div class="fg"><label>Phone *</label><input type="tel" id="dP" placeholder="+92 300 000 0000" value="'+(usr&&usr.phone?usr.phone:'')+'"></div>'+
+        '<div class="fg"><label>Delivery Address *</label><input type="text" id="dA" placeholder="Street, Area, Sialkot"></div>'+
+        '<div class="fr"><div class="fg"><label>City</label><input type="text" id="dC" placeholder="Sialkot" value="Sialkot"></div>'+
+        '<div class="fg"><label>Landmark</label><input type="text" id="dL" placeholder="Near mosque etc."></div></div>'+
+        '<div class="fg"><label>Special Instructions</label><textarea id="dX" placeholder="Any special notes..."></textarea></div>'+
+      '</div>'+
+      '<div class="br"><button class="ol-btn" style="flex:1;justify-content:center;padding:.9rem" onclick="renderCk(1)">← Back</button>'+
+      '<button class="bg-btn" style="flex:2;justify-content:center;padding:.9rem" onclick="renderCk(3)">Payment →</button></div>';
+  } else if(step===3){
+    T.textContent='Secure Payment';
+    B.innerHTML=bar+
+      '<div class="sec">🔒 256-bit SSL encrypted — card details are processed securely by Stripe and never stored on our servers.</div>'+
+      '<div class="cs2"><h4>Payment Method</h4>'+
+        '<div style="display:flex;gap:.5rem;margin-bottom:1.2rem;flex-wrap:wrap" id="pmBtns">'+
+          ['💳 Card','📱 EasyPaisa','💚 JazzCash','🏦 Bank Transfer'].map(function(m,i){
+            return '<button onclick="selPay(this,'+i+')" class="ab '+(i===0?'selPay':'')+'" style="'+(i===0?'border-color:var(--go);color:var(--go)':'')+'">'+m+'</button>';
+          }).join('')+
+        '</div>'+
+        '<div class="cw" id="payFields">'+
+          '<input type="text" placeholder="Cardholder name" id="ccN">'+
+          '<input type="text" placeholder="Card number  •••• •••• •••• ••••" maxlength="19" oninput="fmtC(this)" id="ccNm">'+
+          '<div class="cr2"><input type="text" placeholder="MM / YY" maxlength="5" id="ccE"><input type="text" placeholder="CVV" maxlength="4" id="ccV"></div>'+
+        '</div>'+
+        '<div style="display:flex;gap:.4rem;margin-top:.75rem;align-items:center;flex-wrap:wrap">'+
+          '<span style="font-size:.7rem;color:var(--c3r)">Accepted:</span>'+
+          ['VISA','Mastercard','AMEX','UnionPay'].map(function(b){return '<span style="padding:.18rem .5rem;border:1px solid var(--b1);border-radius:2px;font-size:.65rem;color:var(--c3r)">'+b+'</span>';}).join('')+
+        '</div>'+
+      '</div>'+
+      '<div class="ot" style="border-top:1px solid var(--b1);padding-top:1rem;margin-bottom:1.5rem"><span style="color:var(--c3r)">Total Payable</span><span>Rs '+grand.toLocaleString()+'</span></div>'+
+      '<div class="br">'+
+        '<button class="ol-btn" style="flex:1;justify-content:center;padding:.9rem" onclick="renderCk(2)">← Back</button>'+
+        '<button class="bg-btn" style="flex:2;justify-content:center;padding:.9rem" id="payB" onclick="doPayment('+grand+')">Pay Rs '+grand.toLocaleString()+'</button>'+
+      '</div>';
+  } else if(step===4){
+    var oid='BC-'+Date.now().toString(36).toUpperCase();
+    T.textContent='Order Confirmed!';
+    B.innerHTML='<div class="su"><div class="si">✅</div><h3>Thank You, '+(usr?usr.name.split(' ')[0]:'Friend')+'!</h3>'+
+      '<p>Your order has been placed and is being prepared.</p>'+
+      '<div class="oid">Order ID: '+oid+'</div>'+
+      '<p style="margin-top:.8rem;font-size:.82rem;color:var(--c2r)">Estimated delivery: <strong style="color:var(--go)">30–45 minutes</strong></p>'+
+      '<p style="font-size:.78rem;color:var(--c3r);margin-top:.4rem">You will receive a WhatsApp confirmation shortly.</p>'+
+      '<button class="bg-btn" style="margin-top:2rem;padding:.9rem 2.5rem" onclick="closeCk()">Done ✓</button></div>';
+    DB.orders.push({
+      id:oid,user:usr?usr.name:'Guest',email:usr?usr.email:'',phone:usr?usr.phone||'':'',
+      items:JSON.parse(JSON.stringify(cart)),total:grand,status:'New',time:new Date().toLocaleString()
+    });
+    DB.payments.push({
+      id:'PAY-'+Date.now().toString(36).toUpperCase(),order:oid,amount:grand,
+      method:'Card',user:usr?usr.name:'Guest',email:usr?usr.email:'',
+      status:'Paid',time:new Date().toLocaleString()
+    });
+    cart=[];updCart();
+  }
+}
+
+function selPay(btn,idx){
+  document.querySelectorAll('#pmBtns .ab').forEach(function(b){b.style.borderColor='';b.style.color='';});
+  btn.style.borderColor='var(--go)';btn.style.color='var(--go)';
+  var pf=document.getElementById('payFields');
+  if(idx===0){
+    pf.innerHTML='<input type="text" placeholder="Cardholder name" id="ccN">'+
+      '<input type="text" placeholder="Card number  •••• •••• •••• ••••" maxlength="19" oninput="fmtC(this)" id="ccNm">'+
+      '<div class="cr2"><input type="text" placeholder="MM / YY" maxlength="5" id="ccE"><input type="text" placeholder="CVV" maxlength="4" id="ccV"></div>';
+  } else if(idx===1){
+    pf.innerHTML='<input type="tel" placeholder="EasyPaisa mobile number" id="epN"><input type="text" placeholder="Transaction ID (after payment)" id="epT" style="border-top:1px solid var(--b1)">';
+  } else if(idx===2){
+    pf.innerHTML='<input type="tel" placeholder="JazzCash mobile number" id="jcN"><input type="text" placeholder="Transaction ID (after payment)" id="jcT" style="border-top:1px solid var(--b1)">';
+  } else {
+    pf.innerHTML='<div style="padding:1rem;color:var(--c2r);font-size:.85rem;line-height:1.7">Bank: <strong style="color:var(--cr)">HBL / Meezan</strong><br>Account: <strong style="color:var(--cr)">0123-456-789-01</strong><br>Title: <strong style="color:var(--cr)">Boissons Café</strong><br>After transfer, send screenshot to WhatsApp: +92 300 123 4567</div>';
+  }
+}
+function doPayment(grand){
+  var b=document.getElementById('payB');
+  if(b){b.textContent='Processing...';b.disabled=true;b.style.opacity='.7';}
+  setTimeout(function(){renderCk(4)},2200);
+}
+function fmtC(input){
+  var v=input.value.replace(/\D/g,'').substring(0,16);
+  v=v.replace(/(.{4})/g,'$1 ').trim();input.value=v;
+}
+
+// ── BOOKING ──
+function submitBk(){
+  var n=document.getElementById('bkN').value.trim();
+  var p=document.getElementById('bkP').value.trim();
+  var d=document.getElementById('bkD').value;
+  var t=document.getElementById('bkT').value;
+  var g=document.getElementById('bkG').value;
+  var o=document.getElementById('bkO').value;
+  var r=document.getElementById('bkR').value;
+  if(!n||!p||!d||!t){showT('⚠️ Please fill all required fields');return;}
+  DB.bookings.push({id:'BK-'+Date.now().toString(36).toUpperCase(),name:n,phone:p,date:d,time:t,guests:g,occasion:o||'—',notes:r||'—',status:'Confirmed',placed:new Date().toLocaleString()});
+  showT('🎉 Reservation confirmed for '+n+'!');
+  ['bkN','bkP','bkD','bkR'].forEach(function(id){document.getElementById(id).value='';});
+  document.getElementById('bkT').value='';
+}
+
+// ── AUTH ──
+function openAuth(){renderAuth('login');document.getElementById('auMo').classList.add('on')}
+function closeAuth(){document.getElementById('auMo').classList.remove('on')}
+function renderAuth(tab){
+  document.getElementById('auT').textContent=tab==='login'?'Welcome Back':'Create Account';
+  document.getElementById('auB').innerHTML=
+    '<div class="atbs">'+
+      '<button class="atb '+(tab==='login'?'on':'')+'" onclick="renderAuth(\'login\')">Sign In</button>'+
+      '<button class="atb '+(tab==='signup'?'on':'')+'" onclick="renderAuth(\'signup\')">Register</button>'+
+    '</div>'+
+    (tab==='signup'?'<div class="fg"><label>Full Name *</label><input type="text" id="aN" placeholder="Your full name"></div>':'')+
+    (tab==='signup'?'<div class="fg"><label>Phone</label><input type="tel" id="aPh" placeholder="+92 300 000 0000"></div>':'')+
+    '<div class="fg"><label>Email *</label><input type="email" id="aE" placeholder="email@example.com"></div>'+
+    '<div class="fg"><label>Password *</label><input type="password" id="aP" placeholder="••••••••"></div>'+
+    (tab==='login'?'<div style="text-align:right;margin-bottom:1rem"><a href="#" style="font-size:.78rem;color:var(--go)">Forgot password?</a></div>':'')+
+    '<button class="bg-btn w100" style="padding:1rem;justify-content:center;margin-bottom:1rem" onclick="'+(tab==='login'?'doLogin()':'doSignup()')+'">'+
+      (tab==='login'?'Sign In →':'Create Account →')+
+    '</button>'+
+    '<p style="text-align:center;font-size:.78rem;color:var(--c3r)">'+
+      (tab==='login'?'New here? <a href="#" onclick="renderAuth(\'signup\')" style="color:var(--go)">Create account</a>':
+        'Already registered? <a href="#" onclick="renderAuth(\'login\')" style="color:var(--go)">Sign in</a>')+
+    '</p>';
+}
+function doLogin(){
+  var e=document.getElementById('aE').value.trim();
+  var p=document.getElementById('aP').value;
+  if(!e||!p){showT('Please fill all fields');return;}
+  var f=DB.users.find(function(u){return u.email===e});
+  if(!f){showT('No account found — please register');renderAuth('signup');return;}
+  usr=f;closeAuth();updAuth();showT('👋 Welcome back, '+usr.name.split(' ')[0]+'!');
+}
+function doSignup(){
+  var n=document.getElementById('aN')?document.getElementById('aN').value.trim():'';
+  var ph=document.getElementById('aPh')?document.getElementById('aPh').value.trim():'';
+  var e=document.getElementById('aE').value.trim();
+  var p=document.getElementById('aP').value;
+  if(!e||!p){showT('Please fill required fields');return;}
+  if(DB.users.find(function(u){return u.email===e})){showT('Email already registered');renderAuth('login');return;}
+  usr={id:'U-'+Date.now().toString(36).toUpperCase(),name:n||e.split('@')[0],phone:ph,email:e,joined:new Date().toLocaleDateString()};
+  DB.users.push(usr);closeAuth();updAuth();showT('✅ Welcome, '+usr.name.split(' ')[0]+'!');
+}
+function updAuth(){
+  var b=document.getElementById('authBtn');
+  if(usr){
+    b.textContent=usr.name.split(' ')[0];
+    b.onclick=function(){if(confirm('Sign out?')){usr=null;updAuth();showT('Signed out');}};
+  } else {
+    b.textContent='Sign In';b.onclick=openAuth;
+  }
+}
+
+// ── ADMIN ──
+function openAdm(){
+  var pw=prompt('Enter Owner PIN:');
+  if(pw!==admPin){showT('Incorrect PIN');return;}
+  document.getElementById('adm').classList.add('on');
+  admTab('orders',document.querySelector('.at2'));
+}
+function closeAdm(){document.getElementById('adm').classList.remove('on')}
+function admTab(tab,btn){
+  document.querySelectorAll('.at2').forEach(function(b){b.classList.remove('on')});
+  if(btn)btn.classList.add('on');
+  var tot=DB.payments.reduce(function(s,p){return s+p.amount},0);
+  document.getElementById('aStats').innerHTML=[
+    {n:DB.orders.length,l:'Total Orders',i:'📦'},
+    {n:DB.bookings.length,l:'Reservations',i:'📅'},
+    {n:DB.users.length,l:'Registered Users',i:'👥'},
+    {n:'Rs '+tot.toLocaleString(),l:'Revenue',i:'💰'}
+  ].map(function(s){return '<div class="asc"><span style="font-size:1.5rem">'+s.i+'</span><span class="an2">'+s.n+'</span><span class="al2">'+s.l+'</span></div>';}).join('');
+  var T=document.getElementById('aTitle'),TB=document.getElementById('aTable');
+  if(tab==='orders'){
+    T.textContent='All Orders';
+    if(!DB.orders.length){TB.innerHTML='<div class="nd">No orders yet — will appear here in real-time</div>';return;}
+    TB.innerHTML='<div style="overflow-x:auto"><table class="dt"><thead><tr><th>Order ID</th><th>Customer</th><th>Phone</th><th>Email</th><th>Items</th><th>Total</th><th>Status</th><th>Time</th></tr></thead><tbody>'+
+      DB.orders.map(function(o){return '<tr><td style="color:var(--go)">'+o.id+'</td><td>'+o.user+'</td><td>'+(o.phone||'—')+'</td><td>'+(o.email||'—')+'</td>'+
+        '<td style="font-size:.75rem;max-width:160px">'+o.items.map(function(i){return i.ico+i.name+'×'+i.qty}).join(', ')+'</td>'+
+        '<td style="color:var(--go)">Rs '+o.total.toLocaleString()+'</td><td><span class="bx bn">'+o.status+'</span></td><td>'+o.time+'</td></tr>';}).join('')+
+      '</tbody></table></div>';
+  } else if(tab==='bookings'){
+    T.textContent='Table Reservations';
+    if(!DB.bookings.length){TB.innerHTML='<div class="nd">No bookings yet</div>';return;}
+    TB.innerHTML='<div style="overflow-x:auto"><table class="dt"><thead><tr><th>ID</th><th>Name</th><th>Phone</th><th>Date</th><th>Time</th><th>Guests</th><th>Occasion</th><th>Notes</th><th>Status</th><th>Placed</th></tr></thead><tbody>'+
+      DB.bookings.map(function(b){return '<tr><td style="color:var(--go)">'+b.id+'</td><td>'+b.name+'</td><td>'+b.phone+'</td><td>'+b.date+'</td><td>'+b.time+'</td><td>'+b.guests+'</td><td>'+b.occasion+'</td><td style="font-size:.75rem">'+b.notes+'</td><td><span class="bx bp">'+b.status+'</span></td><td>'+b.placed+'</td></tr>';}).join('')+
+      '</tbody></table></div>';
+  } else if(tab==='users'){
+    T.textContent='Registered Users';
+    if(!DB.users.length){TB.innerHTML='<div class="nd">No registered users yet</div>';return;}
+    TB.innerHTML='<div style="overflow-x:auto"><table class="dt"><thead><tr><th>ID</th><th>Name</th><th>Email</th><th>Phone</th><th>Joined</th></tr></thead><tbody>'+
+      DB.users.map(function(u){return '<tr><td style="color:var(--go)">'+u.id+'</td><td>'+u.name+'</td><td>'+u.email+'</td><td>'+(u.phone||'—')+'</td><td>'+u.joined+'</td></tr>';}).join('')+
+      '</tbody></table></div>';
+  } else if(tab==='payments'){
+    T.textContent='Payment Records (Goes to Your Account)';
+    if(!DB.payments.length){TB.innerHTML='<div class="nd">No payment records yet</div>';return;}
+    TB.innerHTML='<div style="overflow-x:auto"><table class="dt"><thead><tr><th>Payment ID</th><th>Order ID</th><th>Customer</th><th>Email</th><th>Amount</th><th>Method</th><th>Status</th><th>Time</th></tr></thead><tbody>'+
+      DB.payments.map(function(p){return '<tr><td style="color:var(--go)">'+p.id+'</td><td>'+p.order+'</td><td>'+p.user+'</td><td>'+(p.email||'—')+'</td><td style="color:var(--go)">Rs '+p.amount.toLocaleString()+'</td><td>'+p.method+'</td><td><span class="bx bp">'+p.status+'</span></td><td>'+p.time+'</td></tr>';}).join('')+
+      '</tbody></table></div>';
+  }
+}
+
+// ── TOAST ──
+var tosTimer;
+function showT(msg){
+  clearTimeout(tosTimer);
+  document.getElementById('tosM').textContent=msg;
+  document.getElementById('tos').classList.add('on');
+  tosTimer=setTimeout(function(){document.getElementById('tos').classList.remove('on')},3200);
+}
+
+// ── NAV ──
+function tNav(){document.getElementById('navL').classList.toggle('on')}
+function cNav(){document.getElementById('navL').classList.remove('on')}
+window.addEventListener('scroll',function(){
+  document.getElementById('nav').classList.toggle('sc',window.scrollY>60);
+  doReveal();
+},{passive:true});
+
+// ── REVEAL ──
+function doReveal(){
+  document.querySelectorAll('.rv:not(.on)').forEach(function(el){
+    if(el.getBoundingClientRect().top<window.innerHeight-70)el.classList.add('on');
+  });
+}
+doReveal();setTimeout(doReveal,300);
+
+// ── ESC CLOSE ──
+document.addEventListener('keydown',function(e){
+  if(e.key==='Escape'){
+    closeCk();closeAuth();
+    document.getElementById('cOv').classList.remove('on');
+    document.getElementById('cPanel').classList.remove('on');
+  }
+});
+
+// ── INIT ──
+fMenu('coffee',document.querySelector('.mtab'));
+updCart();
+</script>
+</body>
+</html>
