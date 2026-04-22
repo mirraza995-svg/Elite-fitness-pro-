@@ -1,1590 +1,590 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Elite Fitness Pro — Train Beyond Limits</title>
-<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Rajdhani:wght@300;400;500;600;700&family=Orbitron:wght@400;700;900&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
-<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.0/chart.umd.min.js"></script>
-<style>
-  :root {
-    --black: #020206;
-    --deep: #07070f;
-    --gold: #c9a84c;
-    --gold-light: #f0c060;
-    --gold-glow: #ffd700;
-    --neon: #00d4ff;
-    --neon-bright: #00f0ff;
-    --neon-glow: rgba(0,212,255,0.4);
-    --glass: rgba(255,255,255,0.04);
-    --glass-border: rgba(255,255,255,0.08);
-    --text: #e8e8f0;
-    --muted: #7a7a9a;
-  }
-
-  * { margin:0; padding:0; box-sizing:border-box; }
-
-  html { scroll-behavior: smooth; }
-
-  body {
-    background: var(--black);
-    color: var(--text);
-    font-family: 'Rajdhani', sans-serif;
-    overflow-x: hidden;
-    cursor: none;
-  }
-
-  /* Custom Cursor */
-  .cursor {
-    position: fixed; width: 12px; height: 12px;
-    background: var(--neon); border-radius: 50%;
-    pointer-events: none; z-index: 9999;
-    transition: transform 0.1s; mix-blend-mode: screen;
-  }
-  .cursor-ring {
-    position: fixed; width: 36px; height: 36px;
-    border: 1px solid var(--gold); border-radius: 50%;
-    pointer-events: none; z-index: 9998;
-    transition: transform 0.15s, width 0.2s, height 0.2s;
-  }
-
-  /* Scrollbar */
-  ::-webkit-scrollbar { width: 4px; }
-  ::-webkit-scrollbar-track { background: var(--deep); }
-  ::-webkit-scrollbar-thumb { background: var(--gold); border-radius: 2px; }
-
-  /* NAV */
-  nav {
-    position: fixed; top: 0; left: 0; right: 0; z-index: 1000;
-    padding: 16px 48px;
-    display: flex; align-items: center; justify-content: space-between;
-    background: rgba(2,2,6,0.85);
-    backdrop-filter: blur(24px);
-    border-bottom: 1px solid rgba(201,168,76,0.15);
-    transition: all 0.3s;
-  }
-  nav.scrolled { padding: 10px 48px; }
-  .nav-logo {
-    font-family: 'Orbitron', monospace;
-    font-size: 1.3rem; font-weight: 900;
-    background: linear-gradient(135deg, var(--gold), var(--neon));
-    -webkit-background-clip: text; -webkit-text-fill-color: transparent;
-    letter-spacing: 2px;
-  }
-  .nav-logo span { color: var(--neon); -webkit-text-fill-color: var(--neon); }
-  .nav-links { display: flex; gap: 36px; list-style: none; }
-  .nav-links a {
-    color: var(--muted); text-decoration: none; font-size: 0.85rem;
-    letter-spacing: 2px; text-transform: uppercase; font-weight: 600;
-    transition: color 0.2s; position: relative;
-  }
-  .nav-links a::after {
-    content: ''; position: absolute; bottom: -4px; left: 0;
-    width: 0; height: 1px; background: var(--gold);
-    transition: width 0.3s;
-  }
-  .nav-links a:hover { color: var(--gold-light); }
-  .nav-links a:hover::after { width: 100%; }
-  .nav-cta { display: flex; gap: 12px; }
-  .btn-ghost {
-    padding: 8px 22px; border: 1px solid var(--gold);
-    color: var(--gold); background: transparent;
-    font-family: 'Rajdhani', sans-serif; font-size: 0.8rem;
-    letter-spacing: 2px; text-transform: uppercase; font-weight: 700;
-    cursor: pointer; transition: all 0.3s;
-  }
-  .btn-ghost:hover { background: var(--gold); color: var(--black); }
-  .btn-primary {
-    padding: 8px 22px;
-    background: linear-gradient(135deg, var(--gold), #a07030);
-    border: none; color: var(--black);
-    font-family: 'Rajdhani', sans-serif; font-size: 0.8rem;
-    letter-spacing: 2px; text-transform: uppercase; font-weight: 700;
-    cursor: pointer; transition: all 0.3s; position: relative; overflow: hidden;
-  }
-  .btn-primary::before {
-    content: ''; position: absolute; top: 0; left: -100%;
-    width: 100%; height: 100%;
-    background: linear-gradient(90deg, transparent, rgba(255,255,255,0.2), transparent);
-    transition: left 0.4s;
-  }
-  .btn-primary:hover::before { left: 100%; }
-  .btn-primary:hover { box-shadow: 0 0 20px rgba(201,168,76,0.5); }
-
-  /* Hamburger */
-  .hamburger { display: none; flex-direction: column; gap: 5px; cursor: pointer; }
-  .hamburger span { width: 26px; height: 2px; background: var(--gold); transition: all 0.3s; }
-
-  /* HERO */
-  #hero {
-    min-height: 100vh; position: relative;
-    display: flex; align-items: center; justify-content: center;
-    overflow: hidden;
-  }
-  .hero-bg {
-    position: absolute; inset: 0; z-index: 0;
-    background: 
-      radial-gradient(ellipse 80% 60% at 50% 40%, rgba(0,100,150,0.18) 0%, transparent 70%),
-      radial-gradient(ellipse 50% 40% at 80% 20%, rgba(201,168,76,0.12) 0%, transparent 60%),
-      url('https://images.unsplash.com/photo-1534438327276-14e5300c3a48?w=1920&q=80') center/cover;
-    filter: brightness(0.3);
-  }
-  .hero-overlay {
-    position: absolute; inset: 0; z-index: 1;
-    background: linear-gradient(180deg, rgba(2,2,6,0.4) 0%, transparent 40%, rgba(2,2,6,0.9) 100%);
-  }
-  /* Grid lines */
-  .hero-grid {
-    position: absolute; inset: 0; z-index: 2;
-    background-image: 
-      linear-gradient(rgba(0,212,255,0.04) 1px, transparent 1px),
-      linear-gradient(90deg, rgba(0,212,255,0.04) 1px, transparent 1px);
-    background-size: 60px 60px;
-    mask-image: radial-gradient(ellipse 70% 60% at 50% 50%, black, transparent);
-  }
-  .hero-content {
-    position: relative; z-index: 5;
-    text-align: center; max-width: 900px; padding: 0 24px;
-  }
-  .hero-badge {
-    display: inline-flex; align-items: center; gap: 8px;
-    background: rgba(0,212,255,0.08); border: 1px solid rgba(0,212,255,0.25);
-    padding: 6px 20px; margin-bottom: 32px;
-    font-size: 0.7rem; letter-spacing: 4px; color: var(--neon); text-transform: uppercase;
-    animation: fadeInDown 0.8s ease;
-  }
-  .hero-badge::before { content: ''; width: 6px; height: 6px; background: var(--neon); border-radius: 50%; animation: pulse 2s infinite; }
-  @keyframes pulse { 0%,100%{opacity:1;transform:scale(1)} 50%{opacity:0.5;transform:scale(1.5)} }
-  @keyframes fadeInDown { from{opacity:0;transform:translateY(-20px)} to{opacity:1;transform:translateY(0)} }
-  @keyframes fadeInUp { from{opacity:0;transform:translateY(40px)} to{opacity:1;transform:translateY(0)} }
-  @keyframes fadeIn { from{opacity:0} to{opacity:1} }
-
-  .hero-title {
-    font-family: 'Bebas Neue', sans-serif;
-    font-size: clamp(4rem, 10vw, 9rem);
-    line-height: 0.9; letter-spacing: 4px;
-    animation: fadeInUp 0.9s 0.2s both;
-  }
-  .hero-title .line1 { color: #fff; display: block; }
-  .hero-title .line2 {
-    display: block;
-    background: linear-gradient(135deg, var(--gold-glow), var(--gold), var(--neon));
-    -webkit-background-clip: text; -webkit-text-fill-color: transparent;
-    text-shadow: none;
-    filter: drop-shadow(0 0 30px rgba(201,168,76,0.4));
-  }
-  .hero-sub {
-    font-size: 1.1rem; color: var(--muted); margin: 24px 0 48px;
-    letter-spacing: 1px; line-height: 1.7;
-    animation: fadeInUp 0.9s 0.4s both;
-  }
-  .hero-actions { display: flex; gap: 16px; justify-content: center; flex-wrap: wrap; animation: fadeInUp 0.9s 0.6s both; }
-  .btn-hero {
-    padding: 16px 44px; font-family: 'Rajdhani', sans-serif;
-    font-size: 0.9rem; letter-spacing: 3px; text-transform: uppercase;
-    font-weight: 700; cursor: pointer; transition: all 0.3s; border: none;
-  }
-  .btn-hero-gold {
-    background: linear-gradient(135deg, var(--gold-glow), #b8860b);
-    color: var(--black);
-    box-shadow: 0 8px 30px rgba(201,168,76,0.3);
-  }
-  .btn-hero-gold:hover { transform: translateY(-2px); box-shadow: 0 12px 40px rgba(201,168,76,0.5); }
-  .btn-hero-outline {
-    background: transparent; color: var(--neon);
-    border: 1px solid var(--neon);
-    box-shadow: 0 0 20px rgba(0,212,255,0.1) inset;
-  }
-  .btn-hero-outline:hover { background: rgba(0,212,255,0.1); box-shadow: 0 0 30px rgba(0,212,255,0.3); }
-
-  .hero-stats {
-    display: flex; gap: 48px; justify-content: center;
-    margin-top: 80px; padding-top: 40px;
-    border-top: 1px solid rgba(255,255,255,0.06);
-    animation: fadeIn 1s 1s both;
-  }
-  .stat-item { text-align: center; }
-  .stat-num {
-    font-family: 'Orbitron', monospace; font-size: 2.2rem; font-weight: 900;
-    background: linear-gradient(135deg, var(--gold-light), var(--neon));
-    -webkit-background-clip: text; -webkit-text-fill-color: transparent;
-  }
-  .stat-label { font-size: 0.7rem; letter-spacing: 3px; color: var(--muted); text-transform: uppercase; margin-top: 4px; }
-
-  /* SECTIONS */
-  section { padding: 100px 48px; }
-  .section-tag {
-    display: inline-block; font-size: 0.7rem; letter-spacing: 4px;
-    text-transform: uppercase; color: var(--neon);
-    margin-bottom: 16px; font-weight: 600;
-  }
-  .section-tag::before { content: '— '; }
-  .section-title {
-    font-family: 'Bebas Neue', sans-serif;
-    font-size: clamp(2.5rem, 5vw, 4.5rem);
-    line-height: 1; letter-spacing: 2px; margin-bottom: 16px;
-  }
-  .section-title .gold { color: var(--gold-light); }
-  .section-sub { font-size: 1rem; color: var(--muted); max-width: 500px; line-height: 1.7; }
-
-  /* PROGRAMS */
-  #programs { background: var(--deep); }
-  .programs-grid {
-    display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-    gap: 24px; margin-top: 60px;
-  }
-  .program-card {
-    position: relative; overflow: hidden;
-    background: var(--glass);
-    border: 1px solid var(--glass-border);
-    backdrop-filter: blur(20px);
-    padding: 0; transition: all 0.4s; cursor: pointer;
-  }
-  .program-card:hover { transform: translateY(-8px); border-color: var(--gold); }
-  .program-card:hover .card-glow { opacity: 1; }
-  .card-glow {
-    position: absolute; inset: 0; opacity: 0; transition: opacity 0.4s;
-    background: linear-gradient(135deg, rgba(201,168,76,0.05), rgba(0,212,255,0.05));
-  }
-  .card-img { width: 100%; height: 220px; object-fit: cover; filter: brightness(0.7); transition: filter 0.4s; }
-  .program-card:hover .card-img { filter: brightness(0.9); }
-  .card-body { padding: 28px; position: relative; z-index: 2; }
-  .card-icon {
-    width: 44px; height: 44px; border: 1px solid var(--gold);
-    display: flex; align-items: center; justify-content: center;
-    margin-bottom: 16px; color: var(--gold); font-size: 1.1rem;
-  }
-  .card-title { font-family: 'Bebas Neue', sans-serif; font-size: 1.8rem; letter-spacing: 2px; margin-bottom: 8px; }
-  .card-desc { font-size: 0.9rem; color: var(--muted); line-height: 1.6; margin-bottom: 20px; }
-  .card-tags { display: flex; flex-wrap: wrap; gap: 8px; }
-  .tag {
-    padding: 4px 12px; border: 1px solid rgba(0,212,255,0.2);
-    color: var(--neon); font-size: 0.7rem; letter-spacing: 2px; text-transform: uppercase;
-  }
-  .card-arrow {
-    position: absolute; bottom: 28px; right: 28px;
-    color: var(--gold); font-size: 1.2rem; transition: transform 0.3s;
-  }
-  .program-card:hover .card-arrow { transform: translate(4px,-4px); }
-
-  /* PRICING */
-  #pricing { background: var(--black); }
-  .pricing-grid {
-    display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-    gap: 24px; margin-top: 60px; align-items: start;
-  }
-  .price-card {
-    background: var(--glass); border: 1px solid var(--glass-border);
-    backdrop-filter: blur(20px); padding: 40px 32px;
-    position: relative; overflow: hidden; transition: all 0.4s;
-  }
-  .price-card:hover { transform: translateY(-6px); }
-  .price-card.featured {
-    border-color: var(--gold);
-    background: linear-gradient(135deg, rgba(201,168,76,0.06), rgba(0,212,255,0.03));
-    transform: scale(1.04);
-  }
-  .price-card.featured:hover { transform: scale(1.04) translateY(-6px); }
-  .featured-badge {
-    position: absolute; top: 0; right: 0;
-    background: var(--gold); color: var(--black);
-    padding: 6px 20px; font-size: 0.7rem; letter-spacing: 2px;
-    font-weight: 700; text-transform: uppercase;
-  }
-  .price-tier { font-size: 0.75rem; letter-spacing: 3px; color: var(--muted); text-transform: uppercase; margin-bottom: 16px; }
-  .price-amount {
-    font-family: 'Orbitron', monospace; font-size: 3rem; font-weight: 900;
-    color: var(--gold-light); line-height: 1; margin-bottom: 4px;
-  }
-  .price-amount sup { font-size: 1.2rem; vertical-align: top; margin-top: 12px; display: inline-block; }
-  .price-amount span { font-size: 1rem; color: var(--muted); }
-  .price-desc { font-size: 0.85rem; color: var(--muted); margin-bottom: 32px; line-height: 1.5; }
-  .price-features { list-style: none; display: flex; flex-direction: column; gap: 14px; margin-bottom: 36px; }
-  .price-features li {
-    display: flex; align-items: center; gap: 12px;
-    font-size: 0.9rem; color: var(--text);
-  }
-  .price-features li i { color: var(--neon); font-size: 0.8rem; width: 16px; }
-  .price-features li.off { color: var(--muted); }
-  .price-features li.off i { color: var(--muted); }
-  .btn-plan {
-    width: 100%; padding: 14px;
-    font-family: 'Rajdhani', sans-serif; font-size: 0.85rem;
-    letter-spacing: 3px; text-transform: uppercase; font-weight: 700;
-    cursor: pointer; transition: all 0.3s; border: none;
-  }
-  .btn-plan-outline { background: transparent; border: 1px solid var(--gold); color: var(--gold); }
-  .btn-plan-outline:hover { background: var(--gold); color: var(--black); }
-  .btn-plan-fill { background: linear-gradient(135deg, var(--gold-glow), #b8860b); color: var(--black); }
-  .btn-plan-fill:hover { box-shadow: 0 8px 30px rgba(201,168,76,0.5); }
-  .price-glow {
-    position: absolute; bottom: -60px; left: 50%;
-    transform: translateX(-50%);
-    width: 200px; height: 120px;
-    background: radial-gradient(ellipse, rgba(201,168,76,0.15), transparent 70%);
-    pointer-events: none;
-  }
-
-  /* CONTACT */
-  #contact { background: var(--deep); }
-  .contact-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 60px; margin-top: 60px; }
-  .contact-info { display: flex; flex-direction: column; gap: 32px; }
-  .contact-item { display: flex; align-items: flex-start; gap: 20px; }
-  .contact-icon {
-    width: 48px; height: 48px; flex-shrink: 0;
-    border: 1px solid var(--gold);
-    display: flex; align-items: center; justify-content: center;
-    color: var(--gold); font-size: 1rem;
-  }
-  .contact-label { font-size: 0.7rem; letter-spacing: 3px; color: var(--muted); text-transform: uppercase; margin-bottom: 6px; }
-  .contact-value { font-size: 1rem; color: var(--text); font-weight: 600; }
-  .contact-form-wrap {
-    background: var(--glass); border: 1px solid var(--glass-border);
-    backdrop-filter: blur(20px); padding: 40px;
-  }
-  .form-row { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
-  .form-group { margin-bottom: 20px; }
-  .form-group label { display: block; font-size: 0.7rem; letter-spacing: 2px; text-transform: uppercase; color: var(--muted); margin-bottom: 8px; }
-  .form-group input, .form-group textarea, .form-group select {
-    width: 100%; padding: 12px 16px;
-    background: rgba(255,255,255,0.03); border: 1px solid var(--glass-border);
-    color: var(--text); font-family: 'Rajdhani', sans-serif; font-size: 0.95rem;
-    outline: none; transition: border-color 0.3s;
-  }
-  .form-group input:focus, .form-group textarea:focus, .form-group select:focus { border-color: var(--gold); }
-  .form-group textarea { resize: vertical; min-height: 120px; }
-  .form-group select option { background: var(--deep); }
-  .btn-submit {
-    width: 100%; padding: 16px;
-    background: linear-gradient(135deg, var(--gold-glow), #b8860b);
-    border: none; color: var(--black);
-    font-family: 'Rajdhani', sans-serif; font-size: 0.9rem;
-    letter-spacing: 3px; text-transform: uppercase; font-weight: 700;
-    cursor: pointer; transition: all 0.3s;
-  }
-  .btn-submit:hover { box-shadow: 0 8px 30px rgba(201,168,76,0.5); }
-
-  /* MODAL OVERLAY */
-  .modal-overlay {
-    position: fixed; inset: 0; z-index: 2000;
-    background: rgba(2,2,6,0.92); backdrop-filter: blur(12px);
-    display: none; align-items: center; justify-content: center;
-    padding: 20px;
-  }
-  .modal-overlay.active { display: flex; }
-  .modal-box {
-    background: #0a0a12; border: 1px solid rgba(201,168,76,0.2);
-    width: 100%; max-width: 560px; max-height: 92vh; overflow-y: auto;
-    position: relative; animation: modalIn 0.35s ease;
-  }
-  @keyframes modalIn { from{opacity:0;transform:scale(0.92)} to{opacity:1;transform:scale(1)} }
-  .modal-close {
-    position: absolute; top: 16px; right: 16px;
-    background: none; border: none; color: var(--muted);
-    font-size: 1.2rem; cursor: pointer; z-index: 10; transition: color 0.2s;
-  }
-  .modal-close:hover { color: var(--gold); }
-  .modal-header {
-    padding: 36px 40px 24px;
-    border-bottom: 1px solid var(--glass-border);
-    background: linear-gradient(135deg, rgba(201,168,76,0.05), rgba(0,212,255,0.03));
-  }
-  .modal-logo {
-    font-family: 'Orbitron', monospace; font-size: 1.1rem; font-weight: 900;
-    background: linear-gradient(135deg, var(--gold), var(--neon));
-    -webkit-background-clip: text; -webkit-text-fill-color: transparent;
-    margin-bottom: 10px;
-  }
-  .modal-title { font-family: 'Bebas Neue', sans-serif; font-size: 2rem; letter-spacing: 2px; }
-  .modal-sub { font-size: 0.85rem; color: var(--muted); margin-top: 4px; }
-  .modal-body { padding: 32px 40px; }
-  .modal-tabs { display: flex; gap: 0; margin-bottom: 28px; }
-  .modal-tab {
-    flex: 1; padding: 10px; text-align: center;
-    border: 1px solid var(--glass-border); background: none;
-    color: var(--muted); font-family: 'Rajdhani', sans-serif;
-    font-size: 0.8rem; letter-spacing: 2px; text-transform: uppercase;
-    cursor: pointer; transition: all 0.3s; font-weight: 700;
-  }
-  .modal-tab.active { background: var(--gold); color: var(--black); border-color: var(--gold); }
-
-  /* Signup step indicator */
-  .step-indicator { display: flex; align-items: center; margin-bottom: 28px; gap: 0; }
-  .step-dot {
-    width: 32px; height: 32px; border-radius: 50%;
-    display: flex; align-items: center; justify-content: center;
-    font-family: 'Orbitron', monospace; font-size: 0.7rem; font-weight: 700;
-    border: 1px solid var(--glass-border); color: var(--muted);
-    transition: all 0.3s; flex-shrink: 0;
-  }
-  .step-dot.active { border-color: var(--gold); color: var(--gold); background: rgba(201,168,76,0.1); }
-  .step-dot.done { background: var(--gold); color: var(--black); border-color: var(--gold); }
-  .step-line { flex: 1; height: 1px; background: var(--glass-border); }
-  .step-line.done { background: var(--gold); }
-  .step-label { font-size: 0.65rem; letter-spacing: 1px; text-transform: uppercase; color: var(--muted); text-align: center; margin-top: 6px; }
-
-  .signup-step { display: none; }
-  .signup-step.active { display: block; }
-
-  .form-row-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; }
-  .m-form-group { margin-bottom: 16px; }
-  .m-form-group label { display: block; font-size: 0.7rem; letter-spacing: 2px; text-transform: uppercase; color: var(--muted); margin-bottom: 6px; }
-  .m-form-group input, .m-form-group select {
-    width: 100%; padding: 11px 14px;
-    background: rgba(255,255,255,0.03); border: 1px solid var(--glass-border);
-    color: var(--text); font-family: 'Rajdhani', sans-serif; font-size: 0.95rem;
-    outline: none; transition: border-color 0.3s;
-  }
-  .m-form-group input:focus, .m-form-group select:focus { border-color: var(--gold); }
-  .m-form-group select option { background: var(--deep); }
-  .input-icon-wrap { position: relative; }
-  .input-icon-wrap i { position: absolute; right: 12px; top: 50%; transform: translateY(-50%); color: var(--muted); font-size: 0.85rem; cursor: pointer; }
-  .input-icon-wrap input { padding-right: 36px; }
-
-  .goal-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 10px; margin-bottom: 16px; }
-  .goal-btn {
-    padding: 14px 10px; border: 1px solid var(--glass-border);
-    background: none; color: var(--muted); cursor: pointer;
-    font-family: 'Rajdhani', sans-serif; font-size: 0.8rem;
-
-/* HERO */
-#hero {
-  height: 100vh; min-height: 700px;
-  position: relative; display: flex; align-items: center;
-  overflow: hidden;
-}
-.hero-video-bg {
-  position: absolute; inset: 0;
-  background:
-    linear-gradient(to right, rgba(2,3,5,.95) 40%, rgba(2,3,5,.6) 100%),
-    linear-gradient(160deg, var(--k) 0%, #050e20 50%, #020810 100%);
-}
-.hero-grid-lines {
-  position: absolute; inset: 0; pointer-events: none;
-  background-image:
-    linear-gradient(rgba(0,212,255,.04) 1px, transparent 1px),
-    linear-gradient(90deg, rgba(0,212,255,.04) 1px, transparent 1px);
-  background-size: 60px 60px;
-  transform: perspective(600px) rotateX(12deg);
-  transform-origin: bottom;
-  animation: gridDrift 20s linear infinite;
-}
-@keyframes gridDrift {
-  from { background-position: 0 0; }
-  to { background-position: 60px 60px; }
-}
-.hero-glow1 {
-  position: absolute; width: 600px; height: 600px;
-  top: -100px; right: -100px;
-  background: radial-gradient(circle, rgba(0,212,255,.12) 0%, transparent 70%);
-  animation: breathe 6s ease-in-out infinite;
-}
-.hero-glow2 {
-  position: absolute; width: 400px; height: 400px;
-  bottom: -50px; left: 20%;
-  background: radial-gradient(circle, rgba(212,168,67,.08) 0%, transparent 70%);
-  animation: breathe 8s ease-in-out 2s infinite;
-}
-@keyframes breathe { 0%,100%{transform:scale(1)}50%{transform:scale(1.15)} }
-
-/* Animated figure silhouette */
-.hero-silhouette {
-  position: absolute; right: 8%; top: 50%; transform: translateY(-50%);
-  width: 380px; height: 520px;
-  display: flex; align-items: center; justify-content: center;
-}
-.sil-glow {
-  position: absolute; inset: -40px;
-  background: radial-gradient(ellipse, rgba(0,212,255,.15) 0%, transparent 70%);
-  animation: breathe 4s ease-in-out infinite;
-}
-.sil-figure {
-  font-size: 14rem; line-height: 1;
-  filter: drop-shadow(0 0 30px rgba(0,212,255,.5)) drop-shadow(0 0 60px rgba(0,212,255,.3));
-  animation: liftPulse 3s ease-in-out infinite;
-  position: relative; z-index: 1;
-}
-@keyframes liftPulse {
-  0%,100%{transform:translateY(0) scaleY(1)}
-  50%{transform:translateY(-12px) scaleY(1.02)}
-}
-.hero-rings {
-  position: absolute; inset: 0;
-  display: flex; align-items: center; justify-content: center;
-}
-.ring {
-  position: absolute; border-radius: 50%;
-  border: 1px solid rgba(0,212,255,.12);
-  animation: ringExpand 6s linear infinite;
-}
-.ring:nth-child(1){width:200px;height:200px;animation-delay:0s}
-.ring:nth-child(2){width:350px;height:350px;animation-delay:2s}
-.ring:nth-child(3){width:500px;height:500px;animation-delay:4s}
-@keyframes ringExpand {
-  0%{opacity:.6;transform:scale(.8)}
-  100%{opacity:0;transform:scale(1.3)}
-}
-
-.hero-inner { position: relative; z-index: 2; padding: 2rem 3rem; max-width: 680px; }
-.hero-badge {
-  display: inline-flex; align-items: center; gap: .5rem;
-  padding: .35rem 1rem; border: 1px solid var(--border2);
-  border-radius: 20px; background: var(--blue3);
-  font-size: .65rem; letter-spacing: .25em; text-transform: uppercase;
-  color: var(--blue); margin-bottom: 1.5rem; font-weight: 700;
-  opacity: 0; animation: slideUp 1s .1s forwards;
-}
-.hero-badge::before { content: ''; width: 6px; height: 6px; border-radius: 50%; background: var(--blue); box-shadow: 0 0 8px var(--blue); animation: blink 1.5s infinite; }
-@keyframes blink { 0%,100%{opacity:1}50%{opacity:.2} }
-.hero-h1 {
-  font-size: clamp(4rem, 9vw, 8rem);
-  line-height: .95; margin-bottom: 1.2rem;
-  opacity: 0; animation: slideUp 1s .3s forwards;
-}
-.hero-h1 .line1 { display: block; color: #fff; }
-.hero-h1 .line2 {
-  display: block;
-  background: linear-gradient(135deg, var(--blue) 0%, var(--gold) 100%);
-  -webkit-background-clip: text; -webkit-text-fill-color: transparent;
-  background-clip: text; filter: drop-shadow(0 0 20px rgba(0,212,255,.4));
-}
-.hero-sub {
-  font-size: 1.05rem; color: rgba(200,216,240,.6);
-  margin-bottom: 2.5rem; line-height: 1.7; font-weight: 400;
-  opacity: 0; animation: slideUp 1s .5s forwards;
-}
-.hero-cta {
-  display: flex; gap: 1rem; flex-wrap: wrap;
-  opacity: 0; animation: slideUp 1s .7s forwards;
-}
-.cta-primary {
-  padding: .95rem 2.8rem; background: linear-gradient(135deg, var(--blue), var(--blue2));
-  color: var(--k); border: none; border-radius: var(--r);
-  font-family: 'Rajdhani', sans-serif; font-size: .8rem;
-  letter-spacing: .2em; text-transform: uppercase; font-weight: 700;
-  transition: all .3s; position: relative; overflow: hidden;
-  box-shadow: 0 0 30px rgba(0,212,255,.3);
-}
-.cta-primary::before {
-  content: ''; position: absolute; inset: 0;
-  background: linear-gradient(135deg, rgba(255,255,255,.2), transparent);
-  transform: translateX(-100%); transition: transform .4s;
-}
-.cta-primary:hover::before { transform: translateX(100%); }
-.cta-primary:hover { box-shadow: 0 0 50px rgba(0,212,255,.5); transform: translateY(-2px); }
-.cta-secondary {
-  padding: .95rem 2.8rem; background: none; color: var(--gold);
-  border: 1px solid var(--gold3); border-radius: var(--r);
-  font-family: 'Rajdhani', sans-serif; font-size: .8rem;
-  letter-spacing: .2em; text-transform: uppercase; font-weight: 700;
-  transition: all .3s;
-}
-.cta-secondary:hover { background: var(--gold-f); border-color: var(--gold); box-shadow: 0 0 30px rgba(212,168,67,.3); transform: translateY(-2px); }
-
-.hero-stats {
-  display: flex; gap: 2.5rem; margin-top: 3rem;
-  opacity: 0; animation: slideUp 1s .9s forwards;
-}
-.hero-stat { }
-.hero-stat .num {
-  font-family: 'Bebas Neue', sans-serif; font-size: 2.4rem;
-  color: #fff; line-height: 1;
-  text-shadow: 0 0 20px rgba(0,212,255,.5);
-}
-.hero-stat .num span { color: var(--blue); }
-.hero-stat .lbl { font-size: .65rem; letter-spacing: .2em; text-transform: uppercase; color: rgba(200,216,240,.45); font-weight: 600; }
-
-.scroll-ind {
-  position: absolute; bottom: 2rem; left: 50%; transform: translateX(-50%);
-  display: flex; flex-direction: column; align-items: center; gap: .5rem;
-  color: rgba(200,216,240,.3); font-size: .6rem; letter-spacing: .3em; text-transform: uppercase;
-  opacity: 0; animation: slideUp 1s 1.2s forwards;
-}
-.scroll-line { width: 1px; height: 44px; background: linear-gradient(var(--blue), transparent); animation: scrollPulse 2s infinite; }
-@keyframes scrollPulse { 0%,100%{opacity:1}50%{opacity:.2} }
-@keyframes slideUp { from{opacity:0;transform:translateY(30px)}to{opacity:1;transform:translateY(0)} }
-
-/* SECTIONS */
-section { padding: 6rem 3rem; }
-.wrap { max-width: 1280px; margin: 0 auto; }
-.sec-eye { font-size: .63rem; letter-spacing: .4em; text-transform: uppercase; color: var(--blue); margin-bottom: .5rem; font-weight: 700; }
-.sec-title { font-size: clamp(2.8rem, 5vw, 4.5rem); color: #fff; margin-bottom: .8rem; }
-.sec-title .hl { color: var(--gold); }
-.sec-line { width: 60px; height: 2px; background: linear-gradient(to right, var(--blue), transparent); margin-bottom: 3rem; }
-.rv { opacity: 0; transform: translateY(32px); transition: opacity .8s cubic-bezier(.4,0,.2,1), transform .8s cubic-bezier(.4,0,.2,1); }
-.rv.on { opacity: 1; transform: none; }
-.d1{transition-delay:.1s}.d2{transition-delay:.2s}.d3{transition-delay:.3s}.d4{transition-delay:.4s}
-
-/* PROGRAMS */
-#programs { background: var(--k2); position: relative; overflow: hidden; }
-#programs::before {
-  content: ''; position: absolute; top: -200px; right: -200px;
-  width: 600px; height: 600px;
-  background: radial-gradient(circle, rgba(0,212,255,.05) 0%, transparent 70%);
-  pointer-events: none;
-}
-.prog-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); gap: 1.5rem; }
-.prog-card {
-  background: var(--glass);
-  border: 1px solid var(--border);
-  border-radius: var(--r2);
-  padding: 2rem;
-  backdrop-filter: blur(20px);
-  position: relative; overflow: hidden;
-  transition: all .4s; cursor: none;
-}
-.prog-card::before {
-  content: ''; position: absolute; top: 0; left: 0; right: 0; height: 2px;
-  background: linear-gradient(to right, var(--blue), transparent);
-  transform: scaleX(0); transform-origin: left; transition: transform .4s;
-}
-.prog-card:hover::before { transform: scaleX(1); }
-.prog-card:hover {
-  border-color: var(--border2);
-  transform: translateY(-6px);
-  box-shadow: 0 20px 60px rgba(0,0,0,.5), 0 0 0 1px rgba(0,212,255,.08), inset 0 1px 0 rgba(0,212,255,.1);
-}
-.prog-card::after {
-  content: ''; position: absolute; inset: 0;
-  background: radial-gradient(circle at var(--mx,50%) var(--my,50%), rgba(0,212,255,.06) 0%, transparent 60%);
-  pointer-events: none; opacity: 0; transition: opacity .3s;
-}
-.prog-card:hover::after { opacity: 1; }
-.prog-icon {
-  font-size: 2.5rem; margin-bottom: 1.2rem;
-  filter: drop-shadow(0 0 12px rgba(0,212,255,.4));
-}
-.prog-tag {
-  display: inline-flex; padding: .25rem .75rem; border-radius: 20px;
-  font-size: .6rem; letter-spacing: .15em; text-transform: uppercase; font-weight: 700;
-  margin-bottom: 1rem;
-}
-.prog-tag.blue { background: var(--blue3); color: var(--blue); border: 1px solid var(--border2); }
-.prog-tag.gold { background: var(--gold-f); color: var(--gold); border: 1px solid var(--border3); }
-.prog-tag.red { background: rgba(255,64,96,.1); color: var(--red); border: 1px solid rgba(255,64,96,.2); }
-.prog-card h3 { font-size: 1.9rem; color: #fff; margin-bottom: .5rem; }
-.prog-card p { font-size: .9rem; color: rgba(200,216,240,.55); line-height: 1.65; margin-bottom: 1.5rem; }
-.prog-features { list-style: none; display: flex; flex-direction: column; gap: .5rem; margin-bottom: 1.5rem; }
-.prog-features li { display: flex; align-items: center; gap: .6rem; font-size: .85rem; color: rgba(200,216,240,.75); }
-.prog-features li::before { content: ''; width: 6px; height: 6px; border-radius: 50%; background: var(--blue); box-shadow: 0 0 8px var(--blue); flex-shrink: 0; }
-.prog-duration {
-  display: flex; justify-content: space-between; align-items: center;
-  padding-top: 1.2rem; border-top: 1px solid var(--border);
-}
-.prog-duration .weeks { font-family: 'Bebas Neue', sans-serif; font-size: 1.6rem; color: var(--gold); }
-.prog-duration .label { font-size: .65rem; letter-spacing: .15em; text-transform: uppercase; color: rgba(200,216,240,.4); }
-.prog-btn {
-  padding: .5rem 1.2rem; border-radius: var(--r);
-  background: var(--blue3); border: 1px solid var(--border2);
-  color: var(--blue); font-family: 'Rajdhani', sans-serif;
-  font-size: .7rem; letter-spacing: .15em; text-transform: uppercase; font-weight: 700;
-  transition: all .3s;
-}
-.prog-btn:hover { background: var(--blue); color: var(--k); }
-
-/* PRICING */
-#pricing { background: var(--k); }
-.price-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1.5rem; }
-.price-card {
-  background: var(--glass2); border: 1px solid var(--border);
-  border-radius: var(--r2); padding: 2.5rem;
-  position: relative; overflow: hidden; transition: all .4s;
-}
-.price-card:hover { transform: translateY(-6px); border-color: var(--border2); }
-.price-card.featured {
-  border-color: var(--gold3); background: linear-gradient(160deg, rgba(212,168,67,.08) 0%, var(--glass2) 100%);
-}
-.price-card.featured::before {
-  content: ''; position: absolute; top: 0; left: 0; right: 0; height: 2px;
-  background: linear-gradient(to right, var(--gold), transparent);
-}
-.price-badge {
-  position: absolute; top: 1.5rem; right: 1.5rem;
-  padding: .3rem .8rem; background: var(--gold); color: var(--k);
-  font-size: .6rem; letter-spacing: .15em; text-transform: uppercase; font-weight: 700;
-  border-radius: 20px;
-}
-.price-plan { font-size: .65rem; letter-spacing: .3em; text-transform: uppercase; color: var(--blue); margin-bottom: .5rem; font-weight: 700; }
-.price-amount { margin: 1rem 0; }
-.price-amount .currency { font-size: 1.5rem; color: rgba(200,216,240,.5); vertical-align: top; margin-top: .5rem; display: inline-block; }
-.price-amount .num { font-family: 'Bebas Neue', sans-serif; font-size: 5rem; color: #fff; line-height: 1; }
-.price-amount .period { font-size: .8rem; color: rgba(200,216,240,.4); letter-spacing: .1em; }
-.price-desc { font-size: .88rem; color: rgba(200,216,240,.5); margin-bottom: 1.5rem; line-height: 1.6; }
-.price-feats { list-style: none; display: flex; flex-direction: column; gap: .7rem; margin-bottom: 2rem; }
-.price-feats li { display: flex; align-items: center; gap: .75rem; font-size: .88rem; }
-.price-feats li .check { width: 18px; height: 18px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: .6rem; flex-shrink: 0; }
-.price-feats li.has .check { background: rgba(0,255,136,.15); color: var(--green); border: 1px solid rgba(0,255,136,.3); }
-.price-feats li.no { opacity: .3; }
-.price-feats li.no .check { background: rgba(255,255,255,.05); color: rgba(200,216,240,.3); border: 1px solid rgba(255,255,255,.1); }
-.price-feats li .txt { color: rgba(200,216,240,.8); }
-.price-cta {
-  width: 100%; padding: .9rem; border-radius: var(--r);
-  font-family: 'Rajdhani', sans-serif; font-size: .78rem;
-  letter-spacing: .2em; text-transform: uppercase; font-weight: 700;
-  transition: all .3s; border: none;
-}
-.price-cta.outline { background: none; border: 1px solid var(--border2); color: var(--blue); }
-.price-cta.outline:hover { background: var(--blue3); }
-.price-cta.filled { background: linear-gradient(135deg, var(--gold), #b8891e); color: var(--k); box-shadow: 0 0 30px rgba(212,168,67,.3); }
-.price-cta.filled:hover { box-shadow: 0 0 50px rgba(212,168,67,.5); transform: translateY(-1px); }
-
-/* DASHBOARD */
-#dashboard { background: var(--k3); }
-.dash-wrap {
-  background: var(--glass2); border: 1px solid var(--border);
-  border-radius: 12px; overflow: hidden;
-  box-shadow: 0 40px 120px rgba(0,0,0,.6), 0 0 0 1px rgba(0,212,255,.05);
-}
-.dash-topbar {
-  background: rgba(5,8,16,.9); border-bottom: 1px solid var(--border);
-  padding: 1rem 1.5rem; display: flex; align-items: center; justify-content: space-between;
-}
-.dash-topbar .brand { font-family: 'Bebas Neue', sans-serif; font-size: 1.1rem; color: var(--blue); letter-spacing: .1em; }
-.dash-user { display: flex; align-items: center; gap: .75rem; }
-.dash-avatar {
-  width: 36px; height: 36px; border-radius: 50%;
-  background: linear-gradient(135deg, var(--blue), var(--gold));
-  display: flex; align-items: center; justify-content: center;
-  font-size: .85rem; font-weight: 700; color: var(--k); border: 2px solid var(--blue);
-  box-shadow: 0 0 16px rgba(0,212,255,.4);
-}
-.dash-user .uname { font-size: .85rem; font-weight: 600; color: rgba(200,216,240,.9); }
-.dash-layout { display: grid; grid-template-columns: 220px 1fr; height: 600px; }
-.dash-sidebar {
-  background: rgba(5,8,16,.6); border-right: 1px solid var(--border);
-  padding: 1.5rem 0;
-}
-.dash-nav-item {
-  display: flex; align-items: center; gap: .75rem;
-  padding: .75rem 1.5rem; font-size: .82rem; font-weight: 600;
-  letter-spacing: .05em; color: rgba(200,216,240,.45); transition: all .3s; cursor: none;
-}
-.dash-nav-item:hover { color: var(--blue); background: var(--blue-f); }
-.dash-nav-item.active {
-  color: var(--blue); background: var(--blue3);
-  border-right: 2px solid var(--blue);
-  box-shadow: inset -4px 0 20px rgba(0,212,255,.1);
-}
-.dash-nav-item .ico { font-size: 1rem; width: 20px; text-align: center; }
-.dash-main { overflow-y: auto; padding: 1.5rem; }
-
-/* DASH STATS */
-.dash-stats { display: grid; grid-template-columns: repeat(4,1fr); gap: 1rem; margin-bottom: 1.5rem; }
-.ds-card {
-  background: var(--glass); border: 1px solid var(--border);
-  border-radius: var(--r2); padding: 1.2rem;
-  position: relative; overflow: hidden; transition: all .3s;
-}
-.ds-card:hover { border-color: var(--border2); }
-.ds-card::after { content: ''; position: absolute; top: 0; left: 0; right: 0; height: 1px; }
-.ds-card.blue::after { background: linear-gradient(to right, var(--blue), transparent); }
-.ds-card.gold::after { background: linear-gradient(to right, var(--gold), transparent); }
-.ds-card.red::after { background: linear-gradient(to right, var(--red), transparent); }
-.ds-card.green::after { background: linear-gradient(to right, var(--green), transparent); }
-.ds-card .label { font-size: .62rem; letter-spacing: .18em; text-transform: uppercase; color: rgba(200,216,240,.4); margin-bottom: .4rem; font-weight: 700; }
-.ds-card .val { font-family: 'Bebas Neue', sans-serif; font-size: 2rem; color: #fff; line-height: 1; }
-.ds-card.blue .val { color: var(--blue); text-shadow: 0 0 20px rgba(0,212,255,.5); }
-.ds-card.gold .val { color: var(--gold); text-shadow: 0 0 20px rgba(212,168,67,.5); }
-.ds-card.red .val { color: var(--red); text-shadow: 0 0 20px rgba(255,64,96,.5); }
-.ds-card.green .val { color: var(--green); text-shadow: 0 0 20px rgba(0,255,136,.5); }
-.ds-card .delta { font-size: .72rem; color: var(--green); margin-top: .3rem; font-weight: 600; }
-
-/* CHARTS */
-.dash-charts { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; margin-bottom: 1rem; }
-.chart-box {
-  background: var(--glass); border: 1px solid var(--border);
-  border-radius: var(--r2); padding: 1.2rem;
-}
-.chart-box h4 { font-size: .72rem; letter-spacing: .15em; text-transform: uppercase; color: rgba(200,216,240,.5); margin-bottom: 1rem; font-weight: 700; }
-.chart-area { position: relative; height: 120px; }
-svg.chart { width: 100%; height: 100%; }
-.chart-bar-row { display: flex; align-items: flex-end; gap: 6px; height: 100%; }
-.chart-bar {
-  flex: 1; border-radius: 3px 3px 0 0; transition: all .6s cubic-bezier(.4,0,.2,1);
-  position: relative; cursor: none;
-}
-.chart-bar:hover { filter: brightness(1.3); }
-.chart-bar .tt {
-  position: absolute; bottom: calc(100% + 6px); left: 50%; transform: translateX(-50%);
-  background: var(--k2); border: 1px solid var(--border); border-radius: 3px;
-  padding: .2rem .5rem; font-size: .65rem; color: var(--blue); white-space: nowrap;
-  opacity: 0; transition: opacity .2s; pointer-events: none;
-}
-.chart-bar:hover .tt { opacity: 1; }
-.day-labels { display: flex; gap: 6px; margin-top: .3rem; }
-.day-labels span { flex: 1; text-align: center; font-size: .55rem; color: rgba(200,216,240,.3); letter-spacing: .05em; text-transform: uppercase; }
-
-/* PROGRESS RINGS */
-.progress-rings { display: flex; gap: 1.2rem; justify-content: space-around; padding: .5rem 0; }
-.p-ring { display: flex; flex-direction: column; align-items: center; gap: .5rem; }
-.p-ring svg { transform: rotate(-90deg); }
-.p-ring .pct { font-family: 'Bebas Neue', sans-serif; font-size: 1rem; }
-.p-ring .rlbl { font-size: .62rem; letter-spacing: .12em; text-transform: uppercase; color: rgba(200,216,240,.4); font-weight: 700; }
-
-/* WORKOUT LOG */
-.workout-log {
-  background: var(--glass); border: 1px solid var(--border);
-  border-radius: var(--r2); padding: 1.2rem;
-}
-.workout-log h4 { font-size: .72rem; letter-spacing: .15em; text-transform: uppercase; color: rgba(200,216,240,.5); margin-bottom: 1rem; font-weight: 700; }
-.w-item {
-  display: flex; align-items: center; gap: 1rem;
-  padding: .7rem 0; border-bottom: 1px solid var(--border);
-}
-.w-item:last-child { border-bottom: none; }
-.w-icon { font-size: 1.1rem; width: 32px; height: 32px; border-radius: var(--r); background: var(--blue3); border: 1px solid var(--border); display: flex; align-items: center; justify-content: center; }
-.w-name { flex: 1; font-size: .88rem; color: rgba(200,216,240,.9); font-weight: 600; }
-.w-sets { font-size: .75rem; color: rgba(200,216,240,.4); }
-.w-done { width: 8px; height: 8px; border-radius: 50%; }
-.w-done.yes { background: var(--green); box-shadow: 0 0 8px var(--green); }
-.w-done.no { background: rgba(200,216,240,.2); }
-
-/* CALORIE TRACKER */
-.cal-track {
-  background: var(--glass); border: 1px solid var(--border);
-  border-radius: var(--r2); padding: 1.2rem; margin-top: 1rem;
-}
-.cal-track h4 { font-size: .72rem; letter-spacing: .15em; text-transform: uppercase; color: rgba(200,216,240,.5); margin-bottom: 1rem; font-weight: 700; }
-.cal-bar-row { display: flex; align-items: center; gap: 1rem; margin-bottom: .75rem; }
-.cal-label { font-size: .75rem; color: rgba(200,216,240,.6); width: 80px; font-weight: 600; }
-.cal-bar-bg { flex: 1; height: 8px; background: rgba(255,255,255,.06); border-radius: 4px; overflow: hidden; }
-.cal-bar-fill { height: 100%; border-radius: 4px; transition: width 1s cubic-bezier(.4,0,.2,1); }
-.cal-val { font-size: .75rem; color: rgba(200,216,240,.5); width: 60px; text-align: right; font-family: 'DM Mono', monospace; }
-
-/* CONTACT */
-#contact { background: var(--k2); }
-.ct-grid { display: grid; grid-template-columns: 1fr 1.2fr; gap: 4rem; align-items: start; }
-.ct-info { display: flex; flex-direction: column; gap: 1.8rem; }
-.ct-item { display: flex; gap: 1rem; align-items: flex-start; }
-.ct-icon {
-  width: 46px; height: 46px; flex-shrink: 0;
-  border: 1px solid var(--border2); border-radius: var(--r2);
-  display: flex; align-items: center; justify-content: center; font-size: 1.2rem;
-  background: var(--blue3);
-  box-shadow: 0 0 20px rgba(0,212,255,.1);
-}
-.ct-item h4 { font-size: .65rem; letter-spacing: .2em; text-transform: uppercase; color: var(--blue); margin-bottom: .25rem; }
-.ct-item p { color: rgba(200,216,240,.6); font-size: .9rem; }
-.ct-form { background: var(--glass2); border: 1px solid var(--border); border-radius: var(--r2); padding: 2.5rem; backdrop-filter: blur(20px); }
-.fg { display: flex; flex-direction: column; gap: .4rem; margin-bottom: 1rem; }
-.fg label { font-size: .65rem; letter-spacing: .2em; text-transform: uppercase; color: rgba(200,216,240,.4); font-weight: 700; }
-.fg input, .fg select, .fg textarea {
-  background: rgba(0,212,255,.04); border: 1px solid var(--border);
-  color: #c8d8f0; padding: .75rem 1rem; border-radius: var(--r);
-  font-size: .9rem; outline: none; transition: all .3s; width: 100%;
-}
-.fg input:focus, .fg select:focus, .fg textarea:focus {
-  border-color: var(--blue); box-shadow: 0 0 20px rgba(0,212,255,.12);
-}
-.fg input::placeholder, .fg textarea::placeholder { color: rgba(200,216,240,.25); }
-.fg select option { background: var(--k3); }
-.fg textarea { resize: vertical; min-height: 100px; }
-.f-row { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; }
-
-/* AUTH OVERLAY */
-.auth-overlay {
-  position: fixed; inset: 0; z-index: 600;
-  background: rgba(2,3,5,.92); backdrop-filter: blur(16px);
-  display: none; align-items: center; justify-content: center; padding: 1rem;
-}
-.auth-overlay.on { display: flex; }
-.auth-box {
-  background: var(--glass2); border: 1px solid var(--border);
-  border-radius: 12px; width: 100%; max-width: 440px;
-  padding: 2.5rem; position: relative;
-  box-shadow: 0 40px 120px rgba(0,0,0,.7), 0 0 0 1px rgba(0,212,255,.08);
-}
-.auth-box::before { content: ''; position: absolute; top: 0; left: 0; right: 0; height: 2px; background: linear-gradient(to right, var(--blue), var(--gold)); border-radius: 12px 12px 0 0; }
-.auth-logo { font-family: 'Bebas Neue', sans-serif; font-size: 1.4rem; color: var(--blue); text-align: center; margin-bottom: 1.5rem; letter-spacing: .1em; text-shadow: 0 0 20px rgba(0,212,255,.5); }
-.auth-tabs { display: flex; border-bottom: 1px solid var(--border); margin-bottom: 2rem; }
-.auth-tab {
-  flex: 1; padding: .75rem; background: none; border: none; border-bottom: 2px solid transparent;
-  color: rgba(200,216,240,.4); font-family: 'Rajdhani', sans-serif; font-size: .78rem;
-  letter-spacing: .18em; text-transform: uppercase; font-weight: 700;
-  transition: all .3s; margin-bottom: -1px;
-}
-.auth-tab.on { color: var(--blue); border-bottom-color: var(--blue); }
-.auth-close {
-  position: absolute; top: 1rem; right: 1rem;
-  width: 30px; height: 30px; background: none; border: 1px solid var(--border);
-  border-radius: var(--r); color: rgba(200,216,240,.4); font-size: .9rem;
-  display: flex; align-items: center; justify-content: center; transition: all .3s;
-}
-.auth-close:hover { border-color: var(--blue); color: var(--blue); }
-.social-divider { display: flex; align-items: center; gap: 1rem; margin: 1.2rem 0; }
-.social-divider::before, .social-divider::after { content: ''; flex: 1; height: 1px; background: var(--border); }
-.social-divider span { font-size: .65rem; color: rgba(200,216,240,.3); letter-spacing: .1em; text-transform: uppercase; }
-.social-btns { display: grid; grid-template-columns: 1fr 1fr; gap: .75rem; margin-bottom: 1.2rem; }
-.soc-btn {
-  padding: .65rem; border: 1px solid var(--border); border-radius: var(--r);
-  background: none; color: rgba(200,216,240,.7); font-family: 'Rajdhani', sans-serif;
-  font-size: .78rem; font-weight: 600; transition: all .3s;
-  display: flex; align-items: center; justify-content: center; gap: .4rem;
-}
-.soc-btn:hover { border-color: var(--border2); color: var(--blue); background: var(--blue3); }
-
-/* TOAST */
-.toast {
-  position: fixed; bottom: 2rem; left: 50%; transform: translateX(-50%) translateY(80px);
-  background: var(--k3); border: 1px solid var(--border2);
-  padding: .7rem 1.6rem; border-radius: var(--r2);
-  color: #fff; font-size: .83rem; z-index: 700;
-  transition: transform .4s cubic-bezier(.4,0,.2,1);
-  display: flex; align-items: center; gap: .6rem;
-  box-shadow: 0 8px 40px rgba(0,0,0,.5), 0 0 20px rgba(0,212,255,.1);
-  font-family: 'Rajdhani', sans-serif; font-weight: 600; letter-spacing: .05em;
-}
-.toast.on { transform: translateX(-50%) translateY(0); }
-.toast-dot { width: 6px; height: 6px; border-radius: 50%; background: var(--blue); box-shadow: 0 0 8px var(--blue); flex-shrink: 0; }
-
-/* FOOTER */
-footer { background: var(--k); border-top: 1px solid var(--border); padding: 3rem; }
-.ft { display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 2rem; }
-.ft-brand { font-family: 'Bebas Neue', sans-serif; font-size: 1.4rem; color: var(--blue); letter-spacing: .1em; }
-.ft-brand span { color: var(--gold); }
-.ft-links { display: flex; gap: 2rem; list-style: none; }
-.ft-links a { font-size: .72rem; letter-spacing: .15em; text-transform: uppercase; color: rgba(200,216,240,.35); transition: color .3s; font-weight: 600; }
-.ft-links a:hover { color: var(--blue); }
-.ft-copy { font-size: .72rem; color: rgba(200,216,240,.25); letter-spacing: .1em; }
-
-/* MARQUEE */
-.marquee { background: linear-gradient(135deg, rgba(0,212,255,.08), rgba(212,168,67,.06)); border-top: 1px solid var(--border); border-bottom: 1px solid var(--border); padding: .7rem 0; overflow: hidden; white-space: nowrap; }
-.marquee-track { display: inline-flex; animation: mscroll 25s linear infinite; }
-.marquee-track span { font-size: .65rem; letter-spacing: .3em; text-transform: uppercase; color: var(--blue); padding: 0 2.5rem; font-weight: 700; opacity: .7; }
-.marquee-track .dot { color: var(--gold); opacity: .5; }
-@keyframes mscroll { from{transform:translateX(0)}to{transform:translateX(-50%)} }
-
-/* RESPONSIVE */
-@media(max-width: 1024px) {
-  .price-grid { grid-template-columns: 1fr 1fr; }
-  .dash-layout { grid-template-columns: 1fr; height: auto; }
-  .dash-sidebar { display: flex; flex-wrap: wrap; border-right: none; border-bottom: 1px solid var(--border); padding: .75rem; }
-  .dash-nav-item { border-right: none; flex: none; padding: .5rem 1rem; border-radius: var(--r); font-size: .72rem; }
-  .dash-nav-item.active { border-right: none; border-bottom: 2px solid var(--blue); }
-  .dash-stats { grid-template-columns: repeat(2,1fr); }
-  .dash-charts { grid-template-columns: 1fr; }
-}
-@media(max-width: 768px) {
-  #nav { padding: 1rem 1.5rem; }
-  .nav-links { display: none; }
-  .burger { display: flex; }
-  section { padding: 4rem 1.5rem; }
-  .hero-inner { padding: 2rem 1.5rem; }
-  .hero-silhouette { display: none; }
-  .prog-grid { grid-template-columns: 1fr; }
-  .price-grid { grid-template-columns: 1fr; }
-  .ct-grid { grid-template-columns: 1fr; gap: 2.5rem; }
-  .f-row { grid-template-columns: 1fr; }
-  .hero-stats { gap: 1.5rem; }
-  .dash-charts { grid-template-columns: 1fr; }
-  .dash-stats { grid-template-columns: repeat(2,1fr); }
-}
-</style>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=yes">
+  <title>Elite Fitness Pro | Firebase SaaS</title>
+  <!-- Premium Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@300;400;500;600;700;800&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  <!-- Font Awesome Icons -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+  <!-- Chart.js for progress graphs -->
+  <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
+  <style>
+    /* === Full premium styles (identical to previous version) === */
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body { font-family: 'Inter', sans-serif; background-color: #050505; color: #f0f0f0; line-height: 1.5; overflow-x: hidden; }
+    h1, h2, h3, h4, .logo, .premium-title { font-family: 'Manrope', sans-serif; font-weight: 600; letter-spacing: -0.02em; }
+    :root { --gold: #D4AF37; --gold-light: #F5E7B2; --neon-blue: #00f2ff; --neon-glow: 0 0 15px rgba(0, 242, 255, 0.5); --glass-bg: rgba(10, 10, 15, 0.45); --glass-border: rgba(212, 175, 55, 0.25); --card-shadow: 0 25px 40px -12px rgba(0, 0, 0, 0.8), 0 8px 20px rgba(0, 242, 255, 0.08); --depth-3d: perspective(1200px) rotateX(2deg) rotateY(0deg); }
+    .glass-card, .navbar, .modal-content, .dashboard-card, .pricing-card, .program-card, .contact-card { background: var(--glass-bg); backdrop-filter: blur(16px) saturate(180%); -webkit-backdrop-filter: blur(16px) saturate(180%); border: 1px solid var(--glass-border); border-radius: 32px; box-shadow: var(--card-shadow); transition: all 0.3s cubic-bezier(0.23, 1, 0.32, 1); }
+    .program-card:hover, .pricing-card:hover, .dashboard-card:hover { transform: var(--depth-3d) translateY(-8px); border-color: var(--neon-blue); box-shadow: 0 30px 50px -15px #000, 0 0 25px rgba(0, 242, 255, 0.3); }
+    .neon-text { color: var(--neon-blue); text-shadow: var(--neon-glow); }
+    .gold-text { background: linear-gradient(135deg, #F5E7B2 0%, #D4AF37 80%); -webkit-background-clip: text; background-clip: text; color: transparent; }
+    .btn-primary { background: linear-gradient(145deg, #1a1f2a, #0b0e14); border: 1.5px solid var(--gold); color: var(--gold); padding: 12px 28px; border-radius: 60px; font-weight: 600; backdrop-filter: blur(10px); box-shadow: 0 8px 20px rgba(0,0,0,0.6), 0 0 8px rgba(212, 175, 55, 0.3); transition: all 0.2s; cursor: pointer; }
+    .btn-primary:hover { background: var(--gold); color: #050505; border-color: var(--neon-blue); box-shadow: 0 0 25px var(--neon-blue); transform: scale(1.02); }
+    .btn-neon { background: transparent; border: 1.5px solid var(--neon-blue); color: var(--neon-blue); padding: 10px 24px; border-radius: 60px; font-weight: 600; backdrop-filter: blur(8px); box-shadow: 0 0 10px rgba(0,242,255,0.2); transition: 0.2s; cursor: pointer; }
+    .btn-neon:hover { background: var(--neon-blue); color: #050505; box-shadow: 0 0 30px var(--neon-blue); }
+    .container { max-width: 1400px; margin: 0 auto; padding: 0 24px; }
+    .navbar { display: flex; justify-content: space-between; align-items: center; padding: 16px 32px; margin: 20px 24px; border-radius: 80px; background: rgba(5,5,5,0.6); backdrop-filter: blur(20px); border: 1px solid rgba(212,175,55,0.2); position: sticky; top: 20px; z-index: 100; }
+    .logo { font-size: 28px; font-weight: 700; background: linear-gradient(135deg, #ffffff, var(--gold)); -webkit-background-clip: text; background-clip: text; color: transparent; letter-spacing: -0.5px; text-shadow: 0 2px 10px rgba(0,242,255,0.3); }
+    .nav-links { display: flex; gap: 36px; font-weight: 500; }
+    .nav-links a { color: #e0e0e0; text-decoration: none; transition: 0.2s; font-size: 1rem; }
+    .nav-links a:hover { color: var(--neon-blue); text-shadow: var(--neon-glow); }
+    .auth-buttons { display: flex; gap: 12px; }
+    .hero { position: relative; height: 100vh; min-height: 750px; display: flex; align-items: center; margin-top: -100px; overflow: hidden; border-bottom: 1px solid rgba(212,175,55,0.2); }
+    .hero-video { position: absolute; top: 0; left: 0; width: 100%; height: 100%; object-fit: cover; z-index: -2; }
+    .hero-overlay { position: absolute; top: 0; left: 0; width: 100%; height: 100%; background: radial-gradient(circle at 30% 40%, rgba(0,20,30,0.5) 0%, #000000 95%); z-index: -1; }
+    .hero-content { max-width: 800px; padding: 0 24px; margin-top: 80px; }
+    .hero h1 { font-size: 5rem; font-weight: 800; line-height: 1.1; margin-bottom: 24px; text-shadow: 0 10px 30px rgba(0,0,0,0.8), 0 0 20px rgba(0,242,255,0.3); }
+    .section-title { font-size: 3.2rem; margin-bottom: 48px; position: relative; }
+    .program-grid, .pricing-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 30px; }
+    .program-card { padding: 40px 28px; background: rgba(8,12,18,0.6); backdrop-filter: blur(14px); }
+    .program-icon { font-size: 48px; color: var(--gold); margin-bottom: 24px; }
+    .dashboard-preview { margin: 100px 0; }
+    .dashboard-grid { display: grid; grid-template-columns: 1.2fr 0.9fr 1fr; gap: 24px; }
+    .dashboard-card { padding: 28px 24px; background: rgba(5,8,14,0.7); backdrop-filter: blur(18px); }
+    .stat-value { font-size: 2.8rem; font-weight: 700; color: var(--neon-blue); }
+    .workout-item { display: flex; justify-content: space-between; padding: 14px 0; border-bottom: 1px solid rgba(255,255,255,0.05); }
+    .progress-bar { height: 8px; background: #1e2630; border-radius: 10px; margin: 8px 0 16px; }
+    .progress-fill { height: 8px; border-radius: 10px; background: linear-gradient(90deg, var(--gold), var(--neon-blue)); width: 75%; box-shadow: 0 0 12px var(--neon-blue); }
+    .chart-container { margin-top: 20px; height: 180px; }
+    .pricing-card { padding: 40px 28px; text-align: center; }
+    .price { font-size: 3.5rem; font-weight: 700; color: var(--gold); margin: 20px 0; }
+    .contact-flex { display: flex; flex-wrap: wrap; gap: 40px; align-items: center; }
+    .contact-info i { color: var(--neon-blue); width: 32px; }
+    .modal { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.8); backdrop-filter: blur(12px); align-items: center; justify-content: center; z-index: 1000; }
+    .modal-content { max-width: 520px; width: 90%; padding: 36px 32px; background: rgba(10,10,18,0.9); border: 1px solid var(--gold); }
+    .tab-header { display: flex; gap: 24px; margin-bottom: 32px; }
+    .tab-btn { background: none; border: none; color: #aaa; font-size: 1.4rem; font-weight: 600; cursor: pointer; padding-bottom: 8px; }
+    .tab-btn.active { color: var(--neon-blue); border-bottom: 3px solid var(--gold); }
+    .input-group { margin-bottom: 20px; }
+    .input-group input, .input-group select { width: 100%; padding: 16px 18px; background: #0f131c; border: 1px solid #2a3340; border-radius: 40px; color: white; font-size: 1rem; }
+    .age-tracker { background: rgba(0,242,255,0.05); border-radius: 24px; padding: 20px; margin-top: 24px; }
+    footer { margin-top: 80px; padding: 32px; text-align: center; border-top: 1px solid rgba(212,175,55,0.2); }
+    #userGreeting { display: flex; align-items: center; gap: 10px; }
+    #logoutBtn { background: none; border: 1px solid var(--gold); color: var(--gold); padding: 6px 16px; border-radius: 40px; cursor: pointer; }
+    @media (max-width: 900px) {
+      .navbar { flex-wrap: wrap; gap: 12px; }
+      .nav-links { order: 3; width: 100%; justify-content: center; }
+      .hero h1 { font-size: 3.5rem; }
+      .dashboard-grid { grid-template-columns: 1fr; }
+    }
+    @media (max-width: 600px) {
+      .hero h1 { font-size: 2.8rem; }
+    }
+  </style>
 </head>
 <body>
 
-<!-- CURSOR -->
-<div id="cur"></div>
-<div id="cur2"></div>
-
-<!-- AUTH OVERLAY -->
-<div class="auth-overlay" id="authOverlay">
-  <div class="auth-box">
-    <div class="auth-logo">ELITE FITNESS <span style="color:var(--gold)">PRO</span></div>
-    <button class="auth-close" onclick="closeAuth()">✕</button>
-    <div class="auth-tabs">
-      <button class="auth-tab on" onclick="switchTab('login',this)" id="loginTab">Sign In</button>
-      <button class="auth-tab" onclick="switchTab('signup',this)" id="signupTab">Create Account</button>
-    </div>
-    <div id="authForm"></div>
+<!-- Sticky Navbar -->
+<nav class="navbar">
+  <div class="logo"><i class="fas fa-dumbbell" style="margin-right: 10px; color: var(--gold);"></i>ELITE FITNESS PRO</div>
+  <div class="nav-links">
+    <a href="#home">Home</a>
+    <a href="#programs">Programs</a>
+    <a href="#dashboard">Dashboard</a>
+    <a href="#pricing">Pricing</a>
+    <a href="#contact">Contact</a>
   </div>
-</div>
-
-<!-- NAV -->
-<nav id="nav">
-  <div class="nav-logo">ELITE<span> FITNESS</span> PRO</div>
-  <ul class="nav-links" id="navLinks">
-    <li><a href="#programs">Programs</a></li>
-    <li><a href="#pricing">Pricing</a></li>
-    <li><a href="#dashboard">Dashboard</a></li>
-    <li><a href="#contact">Contact</a></li>
-  </ul>
-  <div class="nav-right">
-    <button class="n-btn" onclick="openAuth()">Sign In</button>
-    <button class="n-btn gold" onclick="openAuth()">Start Free Trial</button>
-    <button class="burger" onclick="toggleNav()"><span></span><span></span><span></span></button>
+  <div class="auth-buttons" id="authButtons">
+    <button class="btn-neon" id="loginBtn"><i class="fas fa-key"></i> Login</button>
+    <button class="btn-primary" id="signupBtn"><i class="fas fa-user-plus"></i> Sign Up</button>
+  </div>
+  <div id="userGreeting" style="display: none;">
+    <span id="userEmailDisplay"></span>
+    <button id="logoutBtn" class="btn-neon">Logout</button>
   </div>
 </nav>
 
-<!-- HERO -->
-<section id="hero">
-  <div class="hero-video-bg"></div>
-  <div class="hero-grid-lines"></div>
-  <div class="hero-glow1"></div>
-  <div class="hero-glow2"></div>
-  <div class="hero-inner">
-    <div class="hero-badge">⚡ AI-Powered Training Platform 2026</div>
-    <h1 class="hero-h1">
-      <span class="line1">FORGE YOUR</span>
-      <span class="line2">ELITE BODY</span>
-    </h1>
-    <p class="hero-sub">The world's most advanced fitness platform. Real-time AI coaching, precision tracking, and elite programs engineered for extraordinary results.</p>
-    <div class="hero-cta">
-      <button class="cta-primary" onclick="openAuth()">⚡ Start Training Now</button>
-      <button class="cta-secondary" onclick="scrollTo('#programs')">Explore Programs →</button>
+<!-- Hero Section -->
+<section id="home" class="hero">
+  <video class="hero-video" autoplay muted loop playsinline poster="https://images.pexels.com/photos/841130/pexels-photo-841130.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2">
+    <source src="https://assets.mixkit.co/videos/preview/mixkit-man-and-woman-doing-push-ups-in-a-gym-47496-large.mp4" type="video/mp4">
+  </video>
+  <div class="hero-overlay"></div>
+  <div class="container hero-content">
+    <h1><span class="gold-text">ELITE</span> <span class="neon-text">PERFORMANCE</span><br>REDEFINED</h1>
+    <p style="font-size: 1.3rem; margin-bottom: 40px; max-width: 600px; text-shadow: 0 4px 20px black;">Cinematic training • AI coaching • Firebase sync. Join the future of fitness.</p>
+    <div style="display: flex; gap: 20px;">
+      <button class="btn-primary" id="heroCta"><i class="fas fa-crown"></i> Start Elite Journey</button>
+      <button class="btn-neon"><i class="fas fa-play"></i> Watch Teaser</button>
     </div>
-    <div class="hero-stats">
-      <div class="hero-stat">
-        <div class="num">50<span>K+</span></div>
-        <div class="lbl">Active Athletes</div>
-      </div>
-      <div class="hero-stat">
-        <div class="num">200<span>+</span></div>
-        <div class="lbl">Elite Programs</div>
-      </div>
-      <div class="hero-stat">
-        <div class="num">98<span>%</span></div>
-        <div class="lbl">Success Rate</div>
-      </div>
-    </div>
-  </div>
-  <div class="hero-silhouette">
-    <div class="sil-glow"></div>
-    <div class="hero-rings">
-      <div class="ring"></div><div class="ring"></div><div class="ring"></div>
-    </div>
-    <div class="sil-figure">🏋️</div>
-  </div>
-  <div class="scroll-ind"><div class="scroll-line"></div><span>Scroll</span></div>
-</section>
-
-<!-- MARQUEE -->
-<div class="marquee">
-  <div class="marquee-track" id="mqt"></div>
-</div>
-
-<!-- PROGRAMS -->
-<section id="programs">
-  <div class="wrap">
-    <div class="rv">
-      <p class="sec-eye">Training Programs</p>
-      <h2 class="sec-title">ELITE <span class="hl">PROGRAMS</span></h2>
-      <div class="sec-line"></div>
-    </div>
-    <div class="prog-grid" id="progGrid"></div>
-  </div>
-</section>
-
-<!-- PRICING -->
-<section id="pricing">
-  <div class="wrap">
-    <div style="text-align:center" class="rv">
-      <p class="sec-eye">Investment in Excellence</p>
-      <h2 class="sec-title">CHOOSE YOUR <span class="hl">PLAN</span></h2>
-      <div class="sec-line" style="margin:0 auto 3rem"></div>
-    </div>
-    <div class="price-grid">
-      <!-- STARTER -->
-      <div class="price-card rv d1">
-        <div class="price-plan">Starter</div>
-        <div class="price-amount">
-          <span class="currency">$</span><span class="num">29</span>
-          <span class="period">/month</span>
-        </div>
-        <p class="price-desc">Perfect for beginners starting their fitness journey.</p>
-        <ul class="price-feats">
-          <li class="has"><span class="check">✓</span><span class="txt">5 Training Programs</span></li>
-          <li class="has"><span class="check">✓</span><span class="txt">Basic Progress Tracking</span></li>
-          <li class="has"><span class="check">✓</span><span class="txt">Calorie Counter</span></li>
-          <li class="has"><span class="check">✓</span><span class="txt">Community Access</span></li>
-          <li class="no"><span class="check">✕</span><span class="txt">AI Coaching</span></li>
-          <li class="no"><span class="check">✕</span><span class="txt">1-on-1 Sessions</span></li>
-          <li class="no"><span class="check">✕</span><span class="txt">Custom Meal Plans</span></li>
-        </ul>
-        <button class="price-cta outline" onclick="openAuth()">Get Started →</button>
-      </div>
-      <!-- ELITE (featured) -->
-      <div class="price-card featured rv d2">
-        <div class="price-badge">MOST POPULAR</div>
-        <div class="price-plan">Elite</div>
-        <div class="price-amount">
-          <span class="currency">$</span><span class="num">79</span>
-          <span class="period">/month</span>
-        </div>
-        <p class="price-desc">The complete system for serious athletes demanding results.</p>
-        <ul class="price-feats">
-          <li class="has"><span class="check">✓</span><span class="txt">All 200+ Programs</span></li>
-          <li class="has"><span class="check">✓</span><span class="txt">Advanced Analytics</span></li>
-          <li class="has"><span class="check">✓</span><span class="txt">AI Coaching Engine</span></li>
-          <li class="has"><span class="check">✓</span><span class="txt">Custom Meal Plans</span></li>
-          <li class="has"><span class="check">✓</span><span class="txt">Real-time Form Analysis</span></li>
-          <li class="has"><span class="check">✓</span><span class="txt">Priority Support</span></li>
-          <li class="no"><span class="check">✕</span><span class="txt">1-on-1 Coach Sessions</span></li>
-        </ul>
-        <button class="price-cta filled" onclick="openAuth()">⚡ Join Elite →</button>
-      </div>
-      <!-- PRO -->
-      <div class="price-card rv d3">
-        <div class="price-plan">Pro Athlete</div>
-        <div class="price-amount">
-          <span class="currency">$</span><span class="num">149</span>
-          <span class="period">/month</span>
-        </div>
-        <p class="price-desc">For elite athletes who demand the absolute best.</p>
-        <ul class="price-feats">
-          <li class="has"><span class="check">✓</span><span class="txt">Everything in Elite</span></li>
-          <li class="has"><span class="check">✓</span><span class="txt">4x Monthly 1-on-1 Sessions</span></li>
-          <li class="has"><span class="check">✓</span><span class="txt">Dedicated Coach</span></li>
-          <li class="has"><span class="check">✓</span><span class="txt">Competition Prep</span></li>
-          <li class="has"><span class="check">✓</span><span class="txt">Blood Work Analysis</span></li>
-          <li class="has"><span class="check">✓</span><span class="txt">24/7 Coach Messaging</span></li>
-          <li class="has"><span class="check">✓</span><span class="txt">Recovery Protocols</span></li>
-        </ul>
-        <button class="price-cta outline" onclick="openAuth()">Go Pro →</button>
-      </div>
+    <div style="margin-top: 60px; display: flex; gap: 16px;">
+      <img src="https://images.pexels.com/photos/2294361/pexels-photo-2294361.jpeg?auto=compress&cs=tinysrgb&w=600" alt="Fitness model" style="width: 70px; height: 70px; border-radius: 50%; border: 2px solid var(--gold); object-fit: cover;">
+      <img src="https://images.pexels.com/photos/416809/pexels-photo-416809.jpeg?auto=compress&cs=tinysrgb&w=600" alt="Strong athlete" style="width: 70px; height: 70px; border-radius: 50%; border: 2px solid var(--neon-blue); object-fit: cover;">
+      <img src="https://images.pexels.com/photos/1552252/pexels-photo-1552252.jpeg?auto=compress&cs=tinysrgb&w=600" alt="Gym" style="width: 70px; height: 70px; border-radius: 50%; border: 2px solid var(--gold); object-fit: cover;">
+      <span style="margin-left: 12px; align-self: center; color: #ccc;"><i class="fas fa-star" style="color: gold;"></i> 10k+ Elite members</span>
     </div>
   </div>
 </section>
 
-<!-- DASHBOARD PREVIEW -->
-<section id="dashboard">
-  <div class="wrap">
-    <div class="rv" style="margin-bottom:2rem">
-      <p class="sec-eye">Member Dashboard</p>
-      <h2 class="sec-title">YOUR <span class="hl">COMMAND CENTER</span></h2>
-      <div class="sec-line"></div>
+<div class="container">
+  <!-- Programs Section -->
+  <section id="programs" style="padding: 100px 0 60px;">
+    <h2 class="section-title"><span class="neon-text">//</span> SIGNATURE <span class="gold-text">PROGRAMS</span></h2>
+    <div class="program-grid">
+      <div class="program-card">
+        <div class="program-icon"><i class="fas fa-fire"></i></div>
+        <h3 style="font-size: 2rem; margin-bottom: 16px;">Weight Loss</h3>
+        <p style="margin-bottom: 24px; opacity: 0.9;">AI-powered fat burn, metabolic conditioning. Personalized meal & workout sync.</p>
+        <img src="https://images.pexels.com/photos/416778/pexels-photo-416778.jpeg?auto=compress&cs=tinysrgb&w=600" alt="Weight loss" style="width: 100%; height: 180px; object-fit: cover; border-radius: 20px; margin-bottom: 20px; border: 1px solid var(--gold);">
+        <button class="btn-neon" style="width: 100%;">Explore →</button>
+      </div>
+      <div class="program-card">
+        <div class="program-icon"><i class="fas fa-dumbbell"></i></div>
+        <h3 style="font-size: 2rem; margin-bottom: 16px;">Muscle Gain</h3>
+        <p style="margin-bottom: 24px; opacity: 0.9;">Hypertrophy specialization, progressive overload tracking, recovery analytics.</p>
+        <img src="https://images.pexels.com/photos/841130/pexels-photo-841130.jpeg?auto=compress&cs=tinysrgb&w=600" alt="Muscle gain" style="width: 100%; height: 180px; object-fit: cover; border-radius: 20px; margin-bottom: 20px; border: 1px solid var(--neon-blue);">
+        <button class="btn-neon" style="width: 100%;">Explore →</button>
+      </div>
     </div>
-    <div class="dash-wrap rv d1">
-      <!-- Topbar -->
-      <div class="dash-topbar">
-        <div class="brand">ELITE FITNESS PRO</div>
-        <div style="display:flex;align-items:center;gap:1.5rem">
-          <div style="font-size:.7rem;color:rgba(200,216,240,.4);letter-spacing:.1em">MON, APR 21 · 2026</div>
-          <div style="font-size:.7rem;padding:.3rem .8rem;border-radius:20px;background:rgba(0,255,136,.1);color:var(--green);border:1px solid rgba(0,255,136,.2);letter-spacing:.1em">● LIVE</div>
-          <div class="dash-user">
-            <div class="dash-avatar">JD</div>
-            <div class="uname">James D.</div>
+  </section>
+
+  <!-- User Dashboard + Tracking (Firestore sync) -->
+  <section id="dashboard" class="dashboard-preview">
+    <h2 class="section-title"><span class="neon-text">⌘</span> YOUR <span class="gold-text">ELITE DASHBOARD</span></h2>
+    <div class="dashboard-grid" id="dashboardContent">
+      <div class="dashboard-card">
+        <div style="display: flex; align-items: center; gap: 12px; margin-bottom: 20px;">
+          <i class="fas fa-user-circle" style="font-size: 50px; color: var(--gold);"></i>
+          <div><h3 id="dashName">Guest</h3><span class="neon-text">Member</span></div>
+        </div>
+        <div class="stat-value" id="dailyCalories">0 <span style="font-size: 1rem;">kcal</span></div>
+        <div>Daily active burn</div>
+        <div class="progress-bar"><div class="progress-fill" id="calProgress" style="width: 0%;"></div></div>
+        <div style="display: flex; justify-content: space-between; margin-top: 24px;">
+          <div><i class="fas fa-shoe-prints"></i> <span id="stepsCount">0</span> steps</div>
+          <div><i class="fas fa-heart"></i> <span id="heartRate">--</span> bpm</div>
+        </div>
+      </div>
+      <div class="dashboard-card">
+        <h3 style="display: flex; gap: 8px;"><i class="fas fa-clipboard-list neon-text"></i> Today's Workout</h3>
+        <div id="workoutList"></div>
+        <div style="margin-top: 24px; background: rgba(0,242,255,0.05); border-radius: 20px; padding: 16px;">
+          <div style="display: flex; justify-content: space-between;"><span>🔥 Calories burned</span> <span class="neon-text" id="workoutCal">0 kcal</span></div>
+          <div style="display: flex; justify-content: space-between; margin-top: 10px;"><span>🍗 Protein goal</span> <span id="proteinGoal">0g / 180g</span></div>
+          <div class="progress-bar"><div class="progress-fill" id="proteinProgress" style="width: 0%;"></div></div>
+        </div>
+      </div>
+      <div class="dashboard-card">
+        <h3><i class="fas fa-chart-line neon-text"></i> Weekly Progress</h3>
+        <div class="chart-container">
+          <canvas id="progressChart" width="300" height="150"></canvas>
+        </div>
+        <div class="age-tracker">
+          <label style="display: block; margin-bottom: 8px;"><i class="fas fa-cake-candles"></i> Age-based nutrition</label>
+          <div style="display: flex; gap: 10px;">
+            <input type="number" id="ageInput" placeholder="Your age" value="28" min="15" max="80" style="background:#0f131c; border:1px solid var(--gold); border-radius: 30px; padding: 10px 16px; color:white; width: 100px;">
+            <button id="calcNutritionBtn" class="btn-neon" style="padding: 8px 16px;">Update</button>
+            <button id="saveNutritionBtn" class="btn-primary" style="padding: 8px 16px;">Save</button>
+          </div>
+          <div style="margin-top: 12px;" id="nutritionResult">
+            <span>🔥 BMR: 1820 kcal</span> | <span>🥑 Protein: 145g</span>
           </div>
         </div>
-      </div>
-      <!-- Layout -->
-      <div class="dash-layout">
-        <!-- Sidebar -->
-        <div class="dash-sidebar">
-          <div class="dash-nav-item active" onclick="switchDash('overview',this)"><span class="ico">📊</span>Overview</div>
-          <div class="dash-nav-item" onclick="switchDash('workouts',this)"><span class="ico">🏋️</span>Workouts</div>
-          <div class="dash-nav-item" onclick="switchDash('nutrition',this)"><span class="ico">🥗</span>Nutrition</div>
-          <div class="dash-nav-item" onclick="switchDash('progress',this)"><span class="ico">📈</span>Progress</div>
-          <div class="dash-nav-item" onclick="switchDash('programs',this)"><span class="ico">⚡</span>Programs</div>
-          <div class="dash-nav-item" onclick="switchDash('settings',this)"><span class="ico">⚙️</span>Settings</div>
-        </div>
-        <!-- Main content -->
-        <div class="dash-main" id="dashMain"></div>
+        <p style="margin-top: 16px; font-size: 0.9rem;"><i class="fas fa-arrow-up" style="color: var(--gold);"></i> +4.2% strength vs last week</p>
       </div>
     </div>
-  </div>
-</section>
+  </section>
 
-<!-- CONTACT -->
-<section id="contact">
-  <div class="wrap">
-    <div class="rv" style="margin-bottom:3rem">
-      <p class="sec-eye">Get in Touch</p>
-      <h2 class="sec-title">CONTACT <span class="hl">US</span></h2>
-      <div class="sec-line"></div>
-    </div>
-    <div class="ct-grid">
-      <div class="ct-info rv">
-        <div class="ct-item"><div class="ct-icon">📍</div><div><h4>Location</h4><p>One Elite Tower, 5th Ave<br>New York, NY 10001</p></div></div>
-        <div class="ct-item"><div class="ct-icon">📞</div><div><h4>Phone</h4><p>+1 (800) ELITE-FIT</p></div></div>
-        <div class="ct-item"><div class="ct-icon">📧</div><div><h4>Email</h4><p>elite@elitefitnesspro.com</p></div></div>
-        <div class="ct-item"><div class="ct-icon">🕐</div><div><h4>Support Hours</h4><p>24/7 Elite Member Support<br>Mon–Fri: Priority Response</p></div></div>
+  <!-- Pricing Plans -->
+  <section id="pricing" style="padding: 80px 0;">
+    <h2 class="section-title"><span class="neon-text">//</span> ELITE <span class="gold-text">MEMBERSHIP</span></h2>
+    <div class="pricing-grid">
+      <div class="pricing-card">
+        <h3>Essential</h3>
+        <div class="price">$29<small style="font-size: 1rem;">/mo</small></div>
+        <ul style="list-style: none; margin: 24px 0; text-align: left;">
+          <li><i class="fas fa-check-circle neon-text"></i> Workout tracking</li>
+          <li><i class="fas fa-check-circle neon-text"></i> Basic analytics</li>
+          <li><i class="fas fa-check-circle neon-text"></i> 5 programs</li>
+        </ul>
+        <button class="btn-primary" style="width:100%;">Choose</button>
       </div>
-      <div class="ct-form rv d2">
-        <div class="f-row">
-          <div class="fg"><label>First Name</label><input type="text" placeholder="James"></div>
-          <div class="fg"><label>Last Name</label><input type="text" placeholder="Doe"></div>
-        </div>
-        <div class="fg"><label>Email</label><input type="email" placeholder="james@example.com"></div>
-        <div class="fg"><label>Goal</label>
-          <select>
-            <option value="">Select your fitness goal</option>
-            <option>Weight Loss</option><option>Muscle Gain</option>
-            <option>Athletic Performance</option><option>Endurance</option>
-            <option>General Fitness</option>
-          </select>
-        </div>
-        <div class="fg"><label>Message</label><textarea placeholder="Tell us about your fitness goals..."></textarea></div>
-        <button class="cta-primary" style="width:100%;justify-content:center;padding:1rem" onclick="showToast('Message sent! Our team will contact you within 24 hours.')">⚡ Send Message</button>
+      <div class="pricing-card" style="border: 2px solid var(--gold); transform: scale(1.02);">
+        <h3>Pro <span style="background: var(--neon-blue); color:black; padding:4px 12px; border-radius: 40px; font-size:0.8rem;">POPULAR</span></h3>
+        <div class="price">$59<small>/mo</small></div>
+        <ul style="list-style: none; margin: 24px 0; text-align: left;">
+          <li><i class="fas fa-check-circle neon-text"></i> All Essential +</li>
+          <li><i class="fas fa-check-circle neon-text"></i> AI nutrition coach</li>
+          <li><i class="fas fa-check-circle neon-text"></i> Advanced charts</li>
+          <li><i class="fas fa-check-circle neon-text"></i> 1:1 check-ins</li>
+        </ul>
+        <button class="btn-primary" style="width:100%; background: var(--gold); color:#050505;">Start Pro</button>
+      </div>
+      <div class="pricing-card">
+        <h3>Elite</h3>
+        <div class="price">$99<small>/mo</small></div>
+        <ul style="list-style: none; margin: 24px 0; text-align: left;">
+          <li><i class="fas fa-check-circle neon-text"></i> Everything in Pro</li>
+          <li><i class="fas fa-check-circle neon-text"></i> Personal coaching</li>
+          <li><i class="fas fa-check-circle neon-text"></i> Bloodwork insights</li>
+        </ul>
+        <button class="btn-primary" style="width:100%;">Go Elite</button>
       </div>
     </div>
-  </div>
-</section>
+  </section>
 
-<!-- FOOTER -->
+  <!-- Contact Section -->
+  <section id="contact" style="padding-bottom: 80px;">
+    <h2 class="section-title"><span class="neon-text">⌕</span> GET IN <span class="gold-text">TOUCH</span></h2>
+    <div class="contact-flex">
+      <div class="contact-card" style="flex:1; padding: 40px;">
+        <div style="display: flex; gap: 40px; flex-wrap: wrap;">
+          <div class="contact-info">
+            <p><i class="fas fa-phone-alt"></i> <a href="tel:+923447436681" style="color:white; text-decoration:none;">+92 344 7436681</a></p>
+            <p><i class="fas fa-envelope"></i> <a href="mailto:mirraza995@gmail.com" style="color:var(--neon-blue);">mirraza995@gmail.com</a></p>
+            <p><i class="fas fa-map-pin"></i> Dubai / London / NYC</p>
+          </div>
+          <div>
+            <img src="https://images.pexels.com/photos/260447/pexels-photo-260447.jpeg?auto=compress&cs=tinysrgb&w=600" alt="Luxury gym" style="width: 220px; border-radius: 28px; border: 2px solid var(--gold);">
+          </div>
+        </div>
+        <div style="margin-top: 30px;">
+          <button class="btn-neon"><i class="fab fa-whatsapp"></i> Chat on WhatsApp</button>
+          <button class="btn-primary" style="margin-left: 16px;">Book consultation</button>
+        </div>
+      </div>
+    </div>
+  </section>
+</div>
+
 <footer>
-  <div class="wrap">
-    <div class="ft">
-      <div>
-        <div class="ft-brand">ELITE FITNESS<span> PRO</span></div>
-        <div style="font-size:.75rem;color:rgba(200,216,240,.3);margin-top:.5rem;letter-spacing:.05em">The World's Most Advanced Fitness Platform</div>
-      </div>
-      <ul class="ft-links">
-        <li><a href="#programs">Programs</a></li>
-        <li><a href="#pricing">Pricing</a></li>
-        <li><a href="#dashboard">Dashboard</a></li>
-        <li><a href="#contact">Contact</a></li>
-      </ul>
-      <div class="ft-copy">© 2026 Elite Fitness Pro. All rights reserved.</div>
-    </div>
-  </div>
+  <p>© 2026 Elite Fitness Pro — Cinematic SaaS. All rights reserved. <span class="neon-text">#TrainElite</span></p>
 </footer>
 
-<!-- TOAST -->
-<div class="toast" id="toast"><div class="toast-dot"></div><span id="toastMsg"></span></div>
+<!-- AUTH MODAL with Firebase integration -->
+<div class="modal" id="authModal">
+  <div class="modal-content">
+    <div class="tab-header">
+      <button class="tab-btn active" id="loginTabBtn">Login</button>
+      <button class="tab-btn" id="signupTabBtn">Create Account</button>
+      <i class="fas fa-times" style="margin-left: auto; cursor: pointer; font-size: 24px; color: var(--gold);" id="closeModal"></i>
+    </div>
+    <div id="authError" style="color: #ff6b6b; margin-bottom: 16px;"></div>
+    <!-- Login Form -->
+    <form id="loginForm">
+      <div class="input-group"><input type="email" id="loginEmail" placeholder="Email" required></div>
+      <div class="input-group"><input type="password" id="loginPassword" placeholder="Password" required></div>
+      <button type="submit" class="btn-primary" style="width:100%;">Sign In</button>
+      <p style="margin-top: 16px; text-align:center;">or</p>
+      <div class="input-group"><input type="tel" id="phoneLogin" placeholder="Phone (+1234567890)"></div>
+      <div id="recaptcha-container-login"></div>
+      <button type="button" id="phoneLoginBtn" class="btn-neon" style="width:100%;">Login with Phone</button>
+    </form>
+    <!-- Signup Form -->
+    <form id="signupForm" style="display: none;">
+      <div class="input-group"><input type="text" id="signupName" placeholder="Full Name" required></div>
+      <div class="input-group"><input type="email" id="signupEmail" placeholder="Email" required></div>
+      <div class="input-group"><input type="password" id="signupPassword" placeholder="Password" required></div>
+      <div class="input-group"><input type="number" id="signupAge" placeholder="Age"></div>
+      <div class="input-group">
+        <select id="signupGender"><option>Male</option><option>Female</option><option>Other</option></select>
+      </div>
+      <div class="input-group">
+        <select id="signupGoal"><option>Weight Loss</option><option>Muscle Gain</option><option>Endurance</option></select>
+      </div>
+      <div id="recaptcha-container-signup"></div>
+      <button type="submit" class="btn-primary" style="width:100%;">Create Elite Account</button>
+      <p style="margin-top:12px;">or</p>
+      <button type="button" id="phoneSignupBtn" class="btn-neon" style="width:100%;">Sign up with Phone</button>
+    </form>
+    <div id="verificationCodeDiv" style="display:none; margin-top:20px;">
+      <input type="text" id="verificationCode" placeholder="Enter OTP" style="width:100%; padding:12px; border-radius:40px; background:#0f131c; color:white;">
+      <button id="verifyCodeBtn" class="btn-primary" style="width:100%; margin-top:10px;">Verify</button>
+    </div>
+  </div>
+</div>
 
-<script>
-// CURSOR
-var curEl=document.getElementById('cur'),cur2El=document.getElementById('cur2');
-document.addEventListener('mousemove',function(e){
-  curEl.style.left=e.clientX+'px';curEl.style.top=e.clientY+'px';
-  setTimeout(function(){cur2El.style.left=e.clientX+'px';cur2El.style.top=e.clientY+'px';},80);
-  // card glow follow
-  var card=document.elementFromPoint(e.clientX,e.clientY);
-  if(card){var pc=card.closest('.prog-card');if(pc){var r=pc.getBoundingClientRect();pc.style.setProperty('--mx',(e.clientX-r.left)/r.width*100+'%');pc.style.setProperty('--my',(e.clientY-r.top)/r.height*100+'%');}}
-});
-document.addEventListener('mousedown',function(){curEl.style.transform='translate(-50%,-50%) scale(.7)'});
-document.addEventListener('mouseup',function(){curEl.style.transform='translate(-50%,-50%) scale(1)'});
+<!-- Firebase SDK -->
+<script type="module">
+  import { initializeApp } from "https://www.gstatic.com/firebasejs/12.12.1/firebase-app.js";
+  import { 
+    getAuth, 
+    createUserWithEmailAndPassword, 
+    signInWithEmailAndPassword, 
+    signOut, 
+    onAuthStateChanged,
+    RecaptchaVerifier,
+    signInWithPhoneNumber,
+    updateProfile
+  } from "https://www.gstatic.com/firebasejs/12.12.1/firebase-auth.js";
+  import { 
+    getFirestore, 
+    doc, 
+    setDoc, 
+    getDoc, 
+    updateDoc, 
+    onSnapshot 
+  } from "https://www.gstatic.com/firebasejs/12.12.1/firebase-firestore.js";
 
-// MARQUEE
-(function(){
-  var items=['Weight Loss','Muscle Gain','HIIT Training','Strength & Power','Endurance Run','Body Recomposition','Competition Prep','Recovery Science'];
-  var t=document.getElementById('mqt');
-  var h=items.map(function(i){return '<span>'+i+'</span><span class="dot"> ✦ </span>';}).join('');
-  t.innerHTML=h+h;
-})();
+  // Your Firebase configuration
+  const firebaseConfig = {
+    apiKey: "AIzaSyDb37iOgAVsPkt2DrcMCpaVk9nb81W_vSg",
+    authDomain: "elite-fitness-pro-844b7.firebaseapp.com",
+    projectId: "elite-fitness-pro-844b7",
+    storageBucket: "elite-fitness-pro-844b7.firebasestorage.app",
+    messagingSenderId: "878667264227",
+    appId: "1:878667264227:web:d63ebc8d8cf8d133e955d6"
+  };
 
-// PROGRAMS DATA
-var PROGRAMS=[
-  {icon:'🔥',tag:'blue',tagTxt:'Fat Burn',name:'INCINERATE',desc:'High-intensity metabolic conditioning designed to torch fat while preserving hard-earned muscle. Science-backed protocols for maximum caloric burn.',feats:['Metabolic circuit training','Daily HIIT sessions','Macro-optimized nutrition','Weekly body composition scan'],weeks:'12',wLabel:'Week Program'},
-  {icon:'💪',tag:'gold',tagTxt:'Hypertrophy',name:'MASS PROTOCOL',desc:'Progressive overload engineering for maximum muscle hypertrophy. Periodized training blocks optimized for size and strength simultaneously.',feats:['Progressive overload system','Compound + isolation split','Protein synthesis protocols','Recovery optimization'],weeks:'16',wLabel:'Week Program'},
-  {icon:'⚡',tag:'red',tagTxt:'Performance',name:'ATHLETE X',desc:'Elite athletic performance training used by professional competitors. Speed, power, agility, and sport-specific conditioning fused into one.',feats:['Power & speed development','Plyometric progression','Sport-specific protocols','Competition peaking'],weeks:'20',wLabel:'Week Program'},
-  {icon:'🎯',tag:'blue',tagTxt:'Toning',name:'SCULPT PRO',desc:'Precision body sculpting with targeted resistance training and strategic cardio. Build lean, defined muscle while eliminating stubborn fat.',feats:['Targeted isolation work','Body sculpting circuits','Flexibility integration','Daily habit tracking'],weeks:'10',wLabel:'Week Program'},
-  {icon:'🧠',tag:'gold',tagTxt:'Mind-Body',name:'ZENITH',desc:'The intersection of peak physical performance and mental resilience. Combines elite strength training with mindfulness and recovery science.',feats:['Strength + mindfulness','Breathwork protocols','Sleep optimization','Stress reduction science'],weeks:'8',wLabel:'Week Program'},
-  {icon:'🏆',tag:'red',tagTxt:'Competition',name:'CHAMPION CUT',desc:'Pre-competition physique peaking for bodybuilding and fitness competitors. Precisely engineered for stage-ready conditioning.',feats:['Peak week protocols','Depletion & loading','Stage presentation coaching','Photo shoot prep'],weeks:'24',wLabel:'Week Program'},
-];
+  const app = initializeApp(firebaseConfig);
+  const auth = getAuth(app);
+  const db = getFirestore(app);
 
-var pGrid=document.getElementById('progGrid');
-pGrid.innerHTML=PROGRAMS.map(function(p,i){
-  return '<div class="prog-card rv" style="transition-delay:'+i*.08+'s">'+
-    '<div class="prog-icon">'+p.icon+'</div>'+
-    '<div class="prog-tag '+p.tag+'">'+p.tagTxt+'</div>'+
-    '<h3>'+p.name+'</h3>'+
-    '<p>'+p.desc+'</p>'+
-    '<ul class="prog-features">'+p.feats.map(function(f){return '<li>'+f+'</li>';}).join('')+'</ul>'+
-    '<div class="prog-duration"><div><div class="weeks">'+p.weeks+'</div><div class="label">'+p.wLabel+'</div></div>'+
-    '<button class="prog-btn" onclick="showToast(\'Starting '+p.name+' program!\')">Enroll →</button></div>'+
-  '</div>';
-}).join('');
+  // Global variables
+  let currentUser = null;
+  let confirmationResult = null;
+  let chartInstance = null;
 
-// DASHBOARD
-var currentDash='overview';
-function switchDash(view,btn){
-  currentDash=view;
-  document.querySelectorAll('.dash-nav-item').forEach(function(b){b.classList.remove('active')});
-  if(btn)btn.classList.add('active');
-  renderDash(view);
-}
+  // UI Elements
+  const authModal = document.getElementById('authModal');
+  const loginBtn = document.getElementById('loginBtn');
+  const signupBtn = document.getElementById('signupBtn');
+  const heroCta = document.getElementById('heroCta');
+  const closeModal = document.getElementById('closeModal');
+  const loginTab = document.getElementById('loginTabBtn');
+  const signupTab = document.getElementById('signupTabBtn');
+  const loginForm = document.getElementById('loginForm');
+  const signupForm = document.getElementById('signupForm');
+  const authError = document.getElementById('authError');
+  const verificationDiv = document.getElementById('verificationCodeDiv');
+  const authButtons = document.getElementById('authButtons');
+  const userGreeting = document.getElementById('userGreeting');
+  const userEmailDisplay = document.getElementById('userEmailDisplay');
+  const logoutBtn = document.getElementById('logoutBtn');
+  const dashName = document.getElementById('dashName');
+  const dailyCalories = document.getElementById('dailyCalories');
+  const calProgress = document.getElementById('calProgress');
+  const stepsCount = document.getElementById('stepsCount');
+  const heartRate = document.getElementById('heartRate');
+  const workoutList = document.getElementById('workoutList');
+  const workoutCal = document.getElementById('workoutCal');
+  const proteinGoal = document.getElementById('proteinGoal');
+  const proteinProgress = document.getElementById('proteinProgress');
+  const ageInput = document.getElementById('ageInput');
+  const calcNutritionBtn = document.getElementById('calcNutritionBtn');
+  const saveNutritionBtn = document.getElementById('saveNutritionBtn');
+  const nutritionResult = document.getElementById('nutritionResult');
 
-// SVG LINE CHART
-function lineChartSVG(data, color, label){
-  var max=Math.max.apply(null,data), min=Math.min.apply(null,data);
-  var w=300,h=100;
-  var pts=data.map(function(v,i){
-    return [(i/(data.length-1))*w, h-((v-min)/(max-min||1))*h*.85-7];
-  });
-  var path='M'+pts.map(function(p){return p[0]+','+p[1]}).join(' L');
-  var fill='M'+pts[0][0]+','+h+' L'+pts.map(function(p){return p[0]+','+p[1]}).join(' L')+' L'+pts[pts.length-1][0]+','+h+' Z';
-  return '<svg viewBox="0 0 '+w+' '+h+'" preserveAspectRatio="none" class="chart">'+
-    '<defs><linearGradient id="lg'+color.replace('#','')+'" x1="0" y1="0" x2="0" y2="1">'+
-      '<stop offset="0%" stop-color="'+color+'" stop-opacity="0.3"/>'+
-      '<stop offset="100%" stop-color="'+color+'" stop-opacity="0"/>'+
-    '</linearGradient></defs>'+
-    '<path d="'+fill+'" fill="url(#lg'+color.replace('#','')+')" />'+
-    '<path d="'+path+'" stroke="'+color+'" stroke-width="2" fill="none" stroke-linecap="round"/>'+
-    pts.map(function(p,i){return '<circle cx="'+p[0]+'" cy="'+p[1]+'" r="3" fill="'+color+'" opacity="0.8"/>';}).join('')+
-  '</svg>';
-}
+  // Recaptcha verifiers
+  let recaptchaVerifierLogin, recaptchaVerifierSignup;
 
-// Ring SVG
-function ringChart(pct, color, label, val){
-  var r=38, c=2*Math.PI*r;
-  var dash=c*pct/100;
-  return '<div class="p-ring">'+
-    '<svg width="90" height="90" viewBox="0 0 90 90">'+
-      '<circle cx="45" cy="45" r="'+r+'" fill="none" stroke="rgba(255,255,255,.06)" stroke-width="6"/>'+
-      '<circle cx="45" cy="45" r="'+r+'" fill="none" stroke="'+color+'" stroke-width="6" stroke-dasharray="'+dash+' '+c+'" stroke-linecap="round" style="filter:drop-shadow(0 0 6px '+color+')"/>'+
-      '<text x="45" y="50" text-anchor="middle" fill="'+color+'" font-family=\'Bebas Neue\' font-size="18" transform="rotate(90,45,45)">'+pct+'%</text>'+
-    '</svg>'+
-    '<div class="rlbl">'+label+'</div>'+
-  '</div>';
-}
-
-function renderDash(view){
-  var main=document.getElementById('dashMain');
-
-  if(view==='overview'||view==='progress'){
-    var wData=[320,410,380,490,440,520,480];
-    var cData=[1850,2100,1950,2300,2050,2400,2200];
-    var days=['Mon','Tue','Wed','Thu','Fri','Sat','Sun'];
-    main.innerHTML=
-      '<div class="dash-stats">'+
-        '<div class="ds-card blue"><div class="label">Calories Burned</div><div class="val">2,847</div><div class="delta">↑ 12% this week</div></div>'+
-        '<div class="ds-card gold"><div class="label">Workouts Done</div><div class="val">24</div><div class="delta">↑ 3 vs last month</div></div>'+
-        '<div class="ds-card red"><div class="label">Body Fat %</div><div class="val">14.2%</div><div class="delta">↓ 2.1% since start</div></div>'+
-        '<div class="ds-card green"><div class="label">Streak</div><div class="val">18 days</div><div class="delta">Personal best! 🏆</div></div>'+
-      '</div>'+
-      '<div class="dash-charts">'+
-        '<div class="chart-box">'+
-          '<h4>Weekly Calories Burned (kcal)</h4>'+
-          '<div class="chart-area">'+
-            '<div class="chart-bar-row">'+
-              wData.map(function(v,i){
-                var pct=v/600*100;
-                return '<div class="chart-bar" style="height:'+pct+'%;background:linear-gradient(to top,var(--blue),rgba(0,212,255,.3))">'+
-                  '<div class="tt">'+v+' cal</div></div>';
-              }).join('')+
-            '</div>'+
-          '</div>'+
-          '<div class="day-labels">'+days.map(function(d){return '<span>'+d+'</span>';}).join('')+'</div>'+
-        '</div>'+
-        '<div class="chart-box">'+
-          '<h4>Body Weight Progress (kg)</h4>'+
-          '<div class="chart-area">'+lineChartSVG([88,87.2,86.8,86.1,85.7,85.2,84.8],'#d4a843','Weight')+'</div>'+
-          '<div class="day-labels">'+days.map(function(d){return '<span>'+d+'</span>';}).join('')+'</div>'+
-        '</div>'+
-      '</div>'+
-      '<div class="chart-box" style="margin-bottom:1rem">'+
-        '<h4>Goal Completion</h4>'+
-        '<div class="progress-rings">'+
-          ringChart(78,'#00d4ff','Cardio','78%')+
-          ringChart(92,'#d4a843','Strength','92%')+
-          ringChart(65,'#00ff88','Nutrition','65%')+
-          ringChart(84,'#8b5cf6','Recovery','84%')+
-        '</div>'+
-      '</div>';
-  } else if(view==='workouts'){
-    var exercises=[
-      {ico:'🏋️',name:'Barbell Back Squat',sets:'5×5 @ 120kg',done:true},
-      {ico:'🤸',name:'Bench Press',sets:'4×8 @ 90kg',done:true},
-      {ico:'💪',name:'Deadlift',sets:'3×3 @ 180kg',done:true},
-      {ico:'🎯',name:'Pull-ups',sets:'4×10 BW',done:false},
-      {ico:'⚡',name:'Romanian Deadlift',sets:'3×12 @ 80kg',done:false},
-      {ico:'🔥',name:'Cable Rows',sets:'3×15 @ 60kg',done:false},
-    ];
-    main.innerHTML=
-      '<div class="dash-stats" style="grid-template-columns:repeat(3,1fr)">'+
-        '<div class="ds-card blue"><div class="label">Today\'s Volume</div><div class="val">12,450</div><div class="delta">kg total lifted</div></div>'+
-        '<div class="ds-card gold"><div class="label">Exercises</div><div class="val">3/6</div><div class="delta">50% complete</div></div>'+
-        '<div class="ds-card green"><div class="label">Est. Calories</div><div class="val">487</div><div class="delta">kcal burned today</div></div>'+
-      '</div>'+
-      '<div class="workout-log">'+
-        '<h4>Today\'s Workout — Push/Pull/Legs: Legs A</h4>'+
-        exercises.map(function(ex){
-          return '<div class="w-item">'+
-            '<div class="w-icon">'+ex.ico+'</div>'+
-            '<div class="w-name">'+ex.name+'</div>'+
-            '<div class="w-sets">'+ex.sets+'</div>'+
-            '<div class="w-done '+(ex.done?'yes':'no')+'"></div>'+
-          '</div>';
-        }).join('')+
-      '</div>'+
-      '<div style="margin-top:1rem;display:flex;gap:.75rem">'+
-        '<button class="cta-primary" style="padding:.7rem 1.5rem;font-size:.7rem" onclick="showToast(\'Workout logged successfully!\')">✓ Log Workout</button>'+
-        '<button style="padding:.7rem 1.5rem;font-size:.7rem;letter-spacing:.15em;text-transform:uppercase;font-weight:700;background:none;border:1px solid var(--border2);color:var(--blue);border-radius:var(--r);font-family:Rajdhani,sans-serif" onclick="showToast(\'Starting next exercise...\')">⚡ Next Exercise</button>'+
-      '</div>';
-  } else if(view==='nutrition'){
-    var macros=[
-      {label:'Protein',val:'185g',target:'200g',pct:92,color:'#00d4ff'},
-      {label:'Carbs',val:'240g',target:'300g',pct:80,color:'#d4a843'},
-      {label:'Fats',val:'58g',target:'80g',pct:72,color:'#ff4060'},
-      {label:'Fiber',val:'28g',target:'35g',pct:80,color:'#00ff88'},
-      {label:'Water',val:'2.4L',target:'3.5L',pct:69,color:'#8b5cf6'},
-    ];
-    main.innerHTML=
-      '<div class="dash-stats" style="grid-template-columns:repeat(3,1fr)">'+
-        '<div class="ds-card gold"><div class="label">Calories In</div><div class="val">2,140</div><div class="delta">Target: 2,500 kcal</div></div>'+
-        '<div class="ds-card blue"><div class="label">Calories Out</div><div class="val">2,847</div><div class="delta">Deficit: 707 kcal 🔥</div></div>'+
-        '<div class="ds-card green"><div class="label">Net Balance</div><div class="val">−707</div><div class="delta">Fat loss mode ✓</div></div>'+
-      '</div>'+
-      '<div class="cal-track">'+
-        '<h4>Macro Breakdown</h4>'+
-        macros.map(function(m){
-          return '<div class="cal-bar-row">'+
-            '<div class="cal-label">'+m.label+'</div>'+
-            '<div class="cal-bar-bg"><div class="cal-bar-fill" style="width:'+m.pct+'%;background:linear-gradient(to right,'+m.color+','+m.color+'88)"></div></div>'+
-            '<div class="cal-val">'+m.val+'</div>'+
-          '</div>';
-        }).join('')+
-      '</div>'+
-      '<div style="margin-top:1rem;background:var(--glass);border:1px solid var(--border);border-radius:var(--r2);padding:1.2rem">'+
-        '<h4 style="font-size:.72rem;letter-spacing:.15em;text-transform:uppercase;color:rgba(200,216,240,.5);margin-bottom:1rem;font-weight:700">Today\'s Meals</h4>'+
-        [['🌅 Breakfast','Protein oats, 4 eggs, banana','620 kcal'],
-         ['☀️ Lunch','Chicken breast, brown rice, broccoli','740 kcal'],
-         ['🌙 Dinner','Salmon, sweet potato, asparagus','580 kcal'],
-         ['⚡ Snacks','Protein shake, almonds, Greek yogurt','390 kcal']].map(function(m){
-          return '<div style="display:flex;justify-content:space-between;align-items:center;padding:.65rem 0;border-bottom:1px solid var(--border)">'+
-            '<div><div style="font-size:.85rem;color:rgba(200,216,240,.9);font-weight:600">'+m[0]+'</div>'+
-            '<div style="font-size:.75rem;color:rgba(200,216,240,.4);margin-top:.15rem">'+m[1]+'</div></div>'+
-            '<div style="font-size:.85rem;color:var(--gold);font-family:\'DM Mono\',monospace">'+m[2]+'</div>'+
-          '</div>';
-        }).join('')+
-      '</div>';
-  } else if(view==='programs'){
-    main.innerHTML=
-      '<div style="display:grid;grid-template-columns:1fr 1fr;gap:1rem">'+
-        [['🔥 INCINERATE','12 Weeks','Week 4 of 12',33,'var(--blue)'],
-         ['💪 MASS PROTOCOL','16 Weeks','Not Started',0,'var(--gold)'],
-         ['⚡ ATHLETE X','20 Weeks','Not Started',0,'var(--red)']].map(function(p){
-          return '<div style="background:var(--glass);border:1px solid var(--border);border-radius:var(--r2);padding:1.2rem">'+
-            '<div style="font-size:1.2rem;margin-bottom:.5rem;font-family:\'Bebas Neue\',sans-serif;color:#fff">'+p[0]+'</div>'+
-            '<div style="font-size:.7rem;color:rgba(200,216,240,.4);letter-spacing:.1em;margin-bottom:.8rem">'+p[1]+' · '+p[2]+'</div>'+
-            '<div style="height:6px;background:rgba(255,255,255,.06);border-radius:3px;margin-bottom:.5rem">'+
-              '<div style="height:100%;width:'+p[3]+'%;background:'+p[4]+';border-radius:3px;box-shadow:0 0 10px '+p[4]+'"></div>'+
-            '</div>'+
-            '<div style="font-size:.72rem;color:'+p[4]+';font-family:\'DM Mono\',monospace">'+p[3]+'% COMPLETE</div>'+
-          '</div>';
-        }).join('')+
-      '</div>';
-  } else if(view==='settings'){
-    main.innerHTML=
-      '<div style="background:var(--glass);border:1px solid var(--border);border-radius:var(--r2);padding:1.5rem">'+
-        '<h4 style="font-size:.72rem;letter-spacing:.15em;text-transform:uppercase;color:rgba(200,216,240,.5);margin-bottom:1.2rem;font-weight:700">Profile Settings</h4>'+
-        '<div style="display:grid;grid-template-columns:1fr 1fr;gap:1rem">'+
-          [['Name','James Doe'],['Email','james@example.com'],['Goal','Muscle Gain'],['Level','Intermediate']].map(function(f){
-            return '<div class="fg"><label>'+f[0]+'</label><input type="text" value="'+f[1]+'"></div>';
-          }).join('')+
-        '</div>'+
-        '<button class="cta-primary" style="padding:.7rem 1.5rem;font-size:.7rem;margin-top:.5rem" onclick="showToast(\'Profile saved!\')">Save Changes</button>'+
-      '</div>';
+  // Initialize chart
+  function initChart(data = [2100,2350,2200,2680,2450,2800,2520]) {
+    const ctx = document.getElementById('progressChart').getContext('2d');
+    if (chartInstance) chartInstance.destroy();
+    chartInstance = new Chart(ctx, {
+      type: 'line',
+      data: {
+        labels: ['Mon','Tue','Wed','Thu','Fri','Sat','Sun'],
+        datasets: [{
+          label: 'Calories burned',
+          data: data,
+          borderColor: '#00f2ff',
+          backgroundColor: 'rgba(0,242,255,0.05)',
+          borderWidth: 3,
+          pointBackgroundColor: '#D4AF37',
+          tension: 0.3,
+          fill: true
+        }]
+      },
+      options: { responsive: true, maintainAspectRatio: false, plugins: { legend: { labels: { color: '#ccc' } } } }
+    });
   }
-}
+  initChart();
 
-renderDash('overview');
-
-// AUTH
-function openAuth(){
-  document.getElementById('authOverlay').classList.add('on');
-  renderAuthForm('login');
-}
-function closeAuth(){document.getElementById('authOverlay').classList.remove('on')}
-document.getElementById('authOverlay').addEventListener('click',function(e){if(e.target===this)closeAuth();});
-
-function switchTab(tab,btn){
-  document.querySelectorAll('.auth-tab').forEach(function(b){b.classList.remove('on')});
-  btn.classList.add('on');
-  renderAuthForm(tab);
-}
-
-function renderAuthForm(tab){
-  var f=document.getElementById('authForm');
-  if(tab==='login'){
-    f.innerHTML=
-      '<div class="social-btns">'+
-        '<button class="soc-btn">G Google</button>'+
-        '<button class="soc-btn">⚡ Apple</button>'+
-      '</div>'+
-      '<div class="social-divider"><span>or sign in with email</span></div>'+
-      '<div class="fg"><label>Email</label><input type="email" placeholder="james@example.com"></div>'+
-      '<div class="fg"><label>Password</label><input type="password" placeholder="••••••••"></div>'+
-      '<div style="text-align:right;margin-bottom:1rem"><a href="#" style="font-size:.75rem;color:var(--blue)">Forgot password?</a></div>'+
-      '<button class="cta-primary" style="width:100%;padding:1rem;justify-content:center" onclick="doLogin()">⚡ Sign In</button>'+
-      '<p style="text-align:center;font-size:.78rem;color:rgba(200,216,240,.3);margin-top:1rem">New athlete? <a href="#" onclick="document.getElementById(\'signupTab\').click()" style="color:var(--blue)">Create account</a></p>';
-  } else {
-    f.innerHTML=
-      '<div class="social-btns">'+
-        '<button class="soc-btn">G Google</button>'+
-        '<button class="soc-btn">⚡ Apple</button>'+
-      '</div>'+
-      '<div class="social-divider"><span>or create with email</span></div>'+
-      '<div class="fg"><label>Full Name</label><input type="text" placeholder="James Doe" id="sName"></div>'+
-      '<div class="fg"><label>Email</label><input type="email" placeholder="james@example.com" id="sEmail"></div>'+
-      '<div class="fg"><label>Password</label><input type="password" placeholder="Min. 8 characters" id="sPass"></div>'+
-      '<div class="fg"><label>Fitness Goal</label><select id="sGoal"><option>Weight Loss</option><option>Muscle Gain</option><option>Athletic Performance</option><option>General Fitness</option></select></div>'+
-      '<button class="cta-primary" style="width:100%;padding:1rem;justify-content:center" onclick="doSignup()">⚡ Create My Account</button>'+
-      '<p style="text-align:center;font-size:.72rem;color:rgba(200,216,240,.25);margin-top:1rem">By signing up you agree to our Terms of Service & Privacy Policy</p>';
+  // Modal controls
+  function openModal(tab = 'login') {
+    authModal.style.display = 'flex';
+    authError.textContent = '';
+    verificationDiv.style.display = 'none';
+    if (tab === 'signup') {
+      loginTab.classList.remove('active'); signupTab.classList.add('active');
+      loginForm.style.display = 'none'; signupForm.style.display = 'block';
+      if (!recaptchaVerifierSignup) {
+        recaptchaVerifierSignup = new RecaptchaVerifier(auth, 'recaptcha-container-signup', { size: 'normal' });
+      }
+    } else {
+      loginTab.classList.add('active'); signupTab.classList.remove('active');
+      loginForm.style.display = 'block'; signupForm.style.display = 'none';
+      if (!recaptchaVerifierLogin) {
+        recaptchaVerifierLogin = new RecaptchaVerifier(auth, 'recaptcha-container-login', { size: 'normal' });
+      }
+    }
   }
-}
 
-function doLogin(){closeAuth();showToast('⚡ Welcome back, James! Dashboard ready.');}
-function doSignup(){closeAuth();showToast('🏆 Account created! Welcome to Elite Fitness Pro.');}
+  [loginBtn, signupBtn, heroCta].forEach(btn => btn?.addEventListener('click', (e) => {
+    const id = e.target.id;
+    if (id === 'signupBtn' || id === 'heroCta') openModal('signup');
+    else openModal('login');
+  }));
+  closeModal.addEventListener('click', () => authModal.style.display = 'none');
+  window.addEventListener('click', (e) => { if (e.target === authModal) authModal.style.display = 'none'; });
+  loginTab.addEventListener('click', () => { loginTab.classList.add('active'); signupTab.classList.remove('active'); loginForm.style.display='block'; signupForm.style.display='none'; });
+  signupTab.addEventListener('click', () => { signupTab.classList.add('active'); loginTab.classList.remove('active'); signupForm.style.display='block'; loginForm.style.display='none'; });
 
-// TOAST
-var tTimer;
-function showToast(msg){
-  clearTimeout(tTimer);
-  document.getElementById('toastMsg').textContent=msg;
-  document.getElementById('toast').classList.add('on');
-  tTimer=setTimeout(function(){document.getElementById('toast').classList.remove('on');},3500);
-}
+  // Auth state observer
+  onAuthStateChanged(auth, async (user) => {
+    currentUser = user;
+    if (user) {
+      authButtons.style.display = 'none';
+      userGreeting.style.display = 'flex';
+      userEmailDisplay.textContent = user.email || user.phoneNumber || 'User';
+      const userDoc = await getDoc(doc(db, 'users', user.uid));
+      if (userDoc.exists()) {
+        const data = userDoc.data();
+        dashName.textContent = data.name || 'Athlete';
+        if (data.age) ageInput.value = data.age;
+        updateNutritionDisplay(data.age || 28);
+      } else {
+        await setDoc(doc(db, 'users', user.uid), {
+          name: user.displayName || 'Elite Member',
+          email: user.email,
+          age: 28,
+          goal: 'Muscle Gain',
+          createdAt: new Date()
+        });
+        dashName.textContent = user.displayName || 'Elite Member';
+      }
+      // Load default stats if not exist
+      const statsRef = doc(db, 'users', user.uid, 'stats', 'daily');
+      const statsSnap = await getDoc(statsRef);
+      if (!statsSnap.exists()) {
+        await setDoc(statsRef, { calories: 2450, steps: 8432, heartRate: 72, workoutCalories: 680 });
+      }
+      const workoutRef = doc(db, 'users', user.uid, 'workouts', 'today');
+      const workoutSnap = await getDoc(workoutRef);
+      if (!workoutSnap.exists()) {
+        await setDoc(workoutRef, { exercises: [{name:'Bench Press',sets:4,reps:8},{name:'Squats',sets:5,reps:5}] });
+      }
+      const nutritionRef = doc(db, 'users', user.uid, 'nutrition', 'daily');
+      const nutritionSnap = await getDoc(nutritionRef);
+      if (!nutritionSnap.exists()) {
+        await setDoc(nutritionRef, { protein: 142, bmr: 1820 });
+      }
 
-// NAV
-function toggleNav(){document.getElementById('navLinks').classList.toggle('on');}
-window.addEventListener('scroll',function(){
-  document.getElementById('nav').classList.toggle('scrolled',window.scrollY>60);
-  doReveal();
-},{passive:true});
-
-// REVEAL
-function doReveal(){
-  document.querySelectorAll('.rv:not(.on)').forEach(function(el){
-    if(el.getBoundingClientRect().top<window.innerHeight-70)el.classList.add('on');
+      // Real-time listeners
+      onSnapshot(statsRef, (doc) => {
+        if (doc.exists()) {
+          const s = doc.data();
+          dailyCalories.textContent = s.calories || 0;
+          calProgress.style.width = Math.min((s.calories/3000)*100, 100) + '%';
+          stepsCount.textContent = s.steps || 0;
+          heartRate.textContent = s.heartRate || '--';
+          workoutCal.textContent = (s.workoutCalories || 0) + ' kcal';
+        }
+      });
+      onSnapshot(workoutRef, (doc) => {
+        if (doc.exists()) {
+          const w = doc.data().exercises || [];
+          workoutList.innerHTML = w.map(ex => `<div class="workout-item"><span>${ex.name}</span><span>${ex.sets}x${ex.reps}</span></div>`).join('');
+        }
+      });
+      onSnapshot(nutritionRef, (doc) => {
+        if (doc.exists()) {
+          const n = doc.data();
+          proteinGoal.textContent = `${n.protein || 0}g / 180g`;
+          proteinProgress.style.width = Math.min((n.protein/180)*100, 100) + '%';
+        }
+      });
+    } else {
+      authButtons.style.display = 'flex';
+      userGreeting.style.display = 'none';
+      dashName.textContent = 'Guest';
+      dailyCalories.textContent = '0';
+      calProgress.style.width = '0%';
+      workoutList.innerHTML = '<div class="workout-item"><span>Bench Press</span><span>4x8</span></div><div class="workout-item"><span>Squats</span><span>5x5</span></div>';
+      proteinGoal.textContent = '0g / 180g';
+      proteinProgress.style.width = '0%';
+    }
   });
-}
-doReveal();setTimeout(doReveal,300);
 
-// SCROLL TO
-function scrollTo(sel){document.querySelector(sel).scrollIntoView({behavior:'smooth'});}
+  // Email login
+  loginForm.addEventListener('submit', async (e) => {
+    e.preventDefault();
+    const email = document.getElementById('loginEmail').value;
+    const password = document.getElementById('loginPassword').value;
+    try {
+      await signInWithEmailAndPassword(auth, email, password);
+      authModal.style.display = 'none';
+    } catch (err) { authError.textContent = err.message; }
+  });
 
-// ESC
-document.addEventListener('keydown',function(e){if(e.key==='Escape')closeAuth();});
+  // Email signup
+  signupForm.addEventListener('submit', async (e) => {
+    e.preventDefault();
+    const name = document.getElementById('signupName').value;
+    const email = document.getElementById('signupEmail').value;
+    const password = document.getElementById('signupPassword').value;
+    const age = document.getElementById('signupAge').value;
+    const gender = document.getElementById('signupGender').value;
+    const goal = document.getElementById('signupGoal').value;
+    try {
+      const cred = await createUserWithEmailAndPassword(auth, email, password);
+      await updateProfile(cred.user, { displayName: name });
+      await setDoc(doc(db, 'users', cred.user.uid), { name, email, age: parseInt(age)||28, gender, goal });
+      authModal.style.display = 'none';
+    } catch (err) { authError.textContent = err.message; }
+  });
 
-// Count-up animation for hero stats
-function countUp(el,target,suffix){
-  var start=0,dur=1800,step=dur/60;
-  var timer=setInterval(function(){
-    start+=target/60;
-    if(start>=target){start=target;clearInterval(timer);}
-    el.innerHTML=Math.floor(start).toLocaleString()+'<span>'+suffix+'</span>';
-  },step);
-}
-setTimeout(function(){
-  var nums=document.querySelectorAll('.hero-stat .num');
-  if(nums[0])countUp(nums[0],50,'K+');
-  if(nums[1])countUp(nums[1],200,'+');
-  if(nums[2])countUp(nums[2],98,'%');
-},1000);
+  // Phone login
+  document.getElementById('phoneLoginBtn').addEventListener('click', async () => {
+    const phone = document.getElementById('phoneLogin').value;
+    if (!phone) return authError.textContent = 'Enter phone number';
+    try {
+      if (!recaptchaVerifierLogin) recaptchaVerifierLogin = new RecaptchaVerifier(auth, 'recaptcha-container-login', { size: 'normal' });
+      confirmationResult = await signInWithPhoneNumber(auth, phone, recaptchaVerifierLogin);
+      verificationDiv.style.display = 'block';
+      authError.textContent = 'OTP sent!';
+    } catch (err) { authError.textContent = err.message; }
+  });
+
+  document.getElementById('phoneSignupBtn').addEventListener('click', async () => {
+    const phone = prompt('Enter phone number with country code (e.g., +1234567890):');
+    if (!phone) return;
+    try {
+      if (!recaptchaVerifierSignup) recaptchaVerifierSignup = new RecaptchaVerifier(auth, 'recaptcha-container-signup', { size: 'normal' });
+      confirmationResult = await signInWithPhoneNumber(auth, phone, recaptchaVerifierSignup);
+      verificationDiv.style.display = 'block';
+      authError.textContent = 'OTP sent!';
+    } catch (err) { authError.textContent = err.message; }
+  });
+
+  document.getElementById('verifyCodeBtn').addEventListener('click', async () => {
+    const code = document.getElementById('verificationCode').value;
+    try {
+      await confirmationResult.confirm(code);
+      authModal.style.display = 'none';
+    } catch (err) { authError.textContent = err.message; }
+  });
+
+  // Logout
+  logoutBtn.addEventListener('click', () => signOut(auth));
+
+  // Nutrition helper
+  function updateNutritionDisplay(age) {
+    const bmr = Math.round(1800 + (age * 2.5) - 20);
+    const protein = Math.round(120 + (age * 0.8));
+    nutritionResult.innerHTML = `🔥 BMR: ${bmr} kcal | 🥑 Protein: ${protein}g`;
+  }
+
+  calcNutritionBtn.addEventListener('click', () => {
+    const age = parseInt(ageInput.value) || 28;
+    updateNutritionDisplay(age);
+  });
+
+  saveNutritionBtn.addEventListener('click', async () => {
+    if (!currentUser) return alert('Please login to save nutrition data.');
+    const age = parseInt(ageInput.value) || 28;
+    const bmr = Math.round(1800 + (age * 2.5) - 20);
+    const protein = Math.round(120 + (age * 0.8));
+    await updateDoc(doc(db, 'users', currentUser.uid), { age });
+    await setDoc(doc(db, 'users', currentUser.uid, 'nutrition', 'daily'), { protein, bmr }, { merge: true });
+    alert('Nutrition profile saved!');
+  });
 </script>
-  ‎<script type="module">
-‎  // Import the functions you need from the SDKs you need
-‎  import { initializeApp } from "https://www.gstatic.com/firebasejs/12.12.1/firebase-app.js";
-‎  // TODO: Add SDKs for Firebase products that you want to use
-‎  // https://firebase.google.com/docs/web/setup#available-libraries
-‎
-‎  // Your web app's Firebase configuration
-‎  const firebaseConfig = {
-‎    apiKey: "AIzaSyDb37iOgAVsPkt2DrcMCpaVk9nb81W_vSg",
-‎    authDomain: "elite-fitness-pro-844b7.firebaseapp.com",
-‎    projectId: "elite-fitness-pro-844b7",
-‎    storageBucket: "elite-fitness-pro-844b7.firebasestorage.app",
-‎    messagingSenderId: "878667264227",
-‎    appId: "1:878667264227:web:d63ebc8d8cf8d133e955d6"
-‎  };
-‎
-‎  // Initialize Firebase
-‎  const app = initializeApp(firebaseConfig);
-‎</script>
-‎
 </body>
 </html>
