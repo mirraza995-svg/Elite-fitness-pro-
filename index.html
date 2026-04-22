@@ -3,17 +3,16 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=yes">
-  <title>Elite Fitness Pro | Firebase SaaS + Email Verification</title>
+  <title>Elite Fitness Pro | Premium Fitness SaaS</title>
   <!-- Premium Fonts -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@300;400;500;600;700;800&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
   <!-- Font Awesome Icons -->
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
-  <!-- Chart.js -->
+  <!-- Chart.js for progress graphs -->
   <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
   <style>
-    /* === Full premium styles (same as before) === */
     * { margin: 0; padding: 0; box-sizing: border-box; }
     body { font-family: 'Inter', sans-serif; background-color: #050505; color: #f0f0f0; line-height: 1.5; overflow-x: hidden; }
     h1, h2, h3, h4, .logo, .premium-title { font-family: 'Manrope', sans-serif; font-weight: 600; letter-spacing: -0.02em; }
@@ -65,22 +64,18 @@
     footer { margin-top: 80px; padding: 32px; text-align: center; border-top: 1px solid rgba(212,175,55,0.2); }
     #userGreeting { display: flex; align-items: center; gap: 10px; }
     #logoutBtn { background: none; border: 1px solid var(--gold); color: var(--gold); padding: 6px 16px; border-radius: 40px; cursor: pointer; }
-    #verificationWarning { background: rgba(255,193,7,0.1); border: 1px solid #ffc107; border-radius: 20px; padding: 12px 20px; margin-bottom: 20px; display: none; }
-    .resend-link { color: var(--neon-blue); cursor: pointer; text-decoration: underline; margin-left: 8px; }
     @media (max-width: 900px) {
       .navbar { flex-wrap: wrap; gap: 12px; }
       .nav-links { order: 3; width: 100%; justify-content: center; }
       .hero h1 { font-size: 3.5rem; }
       .dashboard-grid { grid-template-columns: 1fr; }
     }
-    @media (max-width: 600px) {
-      .hero h1 { font-size: 2.8rem; }
-    }
+    @media (max-width: 600px) { .hero h1 { font-size: 2.8rem; } }
   </style>
 </head>
 <body>
 
-<!-- Navbar -->
+<!-- Sticky Navbar -->
 <nav class="navbar">
   <div class="logo"><i class="fas fa-dumbbell" style="margin-right: 10px; color: var(--gold);"></i>ELITE FITNESS PRO</div>
   <div class="nav-links">
@@ -98,13 +93,13 @@
 
 <!-- Hero -->
 <section id="home" class="hero">
-  <video class="hero-video" autoplay muted loop playsinline poster="https://images.pexels.com/photos/841130/pexels-photo-841130.jpeg">
+  <video class="hero-video" autoplay muted loop playsinline poster="https://images.pexels.com/photos/841130/pexels-photo-841130.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2">
     <source src="https://assets.mixkit.co/videos/preview/mixkit-man-and-woman-doing-push-ups-in-a-gym-47496-large.mp4" type="video/mp4">
   </video>
   <div class="hero-overlay"></div>
   <div class="container hero-content">
     <h1><span class="gold-text">ELITE</span> <span class="neon-text">PERFORMANCE</span><br>REDEFINED</h1>
-    <p style="font-size: 1.3rem; margin-bottom: 40px;">Cinematic training • AI coaching • Firebase sync. Join the future of fitness.</p>
+    <p style="font-size: 1.3rem; margin-bottom: 40px; max-width: 600px;">Cinematic training • AI coaching • Firebase sync</p>
     <div style="display: flex; gap: 20px;">
       <button class="btn-primary" id="heroCta"><i class="fas fa-crown"></i> Start Elite Journey</button>
       <button class="btn-neon"><i class="fas fa-play"></i> Watch Teaser</button>
@@ -119,37 +114,31 @@
     <div class="program-grid">
       <div class="program-card">
         <div class="program-icon"><i class="fas fa-fire"></i></div>
-        <h3>Weight Loss</h3>
+        <h3 style="font-size: 2rem; margin-bottom: 16px;">Weight Loss</h3>
         <p>AI-powered fat burn, metabolic conditioning.</p>
         <img src="https://images.pexels.com/photos/416778/pexels-photo-416778.jpeg?auto=compress&cs=tinysrgb&w=600" style="width:100%; height:180px; object-fit:cover; border-radius:20px; margin:20px 0;">
       </div>
       <div class="program-card">
         <div class="program-icon"><i class="fas fa-dumbbell"></i></div>
-        <h3>Muscle Gain</h3>
+        <h3 style="font-size: 2rem; margin-bottom: 16px;">Muscle Gain</h3>
         <p>Hypertrophy specialization, overload tracking.</p>
         <img src="https://images.pexels.com/photos/841130/pexels-photo-841130.jpeg?auto=compress&cs=tinysrgb&w=600" style="width:100%; height:180px; object-fit:cover; border-radius:20px; margin:20px 0;">
       </div>
     </div>
   </section>
 
-  <!-- Dashboard -->
+  <!-- Dashboard (synced with Firestore) -->
   <section id="dashboard" class="dashboard-preview">
     <h2 class="section-title"><span class="neon-text">⌘</span> YOUR <span class="gold-text">ELITE DASHBOARD</span></h2>
-    <!-- Verification warning banner -->
-    <div id="verificationWarning" class="glass-card">
-      <i class="fas fa-exclamation-triangle" style="color: #ffc107;"></i> 
-      Your email is not verified. Please verify to unlock all features. 
-      <span id="resendVerificationBtn" class="resend-link"><i class="fas fa-envelope"></i> Resend verification email</span>
-    </div>
     <div class="dashboard-grid">
       <div class="dashboard-card">
-        <div style="display: flex; gap: 12px; margin-bottom: 20px;">
+        <div style="display: flex; align-items: center; gap: 12px; margin-bottom: 20px;">
           <i class="fas fa-user-circle" style="font-size: 50px; color: var(--gold);"></i>
           <div><h3 id="dashName">Guest</h3><span class="neon-text">Member</span></div>
         </div>
-        <div class="stat-value" id="dailyCalories">0 <span>kcal</span></div>
+        <div class="stat-value" id="dailyCalories">0 <span style="font-size: 1rem;">kcal</span></div>
         <div>Daily active burn</div>
-        <div class="progress-bar"><div class="progress-fill" id="calProgress" style="width:0%;"></div></div>
+        <div class="progress-bar"><div class="progress-fill" id="calProgress" style="width: 0%;"></div></div>
         <div style="display: flex; justify-content: space-between; margin-top: 24px;">
           <div><i class="fas fa-shoe-prints"></i> <span id="stepsCount">0</span> steps</div>
           <div><i class="fas fa-heart"></i> <span id="heartRate">--</span> bpm</div>
@@ -159,9 +148,9 @@
         <h3><i class="fas fa-clipboard-list neon-text"></i> Today's Workout</h3>
         <div id="workoutList"></div>
         <div style="margin-top: 24px; background: rgba(0,242,255,0.05); border-radius: 20px; padding: 16px;">
-          <div style="display: flex; justify-content: space-between;"><span>🔥 Calories burned</span> <span class="neon-text" id="workoutCal">0 kcal</span></div>
-          <div style="display: flex; justify-content: space-between;"><span>🍗 Protein goal</span> <span id="proteinGoal">0g / 180g</span></div>
-          <div class="progress-bar"><div class="progress-fill" id="proteinProgress" style="width:0%;"></div></div>
+          <div><span>🔥 Calories burned</span> <span class="neon-text" id="workoutCal">0 kcal</span></div>
+          <div><span>🍗 Protein goal</span> <span id="proteinGoal">0g / 180g</span></div>
+          <div class="progress-bar"><div class="progress-fill" id="proteinProgress" style="width: 0%;"></div></div>
         </div>
       </div>
       <div class="dashboard-card">
@@ -185,7 +174,7 @@
     <h2 class="section-title"><span class="neon-text">//</span> ELITE <span class="gold-text">MEMBERSHIP</span></h2>
     <div class="pricing-grid">
       <div class="pricing-card"><h3>Essential</h3><div class="price">$29<small>/mo</small></div><button class="btn-primary">Choose</button></div>
-      <div class="pricing-card" style="border:2px solid var(--gold);"><h3>Pro</h3><div class="price">$59<small>/mo</small></div><button class="btn-primary">Start Pro</button></div>
+      <div class="pricing-card" style="border: 2px solid var(--gold);"><h3>Pro</h3><div class="price">$59<small>/mo</small></div><button class="btn-primary">Start Pro</button></div>
       <div class="pricing-card"><h3>Elite</h3><div class="price">$99<small>/mo</small></div><button class="btn-primary">Go Elite</button></div>
     </div>
   </section>
@@ -194,7 +183,7 @@
   <section id="contact" style="padding-bottom: 80px;">
     <h2 class="section-title"><span class="neon-text">⌕</span> GET IN <span class="gold-text">TOUCH</span></h2>
     <div class="contact-flex">
-      <div class="contact-card" style="flex:1; padding:40px;">
+      <div class="contact-card" style="flex:1; padding: 40px;">
         <p><i class="fas fa-phone-alt"></i> <a href="tel:+923447436681" style="color:white;">+92 344 7436681</a></p>
         <p><i class="fas fa-envelope"></i> <a href="mailto:mirraza995@gmail.com" style="color:var(--neon-blue);">mirraza995@gmail.com</a></p>
       </div>
@@ -202,7 +191,7 @@
   </section>
 </div>
 
-<footer>© 2026 Elite Fitness Pro — Secure Firebase SaaS.</footer>
+<footer>© 2026 Elite Fitness Pro — Firebase integrated</footer>
 
 <!-- Auth Modal -->
 <div class="modal" id="authModal">
@@ -210,59 +199,34 @@
     <div class="tab-header">
       <button class="tab-btn active" id="loginTabBtn">Login</button>
       <button class="tab-btn" id="signupTabBtn">Create Account</button>
-      <i class="fas fa-times" id="closeModal" style="margin-left:auto; cursor:pointer; color:var(--gold);"></i>
+      <i class="fas fa-times" id="closeModal" style="margin-left: auto; cursor: pointer; color: var(--gold);"></i>
     </div>
-    <div id="authError" style="color:#ff6b6b; margin-bottom:16px;"></div>
+    <div id="authError" style="color: #ff6b6b; margin-bottom: 16px;"></div>
+    <!-- Login -->
     <form id="loginForm">
       <div class="input-group"><input type="email" id="loginEmail" placeholder="Email" required></div>
       <div class="input-group"><input type="password" id="loginPassword" placeholder="Password" required></div>
       <button type="submit" class="btn-primary" style="width:100%;">Sign In</button>
-      <p style="margin-top:16px; text-align:center;">or</p>
-      <div class="input-group"><input type="tel" id="phoneLogin" placeholder="Phone (+1234567890)"></div>
-      <div id="recaptcha-container-login"></div>
-      <button type="button" id="phoneLoginBtn" class="btn-neon" style="width:100%;">Login with Phone</button>
     </form>
-    <form id="signupForm" style="display:none;">
+    <!-- Signup -->
+    <form id="signupForm" style="display: none;">
       <div class="input-group"><input type="text" id="signupName" placeholder="Full Name" required></div>
       <div class="input-group"><input type="email" id="signupEmail" placeholder="Email" required></div>
       <div class="input-group"><input type="password" id="signupPassword" placeholder="Password" required></div>
       <div class="input-group"><input type="number" id="signupAge" placeholder="Age"></div>
-      <div class="input-group"><select id="signupGender"><option>Male</option><option>Female</option><option>Other</option></select></div>
-      <div class="input-group"><select id="signupGoal"><option>Weight Loss</option><option>Muscle Gain</option><option>Endurance</option></select></div>
-      <div id="recaptcha-container-signup"></div>
+      <div class="input-group">
+        <select id="signupGoal"><option>Weight Loss</option><option>Muscle Gain</option></select>
+      </div>
       <button type="submit" class="btn-primary" style="width:100%;">Create Elite Account</button>
-      <p style="margin-top:12px;">or</p>
-      <button type="button" id="phoneSignupBtn" class="btn-neon" style="width:100%;">Sign up with Phone</button>
     </form>
-    <div id="verificationCodeDiv" style="display:none; margin-top:20px;">
-      <input type="text" id="verificationCode" placeholder="Enter OTP" style="width:100%; padding:12px; border-radius:40px; background:#0f131c; color:white;">
-      <button id="verifyCodeBtn" class="btn-primary" style="width:100%; margin-top:10px;">Verify</button>
-    </div>
   </div>
 </div>
 
 <!-- Firebase SDK -->
 <script type="module">
   import { initializeApp } from "https://www.gstatic.com/firebasejs/12.12.1/firebase-app.js";
-  import { 
-    getAuth, 
-    createUserWithEmailAndPassword, 
-    signInWithEmailAndPassword, 
-    signOut, 
-    onAuthStateChanged,
-    RecaptchaVerifier,
-    signInWithPhoneNumber,
-    updateProfile,
-    sendEmailVerification
-  } from "https://www.gstatic.com/firebasejs/12.12.1/firebase-auth.js";
-  import { 
-    getFirestore, 
-    doc, 
-    setDoc, 
-    getDoc, 
-    updateDoc, 
-    onSnapshot 
-  } from "https://www.gstatic.com/firebasejs/12.12.1/firebase-firestore.js";
+  import { getAuth, createUserWithEmailAndPassword, signInWithEmailAndPassword, signOut, onAuthStateChanged, updateProfile } from "https://www.gstatic.com/firebasejs/12.12.1/firebase-auth.js";
+  import { getFirestore, doc, setDoc, getDoc, updateDoc, onSnapshot } from "https://www.gstatic.com/firebasejs/12.12.1/firebase-firestore.js";
 
   const firebaseConfig = {
     apiKey: "AIzaSyDb37iOgAVsPkt2DrcMCpaVk9nb81W_vSg",
@@ -276,12 +240,9 @@
   const app = initializeApp(firebaseConfig);
   const auth = getAuth(app);
   const db = getFirestore(app);
+  console.log("✅ Firebase initialized");
 
-  let currentUser = null;
-  let confirmationResult = null;
-  let chartInstance = null;
-
-  // UI elements
+  // UI Elements
   const authModal = document.getElementById('authModal');
   const loginBtn = document.getElementById('loginBtn');
   const signupBtn = document.getElementById('signupBtn');
@@ -292,7 +253,6 @@
   const loginForm = document.getElementById('loginForm');
   const signupForm = document.getElementById('signupForm');
   const authError = document.getElementById('authError');
-  const verificationDiv = document.getElementById('verificationCodeDiv');
   const authButtons = document.getElementById('authButtons');
   const userGreeting = document.getElementById('userGreeting');
   const userEmailDisplay = document.getElementById('userEmailDisplay');
@@ -310,11 +270,9 @@
   const calcNutritionBtn = document.getElementById('calcNutritionBtn');
   const saveNutritionBtn = document.getElementById('saveNutritionBtn');
   const nutritionResult = document.getElementById('nutritionResult');
-  const verificationWarning = document.getElementById('verificationWarning');
-  const resendVerificationBtn = document.getElementById('resendVerificationBtn');
 
-  let recaptchaVerifierLogin, recaptchaVerifierSignup;
-
+  let chartInstance;
+  // Chart init
   function initChart(data = [2100,2350,2200,2680,2450,2800,2520]) {
     const ctx = document.getElementById('progressChart').getContext('2d');
     if (chartInstance) chartInstance.destroy();
@@ -338,78 +296,103 @@
   }
   initChart();
 
+  // Modal controls
   function openModal(tab = 'login') {
     authModal.style.display = 'flex';
     authError.textContent = '';
-    verificationDiv.style.display = 'none';
     if (tab === 'signup') {
       loginTab.classList.remove('active'); signupTab.classList.add('active');
       loginForm.style.display = 'none'; signupForm.style.display = 'block';
-      if (!recaptchaVerifierSignup) recaptchaVerifierSignup = new RecaptchaVerifier(auth, 'recaptcha-container-signup', { size: 'normal' });
     } else {
       loginTab.classList.add('active'); signupTab.classList.remove('active');
       loginForm.style.display = 'block'; signupForm.style.display = 'none';
-      if (!recaptchaVerifierLogin) recaptchaVerifierLogin = new RecaptchaVerifier(auth, 'recaptcha-container-login', { size: 'normal' });
     }
   }
-
-  [loginBtn, signupBtn, heroCta].forEach(btn => btn?.addEventListener('click', (e) => {
-    const id = e.target.id;
-    if (id === 'signupBtn' || id === 'heroCta') openModal('signup');
-    else openModal('login');
-  }));
+  loginBtn.addEventListener('click', () => openModal('login'));
+  signupBtn.addEventListener('click', () => openModal('signup'));
+  heroCta.addEventListener('click', () => openModal('signup'));
   closeModal.addEventListener('click', () => authModal.style.display = 'none');
   window.addEventListener('click', (e) => { if (e.target === authModal) authModal.style.display = 'none'; });
   loginTab.addEventListener('click', () => { loginTab.classList.add('active'); signupTab.classList.remove('active'); loginForm.style.display='block'; signupForm.style.display='none'; });
   signupTab.addEventListener('click', () => { signupTab.classList.add('active'); loginTab.classList.remove('active'); signupForm.style.display='block'; loginForm.style.display='none'; });
 
+  // Login
+  loginForm.addEventListener('submit', async (e) => {
+    e.preventDefault();
+    const email = document.getElementById('loginEmail').value;
+    const password = document.getElementById('loginPassword').value;
+    try {
+      await signInWithEmailAndPassword(auth, email, password);
+      authModal.style.display = 'none';
+    } catch (err) {
+      authError.textContent = err.message;
+    }
+  });
+
+  // Signup — FIXED: Explicit Firestore write with logging
+  signupForm.addEventListener('submit', async (e) => {
+    e.preventDefault();
+    const name = document.getElementById('signupName').value;
+    const email = document.getElementById('signupEmail').value;
+    const password = document.getElementById('signupPassword').value;
+    const age = document.getElementById('signupAge').value;
+    const goal = document.getElementById('signupGoal').value;
+
+    try {
+      console.log('📝 Starting signup for:', email);
+      const cred = await createUserWithEmailAndPassword(auth, email, password);
+      console.log('✅ Auth user created:', cred.user.uid);
+      await updateProfile(cred.user, { displayName: name });
+
+      // 🔥 CREATE USER DOCUMENT IN FIRESTORE
+      const userData = {
+        name: name,
+        email: email,
+        age: parseInt(age) || 28,
+        goal: goal,
+        createdAt: new Date()
+      };
+      console.log('💾 Writing to Firestore:', userData);
+      await setDoc(doc(db, 'users', cred.user.uid), userData);
+      console.log('🎉 User document successfully saved to Firestore!');
+
+      authModal.style.display = 'none';
+    } catch (err) {
+      console.error('❌ Signup error:', err);
+      authError.textContent = err.message;
+    }
+  });
+
   // Auth state observer
   onAuthStateChanged(auth, async (user) => {
-    currentUser = user;
     if (user) {
-      const isVerified = user.emailVerified;
-      verificationWarning.style.display = isVerified ? 'none' : 'block';
-      
+      console.log('👤 Logged in as:', user.uid);
       authButtons.style.display = 'none';
       userGreeting.style.display = 'flex';
-      userEmailDisplay.textContent = user.email || user.phoneNumber || 'User';
-      
-      if (!isVerified) {
-        // Don't load sensitive data if not verified
-        dashName.textContent = user.displayName || 'Unverified';
-        return;
-      }
-      
-      const userDoc = await getDoc(doc(db, 'users', user.uid));
-      if (userDoc.exists()) {
-        const data = userDoc.data();
-        dashName.textContent = data.name || 'Athlete';
-        if (data.age) ageInput.value = data.age;
-        updateNutritionDisplay(data.age || 28);
-      } else {
-        await setDoc(doc(db, 'users', user.uid), {
+      userEmailDisplay.textContent = user.email || 'User';
+
+      // Ensure user doc exists (fallback)
+      const userRef = doc(db, 'users', user.uid);
+      const userSnap = await getDoc(userRef);
+      if (!userSnap.exists()) {
+        console.warn('⚠️ User doc missing, creating...');
+        await setDoc(userRef, {
           name: user.displayName || 'Elite Member',
           email: user.email,
           age: 28,
           goal: 'Muscle Gain',
           createdAt: new Date()
         });
-        dashName.textContent = user.displayName || 'Elite Member';
       }
-      
+      const userData = (await getDoc(userRef)).data();
+      dashName.textContent = userData.name || 'Athlete';
+      if (userData.age) ageInput.value = userData.age;
+
+      // Initialize stats subcollections
       const statsRef = doc(db, 'users', user.uid, 'stats', 'daily');
       if (!(await getDoc(statsRef)).exists()) {
         await setDoc(statsRef, { calories: 2450, steps: 8432, heartRate: 72, workoutCalories: 680 });
       }
-      const workoutRef = doc(db, 'users', user.uid, 'workouts', 'today');
-      if (!(await getDoc(workoutRef)).exists()) {
-        await setDoc(workoutRef, { exercises: [{name:'Bench Press',sets:4,reps:8},{name:'Squats',sets:5,reps:5}] });
-      }
-      const nutritionRef = doc(db, 'users', user.uid, 'nutrition', 'daily');
-      if (!(await getDoc(nutritionRef)).exists()) {
-        await setDoc(nutritionRef, { protein: 142, bmr: 1820 });
-      }
-
       onSnapshot(statsRef, (doc) => {
         if (doc.exists()) {
           const s = doc.data();
@@ -420,12 +403,22 @@
           workoutCal.textContent = (s.workoutCalories || 0) + ' kcal';
         }
       });
+
+      const workoutRef = doc(db, 'users', user.uid, 'workouts', 'today');
+      if (!(await getDoc(workoutRef)).exists()) {
+        await setDoc(workoutRef, { exercises: [{name:'Bench Press',sets:4,reps:8},{name:'Squats',sets:5,reps:5}] });
+      }
       onSnapshot(workoutRef, (doc) => {
         if (doc.exists()) {
           const w = doc.data().exercises || [];
           workoutList.innerHTML = w.map(ex => `<div class="workout-item"><span>${ex.name}</span><span>${ex.sets}x${ex.reps}</span></div>`).join('');
         }
       });
+
+      const nutritionRef = doc(db, 'users', user.uid, 'nutrition', 'daily');
+      if (!(await getDoc(nutritionRef)).exists()) {
+        await setDoc(nutritionRef, { protein: 142, bmr: 1820 });
+      }
       onSnapshot(nutritionRef, (doc) => {
         if (doc.exists()) {
           const n = doc.data();
@@ -433,110 +426,38 @@
           proteinProgress.style.width = Math.min((n.protein/180)*100, 100) + '%';
         }
       });
+
     } else {
-      verificationWarning.style.display = 'none';
       authButtons.style.display = 'flex';
       userGreeting.style.display = 'none';
       dashName.textContent = 'Guest';
       dailyCalories.textContent = '0';
       calProgress.style.width = '0%';
-      workoutList.innerHTML = '<div class="workout-item"><span>Bench Press</span><span>4x8</span></div>';
+      workoutList.innerHTML = '<div class="workout-item"><span>Bench Press</span><span>4x8</span></div><div class="workout-item"><span>Squats</span><span>5x5</span></div>';
       proteinGoal.textContent = '0g / 180g';
       proteinProgress.style.width = '0%';
     }
   });
 
-  // Login with email verification check
-  loginForm.addEventListener('submit', async (e) => {
-    e.preventDefault();
-    const email = document.getElementById('loginEmail').value;
-    const password = document.getElementById('loginPassword').value;
-    try {
-      const userCred = await signInWithEmailAndPassword(auth, email, password);
-      if (!userCred.user.emailVerified) {
-        alert("Please verify your email first! Check your inbox or spam.");
-        await signOut(auth);
-        return;
-      }
-      authModal.style.display = 'none';
-    } catch (err) { authError.textContent = err.message; }
-  });
-
-  // Signup with verification email
-  signupForm.addEventListener('submit', async (e) => {
-    e.preventDefault();
-    const name = document.getElementById('signupName').value;
-    const email = document.getElementById('signupEmail').value;
-    const password = document.getElementById('signupPassword').value;
-    const age = document.getElementById('signupAge').value;
-    const gender = document.getElementById('signupGender').value;
-    const goal = document.getElementById('signupGoal').value;
-    try {
-      const cred = await createUserWithEmailAndPassword(auth, email, password);
-      await sendEmailVerification(cred.user);
-      alert("Verification email sent! Please check your inbox (and spam folder).");
-      await updateProfile(cred.user, { displayName: name });
-      await setDoc(doc(db, 'users', cred.user.uid), { name, email, age: parseInt(age)||28, gender, goal });
-      authModal.style.display = 'none';
-    } catch (err) { authError.textContent = err.message; }
-  });
-
-  // Resend verification
-  resendVerificationBtn.addEventListener('click', async () => {
-    if (currentUser && !currentUser.emailVerified) {
-      try {
-        await sendEmailVerification(currentUser);
-        alert("Verification email resent! Check your inbox.");
-      } catch (err) { alert("Error: " + err.message); }
-    } else {
-      alert("Your email is already verified or you're not logged in.");
-    }
-  });
-
-  // Phone auth remains same
-  document.getElementById('phoneLoginBtn').addEventListener('click', async () => {
-    const phone = document.getElementById('phoneLogin').value;
-    if (!phone) return authError.textContent = 'Enter phone number';
-    try {
-      if (!recaptchaVerifierLogin) recaptchaVerifierLogin = new RecaptchaVerifier(auth, 'recaptcha-container-login', { size: 'normal' });
-      confirmationResult = await signInWithPhoneNumber(auth, phone, recaptchaVerifierLogin);
-      verificationDiv.style.display = 'block';
-      authError.textContent = 'OTP sent!';
-    } catch (err) { authError.textContent = err.message; }
-  });
-  document.getElementById('phoneSignupBtn').addEventListener('click', async () => {
-    const phone = prompt('Enter phone number with country code (e.g., +1234567890):');
-    if (!phone) return;
-    try {
-      if (!recaptchaVerifierSignup) recaptchaVerifierSignup = new RecaptchaVerifier(auth, 'recaptcha-container-signup', { size: 'normal' });
-      confirmationResult = await signInWithPhoneNumber(auth, phone, recaptchaVerifierSignup);
-      verificationDiv.style.display = 'block';
-      authError.textContent = 'OTP sent!';
-    } catch (err) { authError.textContent = err.message; }
-  });
-  document.getElementById('verifyCodeBtn').addEventListener('click', async () => {
-    const code = document.getElementById('verificationCode').value;
-    try {
-      await confirmationResult.confirm(code);
-      authModal.style.display = 'none';
-    } catch (err) { authError.textContent = err.message; }
-  });
-
   logoutBtn.addEventListener('click', () => signOut(auth));
 
+  // Nutrition helpers
   function updateNutritionDisplay(age) {
     const bmr = Math.round(1800 + (age * 2.5) - 20);
     const protein = Math.round(120 + (age * 0.8));
     nutritionResult.innerHTML = `🔥 BMR: ${bmr} kcal | 🥑 Protein: ${protein}g`;
   }
-  calcNutritionBtn.addEventListener('click', () => updateNutritionDisplay(parseInt(ageInput.value)||28));
+  calcNutritionBtn.addEventListener('click', () => {
+    const age = parseInt(ageInput.value) || 28;
+    updateNutritionDisplay(age);
+  });
   saveNutritionBtn.addEventListener('click', async () => {
-    if (!currentUser) return alert('Please login');
-    const age = parseInt(ageInput.value)||28;
+    if (!auth.currentUser) return alert('Login first');
+    const age = parseInt(ageInput.value) || 28;
     const bmr = Math.round(1800 + (age * 2.5) - 20);
     const protein = Math.round(120 + (age * 0.8));
-    await updateDoc(doc(db, 'users', currentUser.uid), { age });
-    await setDoc(doc(db, 'users', currentUser.uid, 'nutrition', 'daily'), { protein, bmr }, { merge: true });
+    await updateDoc(doc(db, 'users', auth.currentUser.uid), { age });
+    await setDoc(doc(db, 'users', auth.currentUser.uid, 'nutrition', 'daily'), { protein, bmr }, { merge: true });
     alert('Saved!');
   });
 </script>
