@@ -3,17 +3,17 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=yes">
-  <title>Elite Fitness Pro | Firebase SaaS</title>
+  <title>Elite Fitness Pro | Firebase SaaS + Email Verification</title>
   <!-- Premium Fonts -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@300;400;500;600;700;800&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
   <!-- Font Awesome Icons -->
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
-  <!-- Chart.js for progress graphs -->
+  <!-- Chart.js -->
   <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
   <style>
-    /* === Full premium styles (identical to previous version) === */
+    /* === Full premium styles (same as before) === */
     * { margin: 0; padding: 0; box-sizing: border-box; }
     body { font-family: 'Inter', sans-serif; background-color: #050505; color: #f0f0f0; line-height: 1.5; overflow-x: hidden; }
     h1, h2, h3, h4, .logo, .premium-title { font-family: 'Manrope', sans-serif; font-weight: 600; letter-spacing: -0.02em; }
@@ -65,6 +65,8 @@
     footer { margin-top: 80px; padding: 32px; text-align: center; border-top: 1px solid rgba(212,175,55,0.2); }
     #userGreeting { display: flex; align-items: center; gap: 10px; }
     #logoutBtn { background: none; border: 1px solid var(--gold); color: var(--gold); padding: 6px 16px; border-radius: 40px; cursor: pointer; }
+    #verificationWarning { background: rgba(255,193,7,0.1); border: 1px solid #ffc107; border-radius: 20px; padding: 12px 20px; margin-bottom: 20px; display: none; }
+    .resend-link { color: var(--neon-blue); cursor: pointer; text-decoration: underline; margin-left: 8px; }
     @media (max-width: 900px) {
       .navbar { flex-wrap: wrap; gap: 12px; }
       .nav-links { order: 3; width: 100%; justify-content: center; }
@@ -78,15 +80,11 @@
 </head>
 <body>
 
-<!-- Sticky Navbar -->
+<!-- Navbar -->
 <nav class="navbar">
   <div class="logo"><i class="fas fa-dumbbell" style="margin-right: 10px; color: var(--gold);"></i>ELITE FITNESS PRO</div>
   <div class="nav-links">
-    <a href="#home">Home</a>
-    <a href="#programs">Programs</a>
-    <a href="#dashboard">Dashboard</a>
-    <a href="#pricing">Pricing</a>
-    <a href="#contact">Contact</a>
+    <a href="#home">Home</a><a href="#programs">Programs</a><a href="#dashboard">Dashboard</a><a href="#pricing">Pricing</a><a href="#contact">Contact</a>
   </div>
   <div class="auth-buttons" id="authButtons">
     <button class="btn-neon" id="loginBtn"><i class="fas fa-key"></i> Login</button>
@@ -98,194 +96,139 @@
   </div>
 </nav>
 
-<!-- Hero Section -->
+<!-- Hero -->
 <section id="home" class="hero">
-  <video class="hero-video" autoplay muted loop playsinline poster="https://images.pexels.com/photos/841130/pexels-photo-841130.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2">
+  <video class="hero-video" autoplay muted loop playsinline poster="https://images.pexels.com/photos/841130/pexels-photo-841130.jpeg">
     <source src="https://assets.mixkit.co/videos/preview/mixkit-man-and-woman-doing-push-ups-in-a-gym-47496-large.mp4" type="video/mp4">
   </video>
   <div class="hero-overlay"></div>
   <div class="container hero-content">
     <h1><span class="gold-text">ELITE</span> <span class="neon-text">PERFORMANCE</span><br>REDEFINED</h1>
-    <p style="font-size: 1.3rem; margin-bottom: 40px; max-width: 600px; text-shadow: 0 4px 20px black;">Cinematic training • AI coaching • Firebase sync. Join the future of fitness.</p>
+    <p style="font-size: 1.3rem; margin-bottom: 40px;">Cinematic training • AI coaching • Firebase sync. Join the future of fitness.</p>
     <div style="display: flex; gap: 20px;">
       <button class="btn-primary" id="heroCta"><i class="fas fa-crown"></i> Start Elite Journey</button>
       <button class="btn-neon"><i class="fas fa-play"></i> Watch Teaser</button>
-    </div>
-    <div style="margin-top: 60px; display: flex; gap: 16px;">
-      <img src="https://images.pexels.com/photos/2294361/pexels-photo-2294361.jpeg?auto=compress&cs=tinysrgb&w=600" alt="Fitness model" style="width: 70px; height: 70px; border-radius: 50%; border: 2px solid var(--gold); object-fit: cover;">
-      <img src="https://images.pexels.com/photos/416809/pexels-photo-416809.jpeg?auto=compress&cs=tinysrgb&w=600" alt="Strong athlete" style="width: 70px; height: 70px; border-radius: 50%; border: 2px solid var(--neon-blue); object-fit: cover;">
-      <img src="https://images.pexels.com/photos/1552252/pexels-photo-1552252.jpeg?auto=compress&cs=tinysrgb&w=600" alt="Gym" style="width: 70px; height: 70px; border-radius: 50%; border: 2px solid var(--gold); object-fit: cover;">
-      <span style="margin-left: 12px; align-self: center; color: #ccc;"><i class="fas fa-star" style="color: gold;"></i> 10k+ Elite members</span>
     </div>
   </div>
 </section>
 
 <div class="container">
-  <!-- Programs Section -->
+  <!-- Programs -->
   <section id="programs" style="padding: 100px 0 60px;">
     <h2 class="section-title"><span class="neon-text">//</span> SIGNATURE <span class="gold-text">PROGRAMS</span></h2>
     <div class="program-grid">
       <div class="program-card">
         <div class="program-icon"><i class="fas fa-fire"></i></div>
-        <h3 style="font-size: 2rem; margin-bottom: 16px;">Weight Loss</h3>
-        <p style="margin-bottom: 24px; opacity: 0.9;">AI-powered fat burn, metabolic conditioning. Personalized meal & workout sync.</p>
-        <img src="https://images.pexels.com/photos/416778/pexels-photo-416778.jpeg?auto=compress&cs=tinysrgb&w=600" alt="Weight loss" style="width: 100%; height: 180px; object-fit: cover; border-radius: 20px; margin-bottom: 20px; border: 1px solid var(--gold);">
-        <button class="btn-neon" style="width: 100%;">Explore →</button>
+        <h3>Weight Loss</h3>
+        <p>AI-powered fat burn, metabolic conditioning.</p>
+        <img src="https://images.pexels.com/photos/416778/pexels-photo-416778.jpeg?auto=compress&cs=tinysrgb&w=600" style="width:100%; height:180px; object-fit:cover; border-radius:20px; margin:20px 0;">
       </div>
       <div class="program-card">
         <div class="program-icon"><i class="fas fa-dumbbell"></i></div>
-        <h3 style="font-size: 2rem; margin-bottom: 16px;">Muscle Gain</h3>
-        <p style="margin-bottom: 24px; opacity: 0.9;">Hypertrophy specialization, progressive overload tracking, recovery analytics.</p>
-        <img src="https://images.pexels.com/photos/841130/pexels-photo-841130.jpeg?auto=compress&cs=tinysrgb&w=600" alt="Muscle gain" style="width: 100%; height: 180px; object-fit: cover; border-radius: 20px; margin-bottom: 20px; border: 1px solid var(--neon-blue);">
-        <button class="btn-neon" style="width: 100%;">Explore →</button>
+        <h3>Muscle Gain</h3>
+        <p>Hypertrophy specialization, overload tracking.</p>
+        <img src="https://images.pexels.com/photos/841130/pexels-photo-841130.jpeg?auto=compress&cs=tinysrgb&w=600" style="width:100%; height:180px; object-fit:cover; border-radius:20px; margin:20px 0;">
       </div>
     </div>
   </section>
 
-  <!-- User Dashboard + Tracking (Firestore sync) -->
+  <!-- Dashboard -->
   <section id="dashboard" class="dashboard-preview">
     <h2 class="section-title"><span class="neon-text">⌘</span> YOUR <span class="gold-text">ELITE DASHBOARD</span></h2>
-    <div class="dashboard-grid" id="dashboardContent">
+    <!-- Verification warning banner -->
+    <div id="verificationWarning" class="glass-card">
+      <i class="fas fa-exclamation-triangle" style="color: #ffc107;"></i> 
+      Your email is not verified. Please verify to unlock all features. 
+      <span id="resendVerificationBtn" class="resend-link"><i class="fas fa-envelope"></i> Resend verification email</span>
+    </div>
+    <div class="dashboard-grid">
       <div class="dashboard-card">
-        <div style="display: flex; align-items: center; gap: 12px; margin-bottom: 20px;">
+        <div style="display: flex; gap: 12px; margin-bottom: 20px;">
           <i class="fas fa-user-circle" style="font-size: 50px; color: var(--gold);"></i>
           <div><h3 id="dashName">Guest</h3><span class="neon-text">Member</span></div>
         </div>
-        <div class="stat-value" id="dailyCalories">0 <span style="font-size: 1rem;">kcal</span></div>
+        <div class="stat-value" id="dailyCalories">0 <span>kcal</span></div>
         <div>Daily active burn</div>
-        <div class="progress-bar"><div class="progress-fill" id="calProgress" style="width: 0%;"></div></div>
+        <div class="progress-bar"><div class="progress-fill" id="calProgress" style="width:0%;"></div></div>
         <div style="display: flex; justify-content: space-between; margin-top: 24px;">
           <div><i class="fas fa-shoe-prints"></i> <span id="stepsCount">0</span> steps</div>
           <div><i class="fas fa-heart"></i> <span id="heartRate">--</span> bpm</div>
         </div>
       </div>
       <div class="dashboard-card">
-        <h3 style="display: flex; gap: 8px;"><i class="fas fa-clipboard-list neon-text"></i> Today's Workout</h3>
+        <h3><i class="fas fa-clipboard-list neon-text"></i> Today's Workout</h3>
         <div id="workoutList"></div>
         <div style="margin-top: 24px; background: rgba(0,242,255,0.05); border-radius: 20px; padding: 16px;">
           <div style="display: flex; justify-content: space-between;"><span>🔥 Calories burned</span> <span class="neon-text" id="workoutCal">0 kcal</span></div>
-          <div style="display: flex; justify-content: space-between; margin-top: 10px;"><span>🍗 Protein goal</span> <span id="proteinGoal">0g / 180g</span></div>
-          <div class="progress-bar"><div class="progress-fill" id="proteinProgress" style="width: 0%;"></div></div>
+          <div style="display: flex; justify-content: space-between;"><span>🍗 Protein goal</span> <span id="proteinGoal">0g / 180g</span></div>
+          <div class="progress-bar"><div class="progress-fill" id="proteinProgress" style="width:0%;"></div></div>
         </div>
       </div>
       <div class="dashboard-card">
         <h3><i class="fas fa-chart-line neon-text"></i> Weekly Progress</h3>
-        <div class="chart-container">
-          <canvas id="progressChart" width="300" height="150"></canvas>
-        </div>
+        <div class="chart-container"><canvas id="progressChart"></canvas></div>
         <div class="age-tracker">
-          <label style="display: block; margin-bottom: 8px;"><i class="fas fa-cake-candles"></i> Age-based nutrition</label>
-          <div style="display: flex; gap: 10px;">
-            <input type="number" id="ageInput" placeholder="Your age" value="28" min="15" max="80" style="background:#0f131c; border:1px solid var(--gold); border-radius: 30px; padding: 10px 16px; color:white; width: 100px;">
-            <button id="calcNutritionBtn" class="btn-neon" style="padding: 8px 16px;">Update</button>
-            <button id="saveNutritionBtn" class="btn-primary" style="padding: 8px 16px;">Save</button>
+          <label><i class="fas fa-cake-candles"></i> Age-based nutrition</label>
+          <div style="display: flex; gap: 10px; margin-top: 10px;">
+            <input type="number" id="ageInput" value="28" style="background:#0f131c; border:1px solid var(--gold); border-radius:30px; padding:10px; color:white; width:100px;">
+            <button id="calcNutritionBtn" class="btn-neon">Update</button>
+            <button id="saveNutritionBtn" class="btn-primary">Save</button>
           </div>
-          <div style="margin-top: 12px;" id="nutritionResult">
-            <span>🔥 BMR: 1820 kcal</span> | <span>🥑 Protein: 145g</span>
-          </div>
+          <div style="margin-top: 12px;" id="nutritionResult">🔥 BMR: 1820 kcal | 🥑 Protein: 145g</div>
         </div>
-        <p style="margin-top: 16px; font-size: 0.9rem;"><i class="fas fa-arrow-up" style="color: var(--gold);"></i> +4.2% strength vs last week</p>
       </div>
     </div>
   </section>
 
-  <!-- Pricing Plans -->
+  <!-- Pricing -->
   <section id="pricing" style="padding: 80px 0;">
     <h2 class="section-title"><span class="neon-text">//</span> ELITE <span class="gold-text">MEMBERSHIP</span></h2>
     <div class="pricing-grid">
-      <div class="pricing-card">
-        <h3>Essential</h3>
-        <div class="price">$29<small style="font-size: 1rem;">/mo</small></div>
-        <ul style="list-style: none; margin: 24px 0; text-align: left;">
-          <li><i class="fas fa-check-circle neon-text"></i> Workout tracking</li>
-          <li><i class="fas fa-check-circle neon-text"></i> Basic analytics</li>
-          <li><i class="fas fa-check-circle neon-text"></i> 5 programs</li>
-        </ul>
-        <button class="btn-primary" style="width:100%;">Choose</button>
-      </div>
-      <div class="pricing-card" style="border: 2px solid var(--gold); transform: scale(1.02);">
-        <h3>Pro <span style="background: var(--neon-blue); color:black; padding:4px 12px; border-radius: 40px; font-size:0.8rem;">POPULAR</span></h3>
-        <div class="price">$59<small>/mo</small></div>
-        <ul style="list-style: none; margin: 24px 0; text-align: left;">
-          <li><i class="fas fa-check-circle neon-text"></i> All Essential +</li>
-          <li><i class="fas fa-check-circle neon-text"></i> AI nutrition coach</li>
-          <li><i class="fas fa-check-circle neon-text"></i> Advanced charts</li>
-          <li><i class="fas fa-check-circle neon-text"></i> 1:1 check-ins</li>
-        </ul>
-        <button class="btn-primary" style="width:100%; background: var(--gold); color:#050505;">Start Pro</button>
-      </div>
-      <div class="pricing-card">
-        <h3>Elite</h3>
-        <div class="price">$99<small>/mo</small></div>
-        <ul style="list-style: none; margin: 24px 0; text-align: left;">
-          <li><i class="fas fa-check-circle neon-text"></i> Everything in Pro</li>
-          <li><i class="fas fa-check-circle neon-text"></i> Personal coaching</li>
-          <li><i class="fas fa-check-circle neon-text"></i> Bloodwork insights</li>
-        </ul>
-        <button class="btn-primary" style="width:100%;">Go Elite</button>
-      </div>
+      <div class="pricing-card"><h3>Essential</h3><div class="price">$29<small>/mo</small></div><button class="btn-primary">Choose</button></div>
+      <div class="pricing-card" style="border:2px solid var(--gold);"><h3>Pro</h3><div class="price">$59<small>/mo</small></div><button class="btn-primary">Start Pro</button></div>
+      <div class="pricing-card"><h3>Elite</h3><div class="price">$99<small>/mo</small></div><button class="btn-primary">Go Elite</button></div>
     </div>
   </section>
 
-  <!-- Contact Section -->
+  <!-- Contact -->
   <section id="contact" style="padding-bottom: 80px;">
     <h2 class="section-title"><span class="neon-text">⌕</span> GET IN <span class="gold-text">TOUCH</span></h2>
     <div class="contact-flex">
-      <div class="contact-card" style="flex:1; padding: 40px;">
-        <div style="display: flex; gap: 40px; flex-wrap: wrap;">
-          <div class="contact-info">
-            <p><i class="fas fa-phone-alt"></i> <a href="tel:+923447436681" style="color:white; text-decoration:none;">+92 344 7436681</a></p>
-            <p><i class="fas fa-envelope"></i> <a href="mailto:mirraza995@gmail.com" style="color:var(--neon-blue);">mirraza995@gmail.com</a></p>
-            <p><i class="fas fa-map-pin"></i> Dubai / London / NYC</p>
-          </div>
-          <div>
-            <img src="https://images.pexels.com/photos/260447/pexels-photo-260447.jpeg?auto=compress&cs=tinysrgb&w=600" alt="Luxury gym" style="width: 220px; border-radius: 28px; border: 2px solid var(--gold);">
-          </div>
-        </div>
-        <div style="margin-top: 30px;">
-          <button class="btn-neon"><i class="fab fa-whatsapp"></i> Chat on WhatsApp</button>
-          <button class="btn-primary" style="margin-left: 16px;">Book consultation</button>
-        </div>
+      <div class="contact-card" style="flex:1; padding:40px;">
+        <p><i class="fas fa-phone-alt"></i> <a href="tel:+923447436681" style="color:white;">+92 344 7436681</a></p>
+        <p><i class="fas fa-envelope"></i> <a href="mailto:mirraza995@gmail.com" style="color:var(--neon-blue);">mirraza995@gmail.com</a></p>
       </div>
     </div>
   </section>
 </div>
 
-<footer>
-  <p>© 2026 Elite Fitness Pro — Cinematic SaaS. All rights reserved. <span class="neon-text">#TrainElite</span></p>
-</footer>
+<footer>© 2026 Elite Fitness Pro — Secure Firebase SaaS.</footer>
 
-<!-- AUTH MODAL with Firebase integration -->
+<!-- Auth Modal -->
 <div class="modal" id="authModal">
   <div class="modal-content">
     <div class="tab-header">
       <button class="tab-btn active" id="loginTabBtn">Login</button>
       <button class="tab-btn" id="signupTabBtn">Create Account</button>
-      <i class="fas fa-times" style="margin-left: auto; cursor: pointer; font-size: 24px; color: var(--gold);" id="closeModal"></i>
+      <i class="fas fa-times" id="closeModal" style="margin-left:auto; cursor:pointer; color:var(--gold);"></i>
     </div>
-    <div id="authError" style="color: #ff6b6b; margin-bottom: 16px;"></div>
-    <!-- Login Form -->
+    <div id="authError" style="color:#ff6b6b; margin-bottom:16px;"></div>
     <form id="loginForm">
       <div class="input-group"><input type="email" id="loginEmail" placeholder="Email" required></div>
       <div class="input-group"><input type="password" id="loginPassword" placeholder="Password" required></div>
       <button type="submit" class="btn-primary" style="width:100%;">Sign In</button>
-      <p style="margin-top: 16px; text-align:center;">or</p>
+      <p style="margin-top:16px; text-align:center;">or</p>
       <div class="input-group"><input type="tel" id="phoneLogin" placeholder="Phone (+1234567890)"></div>
       <div id="recaptcha-container-login"></div>
       <button type="button" id="phoneLoginBtn" class="btn-neon" style="width:100%;">Login with Phone</button>
     </form>
-    <!-- Signup Form -->
-    <form id="signupForm" style="display: none;">
+    <form id="signupForm" style="display:none;">
       <div class="input-group"><input type="text" id="signupName" placeholder="Full Name" required></div>
       <div class="input-group"><input type="email" id="signupEmail" placeholder="Email" required></div>
       <div class="input-group"><input type="password" id="signupPassword" placeholder="Password" required></div>
       <div class="input-group"><input type="number" id="signupAge" placeholder="Age"></div>
-      <div class="input-group">
-        <select id="signupGender"><option>Male</option><option>Female</option><option>Other</option></select>
-      </div>
-      <div class="input-group">
-        <select id="signupGoal"><option>Weight Loss</option><option>Muscle Gain</option><option>Endurance</option></select>
-      </div>
+      <div class="input-group"><select id="signupGender"><option>Male</option><option>Female</option><option>Other</option></select></div>
+      <div class="input-group"><select id="signupGoal"><option>Weight Loss</option><option>Muscle Gain</option><option>Endurance</option></select></div>
       <div id="recaptcha-container-signup"></div>
       <button type="submit" class="btn-primary" style="width:100%;">Create Elite Account</button>
       <p style="margin-top:12px;">or</p>
@@ -309,7 +252,8 @@
     onAuthStateChanged,
     RecaptchaVerifier,
     signInWithPhoneNumber,
-    updateProfile
+    updateProfile,
+    sendEmailVerification
   } from "https://www.gstatic.com/firebasejs/12.12.1/firebase-auth.js";
   import { 
     getFirestore, 
@@ -320,7 +264,6 @@
     onSnapshot 
   } from "https://www.gstatic.com/firebasejs/12.12.1/firebase-firestore.js";
 
-  // Your Firebase configuration
   const firebaseConfig = {
     apiKey: "AIzaSyDb37iOgAVsPkt2DrcMCpaVk9nb81W_vSg",
     authDomain: "elite-fitness-pro-844b7.firebaseapp.com",
@@ -334,12 +277,11 @@
   const auth = getAuth(app);
   const db = getFirestore(app);
 
-  // Global variables
   let currentUser = null;
   let confirmationResult = null;
   let chartInstance = null;
 
-  // UI Elements
+  // UI elements
   const authModal = document.getElementById('authModal');
   const loginBtn = document.getElementById('loginBtn');
   const signupBtn = document.getElementById('signupBtn');
@@ -368,11 +310,11 @@
   const calcNutritionBtn = document.getElementById('calcNutritionBtn');
   const saveNutritionBtn = document.getElementById('saveNutritionBtn');
   const nutritionResult = document.getElementById('nutritionResult');
+  const verificationWarning = document.getElementById('verificationWarning');
+  const resendVerificationBtn = document.getElementById('resendVerificationBtn');
 
-  // Recaptcha verifiers
   let recaptchaVerifierLogin, recaptchaVerifierSignup;
 
-  // Initialize chart
   function initChart(data = [2100,2350,2200,2680,2450,2800,2520]) {
     const ctx = document.getElementById('progressChart').getContext('2d');
     if (chartInstance) chartInstance.destroy();
@@ -396,7 +338,6 @@
   }
   initChart();
 
-  // Modal controls
   function openModal(tab = 'login') {
     authModal.style.display = 'flex';
     authError.textContent = '';
@@ -404,15 +345,11 @@
     if (tab === 'signup') {
       loginTab.classList.remove('active'); signupTab.classList.add('active');
       loginForm.style.display = 'none'; signupForm.style.display = 'block';
-      if (!recaptchaVerifierSignup) {
-        recaptchaVerifierSignup = new RecaptchaVerifier(auth, 'recaptcha-container-signup', { size: 'normal' });
-      }
+      if (!recaptchaVerifierSignup) recaptchaVerifierSignup = new RecaptchaVerifier(auth, 'recaptcha-container-signup', { size: 'normal' });
     } else {
       loginTab.classList.add('active'); signupTab.classList.remove('active');
       loginForm.style.display = 'block'; signupForm.style.display = 'none';
-      if (!recaptchaVerifierLogin) {
-        recaptchaVerifierLogin = new RecaptchaVerifier(auth, 'recaptcha-container-login', { size: 'normal' });
-      }
+      if (!recaptchaVerifierLogin) recaptchaVerifierLogin = new RecaptchaVerifier(auth, 'recaptcha-container-login', { size: 'normal' });
     }
   }
 
@@ -430,9 +367,19 @@
   onAuthStateChanged(auth, async (user) => {
     currentUser = user;
     if (user) {
+      const isVerified = user.emailVerified;
+      verificationWarning.style.display = isVerified ? 'none' : 'block';
+      
       authButtons.style.display = 'none';
       userGreeting.style.display = 'flex';
       userEmailDisplay.textContent = user.email || user.phoneNumber || 'User';
+      
+      if (!isVerified) {
+        // Don't load sensitive data if not verified
+        dashName.textContent = user.displayName || 'Unverified';
+        return;
+      }
+      
       const userDoc = await getDoc(doc(db, 'users', user.uid));
       if (userDoc.exists()) {
         const data = userDoc.data();
@@ -449,24 +396,20 @@
         });
         dashName.textContent = user.displayName || 'Elite Member';
       }
-      // Load default stats if not exist
+      
       const statsRef = doc(db, 'users', user.uid, 'stats', 'daily');
-      const statsSnap = await getDoc(statsRef);
-      if (!statsSnap.exists()) {
+      if (!(await getDoc(statsRef)).exists()) {
         await setDoc(statsRef, { calories: 2450, steps: 8432, heartRate: 72, workoutCalories: 680 });
       }
       const workoutRef = doc(db, 'users', user.uid, 'workouts', 'today');
-      const workoutSnap = await getDoc(workoutRef);
-      if (!workoutSnap.exists()) {
+      if (!(await getDoc(workoutRef)).exists()) {
         await setDoc(workoutRef, { exercises: [{name:'Bench Press',sets:4,reps:8},{name:'Squats',sets:5,reps:5}] });
       }
       const nutritionRef = doc(db, 'users', user.uid, 'nutrition', 'daily');
-      const nutritionSnap = await getDoc(nutritionRef);
-      if (!nutritionSnap.exists()) {
+      if (!(await getDoc(nutritionRef)).exists()) {
         await setDoc(nutritionRef, { protein: 142, bmr: 1820 });
       }
 
-      // Real-time listeners
       onSnapshot(statsRef, (doc) => {
         if (doc.exists()) {
           const s = doc.data();
@@ -491,29 +434,35 @@
         }
       });
     } else {
+      verificationWarning.style.display = 'none';
       authButtons.style.display = 'flex';
       userGreeting.style.display = 'none';
       dashName.textContent = 'Guest';
       dailyCalories.textContent = '0';
       calProgress.style.width = '0%';
-      workoutList.innerHTML = '<div class="workout-item"><span>Bench Press</span><span>4x8</span></div><div class="workout-item"><span>Squats</span><span>5x5</span></div>';
+      workoutList.innerHTML = '<div class="workout-item"><span>Bench Press</span><span>4x8</span></div>';
       proteinGoal.textContent = '0g / 180g';
       proteinProgress.style.width = '0%';
     }
   });
 
-  // Email login
+  // Login with email verification check
   loginForm.addEventListener('submit', async (e) => {
     e.preventDefault();
     const email = document.getElementById('loginEmail').value;
     const password = document.getElementById('loginPassword').value;
     try {
-      await signInWithEmailAndPassword(auth, email, password);
+      const userCred = await signInWithEmailAndPassword(auth, email, password);
+      if (!userCred.user.emailVerified) {
+        alert("Please verify your email first! Check your inbox or spam.");
+        await signOut(auth);
+        return;
+      }
       authModal.style.display = 'none';
     } catch (err) { authError.textContent = err.message; }
   });
 
-  // Email signup
+  // Signup with verification email
   signupForm.addEventListener('submit', async (e) => {
     e.preventDefault();
     const name = document.getElementById('signupName').value;
@@ -524,13 +473,27 @@
     const goal = document.getElementById('signupGoal').value;
     try {
       const cred = await createUserWithEmailAndPassword(auth, email, password);
+      await sendEmailVerification(cred.user);
+      alert("Verification email sent! Please check your inbox (and spam folder).");
       await updateProfile(cred.user, { displayName: name });
       await setDoc(doc(db, 'users', cred.user.uid), { name, email, age: parseInt(age)||28, gender, goal });
       authModal.style.display = 'none';
     } catch (err) { authError.textContent = err.message; }
   });
 
-  // Phone login
+  // Resend verification
+  resendVerificationBtn.addEventListener('click', async () => {
+    if (currentUser && !currentUser.emailVerified) {
+      try {
+        await sendEmailVerification(currentUser);
+        alert("Verification email resent! Check your inbox.");
+      } catch (err) { alert("Error: " + err.message); }
+    } else {
+      alert("Your email is already verified or you're not logged in.");
+    }
+  });
+
+  // Phone auth remains same
   document.getElementById('phoneLoginBtn').addEventListener('click', async () => {
     const phone = document.getElementById('phoneLogin').value;
     if (!phone) return authError.textContent = 'Enter phone number';
@@ -541,7 +504,6 @@
       authError.textContent = 'OTP sent!';
     } catch (err) { authError.textContent = err.message; }
   });
-
   document.getElementById('phoneSignupBtn').addEventListener('click', async () => {
     const phone = prompt('Enter phone number with country code (e.g., +1234567890):');
     if (!phone) return;
@@ -552,7 +514,6 @@
       authError.textContent = 'OTP sent!';
     } catch (err) { authError.textContent = err.message; }
   });
-
   document.getElementById('verifyCodeBtn').addEventListener('click', async () => {
     const code = document.getElementById('verificationCode').value;
     try {
@@ -561,29 +522,22 @@
     } catch (err) { authError.textContent = err.message; }
   });
 
-  // Logout
   logoutBtn.addEventListener('click', () => signOut(auth));
 
-  // Nutrition helper
   function updateNutritionDisplay(age) {
     const bmr = Math.round(1800 + (age * 2.5) - 20);
     const protein = Math.round(120 + (age * 0.8));
     nutritionResult.innerHTML = `🔥 BMR: ${bmr} kcal | 🥑 Protein: ${protein}g`;
   }
-
-  calcNutritionBtn.addEventListener('click', () => {
-    const age = parseInt(ageInput.value) || 28;
-    updateNutritionDisplay(age);
-  });
-
+  calcNutritionBtn.addEventListener('click', () => updateNutritionDisplay(parseInt(ageInput.value)||28));
   saveNutritionBtn.addEventListener('click', async () => {
-    if (!currentUser) return alert('Please login to save nutrition data.');
-    const age = parseInt(ageInput.value) || 28;
+    if (!currentUser) return alert('Please login');
+    const age = parseInt(ageInput.value)||28;
     const bmr = Math.round(1800 + (age * 2.5) - 20);
     const protein = Math.round(120 + (age * 0.8));
     await updateDoc(doc(db, 'users', currentUser.uid), { age });
     await setDoc(doc(db, 'users', currentUser.uid, 'nutrition', 'daily'), { protein, bmr }, { merge: true });
-    alert('Nutrition profile saved!');
+    alert('Saved!');
   });
 </script>
 </body>
